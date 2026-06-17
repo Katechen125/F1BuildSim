@@ -73,4 +73,5 @@ public class GameManager : MonoBehaviour
         currentBuild.Reset();
         Debug.Log("Build reset");
     }
+
 }

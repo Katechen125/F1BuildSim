@@ -18,10 +18,10 @@ public static class PerformanceEngine
         foreach (CarPart part in build.GetAllParts())
         {
             if (part == null) continue;
-            totalDownforce  += part.downforce;
-            totalDrag       += part.drag;
-            totalWeight     += part.weight;
-            totalPower      += part.power;
+            totalDownforce += part.downforce;
+            totalDrag += part.drag;
+            totalWeight += part.weight;
+            totalPower += part.power;
             totalReliability += part.reliability;
             partCount++;
         }
@@ -29,21 +29,21 @@ public static class PerformanceEngine
         float avgReliability = totalReliability / partCount;
 
         // Aero efficiency: how much downforce per unit of drag
-        float aeroEfficiency = totalDrag > 0 
-            ? (totalDownforce / (totalDownforce + totalDrag)) * 100f 
+        float aeroEfficiency = totalDrag > 0
+            ? (totalDownforce / (totalDownforce + totalDrag)) * 100f
             : 100f;
 
         // Speed score: power minus drag penalty
-        float speedScore = Mathf.Clamp((totalPower * 1.2f) - (totalDrag * 0.5f), 0f, 100f);
+        float speedScore = Mathf.Clamp((totalPower * 1.5f) - (totalDrag * 0.3f), 0f, 100f);
 
         // Cornering score: downforce minus weight penalty
         float corneringScore = Mathf.Clamp(totalDownforce - (totalWeight * 0.3f), 0f, 100f);
 
         // Estimated lap time: lower is better
         // Base time 90 seconds, improved by speed and cornering
-        float lapTime = 90f 
-            - (speedScore * 0.15f) 
-            - (corneringScore * 0.1f) 
+        float lapTime = 90f
+            - (speedScore * 0.15f)
+            - (corneringScore * 0.1f)
             + (totalWeight * 0.05f);
 
         lapTime = Mathf.Clamp(lapTime, 60f, 90f);
@@ -58,13 +58,13 @@ public static class PerformanceEngine
 
         return new PerformanceResult
         {
-            isValid         = true,
+            isValid = true,
             efficiencyScore = Mathf.Round(efficiencyScore),
-            lapTimeSeconds  = Mathf.Round(lapTime * 10f) / 10f,
-            aeroEfficiency  = Mathf.Round(aeroEfficiency),
-            speedScore      = Mathf.Round(speedScore),
-            corneringScore  = Mathf.Round(corneringScore),
-            reliability     = Mathf.Round(avgReliability)
+            lapTimeSeconds = Mathf.Round(lapTime * 10f) / 10f,
+            aeroEfficiency = Mathf.Round(aeroEfficiency),
+            speedScore = Mathf.Round(speedScore),
+            corneringScore = Mathf.Round(corneringScore),
+            reliability = Mathf.Round(avgReliability)
         };
     }
 }
