@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RearWing_LowDrag
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Low Drag Rear Wing
-  description: DRS-optimised for power circuits, minimal rear grip
+  description: Thin wing profile for raw speed. The rear can feel unstable but the
+    straight-line pace is brutal.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 1

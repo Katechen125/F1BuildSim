@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Tyres_Medium
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Medium Compound
-  description: Balanced grip and durability, the most versatile race tyre
+  description: A balanced tyre that lasts longer than softs but grips better than
+    hards. The safe choice.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 4

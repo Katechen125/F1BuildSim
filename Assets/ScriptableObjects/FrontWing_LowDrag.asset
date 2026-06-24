@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FrontWing_LowDrag
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Low Drag Front Wing
-  description: Built for high speed circuits like Monza, sacrifices cornering grip
-    for straight line speed
+  description: Cuts through air cleanly. Fast on long straights but the front end
+    gets nervous in tight corners.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 0

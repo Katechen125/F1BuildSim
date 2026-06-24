@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FrontWing_HighDownforce
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Downforce Front Wing
-  description: Maximum grip for tight street circuits like Monaco, but kills top
-    speed
+  description: Pushes the front of the car into the ground hard. More grip in corners,
+    but you'll lose speed on straights.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 0

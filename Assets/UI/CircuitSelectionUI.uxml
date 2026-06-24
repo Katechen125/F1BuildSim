@@ -1,0 +1,65 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="CircuitStyles.uss"/>
+    <ui:VisualElement name="Root">
+
+        <ui:VisualElement name="Header">
+            <ui:VisualElement name="HeaderLeft">
+                <ui:Label name="AppTitle" text="F1 BUILD SIM"/>
+                <ui:Label name="ScreenTitle" text="SELECT YOUR CIRCUIT"/>
+            </ui:VisualElement>
+            <ui:Label name="HeaderRight" text="8 CIRCUITS AVAILABLE"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="MainContent">
+
+            <ui:VisualElement name="GridPanel">
+                <ui:Label name="GridLabel" text="CHOOSE A CIRCUIT"/>
+                <ui:ScrollView name="CircuitGrid"
+                    vertical-scroller-visibility="Hidden"
+                    horizontal-scroller-visibility="Hidden"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="PreviewPanel">
+
+                    <ui:VisualElement name="TrackImageContainer">
+                        <ui:VisualElement name="TrackImage"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="CircuitInfo">
+
+                        <ui:VisualElement name="CircuitNameRow">
+                            <ui:VisualElement name="CircuitFlagImg"/>
+                            <ui:VisualElement name="CircuitNameCol">
+                                <ui:Label name="CircuitName" text="SELECT A CIRCUIT"/>
+                                <ui:Label name="CircuitSub" text=""/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="TagsContainer"/>
+
+                        <ui:VisualElement name="StatsRow">
+                            <ui:VisualElement class="stat-block">
+                                <ui:Label text="LAP LENGTH" class="stat-lbl"/>
+                                <ui:Label name="LapLength" text="--" class="stat-val"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="stat-block">
+                                <ui:Label text="RACE LAPS" class="stat-lbl"/>
+                                <ui:Label name="RaceLaps" text="--" class="stat-val"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="stat-block">
+                                <ui:Label text="TOP SPEED" class="stat-lbl"/>
+                                <ui:Label name="TopSpeed" text="--" class="stat-val"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="ButtonRow">
+                            <ui:Button name="BtnConfirm" text="BUILD FOR THIS CIRCUIT →"/>
+                        </ui:VisualElement>
+
+                    </ui:VisualElement>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

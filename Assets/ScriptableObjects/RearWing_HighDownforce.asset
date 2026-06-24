@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RearWing_HighDownforce
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Downforce Rear Wing
-  description: Maximum rear grip, heavy drag penalty
+  description: Glues the rear tyres to the road under acceleration. Stable but slow
+    in a straight line.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 1

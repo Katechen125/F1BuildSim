@@ -1,0 +1,268 @@
+/* ===================== ROOT ===================== */
+#Root {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(13, 10, 7);
+}
+
+/* ===================== HEADER ===================== */
+#Header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px 12px 24px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(40, 28, 16);
+    background-color: rgb(16, 12, 8);
+    flex-shrink: 0;
+}
+
+#HeaderLeft {
+    flex-direction: column;
+}
+
+#AppTitle {
+    color: rgb(255, 107, 26);
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    margin-bottom: 2px;
+}
+
+#ScreenTitle {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+}
+
+#HeaderRight {
+    color: rgb(60, 45, 28);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+#MainContent {
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ===================== GRID PANEL ===================== */
+#GridPanel {
+    width: 300px;
+    background-color: rgb(16, 12, 8);
+    border-right-width: 1px;
+    border-right-color: rgb(40, 28, 16);
+    padding: 16px 12px;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+#GridLabel {
+    font-size: 9px;
+    color: rgb(70, 52, 30);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+    flex-shrink: 0;
+}
+
+#CircuitGrid {
+    flex: 1;
+}
+
+.circuit-card {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(20, 14, 8);
+    border-width: 1px;
+    border-color: rgb(35, 25, 14);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+}
+
+.circuit-card:hover {
+    background-color: rgb(26, 18, 10);
+    border-color: rgb(70, 48, 24);
+}
+
+.circuit-card--selected {
+    background-color: rgb(30, 20, 10);
+    border-color: rgb(255, 107, 26);
+    border-left-width: 3px;
+    border-left-color: rgb(255, 107, 26);
+}
+
+.circuit-flag-img {
+    width: 38px;
+    height: 26px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-radius: 3px;
+}
+
+.circuit-name-col {
+    flex: 1;
+}
+
+.circuit-card-name {
+    font-size: 13px;
+    color: rgb(200, 160, 100);
+    -unity-font-style: bold;
+    margin-bottom: 2px;
+}
+
+.circuit-card--selected .circuit-card-name {
+    color: rgb(255, 107, 26);
+}
+
+.circuit-card-type {
+    font-size: 8px;
+    color: rgb(60, 45, 26);
+    letter-spacing: 1px;
+}
+
+.circuit-card--selected .circuit-card-type {
+    color: rgb(150, 85, 30);
+}
+
+/* ===================== PREVIEW PANEL ===================== */
+#PreviewPanel {
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#PreviewScroll {
+    flex: 1;
+}
+
+#TrackImageContainer {
+    background-color: rgb(240, 230, 215);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 12px 12px 6px 12px;
+    border-radius: 10px;
+    height: 340px;
+    flex-shrink: 0;
+}
+
+#TrackImage {
+    width: 100%;
+    height: 100%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ===================== CIRCUIT INFO ===================== */
+#CircuitInfo {
+    padding: 16px 24px 24px 24px;
+    background-color: rgb(14, 10, 6);
+    border-top-width: 1px;
+    border-top-color: rgb(40, 28, 16);
+    flex-shrink: 0;
+}
+
+#CircuitNameRow {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+#CircuitFlagImg {
+    width: 48px;
+    height: 32px;
+    margin-right: 14px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgb(50, 36, 20);
+}
+
+#CircuitNameCol {
+    flex: 1;
+}
+
+#CircuitName {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    margin-bottom: 1px;
+}
+
+#CircuitSub {
+    font-size: 9px;
+    color: rgb(70, 52, 30);
+    letter-spacing: 2px;
+}
+
+#TagsContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    margin-top: 8px;
+}
+
+.circuit-tag {
+    background-color: rgba(255, 107, 26, 0.12);
+    border-width: 1px;
+    border-color: rgba(255, 107, 26, 0.3);
+    border-radius: 3px;
+    padding: 3px 8px;
+    font-size: 8px;
+    color: rgb(255, 140, 60);
+    letter-spacing: 1.5px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+}
+
+#StatsRow {
+    flex-direction: row;
+    margin-bottom: 16px;
+}
+
+.stat-block {
+    margin-right: 28px;
+}
+
+.stat-lbl {
+    font-size: 8px;
+    color: rgb(60, 45, 26);
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+}
+
+.stat-val {
+    font-size: 14px;
+    color: rgb(220, 185, 130);
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+#ButtonRow {
+    flex-direction: row;
+}
+
+#BtnConfirm {
+    background-color: rgb(255, 107, 26);
+    border-width: 0;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    font-size: 11px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+    height: 42px;
+    padding: 0 32px;
+    flex-shrink: 0;
+}
+
+#BtnConfirm:hover {
+    background-color: rgb(255, 130, 55);
+}

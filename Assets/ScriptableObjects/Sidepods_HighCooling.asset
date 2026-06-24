@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sidepods_HighCooling
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Cooling Sidepods
-  description: Extra cooling capacity for hot climates, slight aero penalty
+  description: Extra cooling capacity for the engine. Slight aero penalty but protects
+    the power unit under stress.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 6

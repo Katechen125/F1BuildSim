@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Brakes_Durable
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Durable Brakes
-  description: Built to last full race distance, slightly reduced peak performance
+  description: Built to last the full race. Slightly less stopping power but zero
+    fade risk over long distances.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 5

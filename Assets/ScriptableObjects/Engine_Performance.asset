@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Engine_Performance
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Works Power Unit
-  description: Factory spec engine, maximum power but higher failure risk
+  description: The full factory engine. Maximum power output but runs hot and risks
+    failure over a long race.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 2

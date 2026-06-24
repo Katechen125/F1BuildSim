@@ -50,17 +50,18 @@ public class GameManager : MonoBehaviour
 
     public PerformanceResult EvaluateBuild()
     {
-        lastResult = PerformanceEngine.Calculate(currentBuild);
+        Circuit chosenCircuit = CircuitSelectionController.ChosenCircuit;
+        lastResult = PerformanceEngine.Calculate(currentBuild, chosenCircuit);
 
         if (lastResult.isValid)
         {
             Debug.Log($"Efficiency: {lastResult.efficiencyScore}/100");
             Debug.Log($"Lap Time: {lastResult.lapTimeSeconds}s");
-            Debug.Log($"Speed: {lastResult.speedScore} | Cornering: {lastResult.corneringScore}");
+            Debug.Log($"Circuit Rating: {lastResult.circuitRating}");
         }
         else
         {
-            Debug.LogWarning("Build incomplete, all 8 parts must be selected");
+            Debug.LogWarning("Build incomplete");
         }
 
         return lastResult;

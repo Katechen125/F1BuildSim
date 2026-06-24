@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Floor_LowDrag
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Low Drag Floor
-  description: Optimised for power circuits, reduced ground effect for less drag
+  description: Reduces underbody resistance for better straight-line speed. Less
+    grip but more velocity.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 7

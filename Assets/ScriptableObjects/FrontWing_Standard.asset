@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FrontWing_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Front Wing
-  description: Balanced downforce and drag, good for most circuits
+  description: A middle-ground wing. Decent grip without sacrificing too much straight-line
+    speed.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 0

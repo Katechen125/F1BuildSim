@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Floor_HighDownforce
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Downforce Floor
-  description: Aggressive ground effect design, maximum underbody downforce
+  description: Maximises the suction effect under the car. Huge grip gains but sensitive
+    to ride height changes.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 7

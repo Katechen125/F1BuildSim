@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Engine_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Customer Power Unit
-  description: Reliable and fuel efficient, solid midfield performance
+  description: ' A reliable engine supplied by a manufacturer. Not the fastest but
+    won''t let you down.'
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 2

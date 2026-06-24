@@ -383,6 +383,87 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &821578987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 821578990}
+  - component: {fileID: 821578989}
+  - component: {fileID: 821578988}
+  m_Layer: 0
+  m_Name: CircuitSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &821578988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821578987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb795723e183e0946a93576456461b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CircuitSelectionController
+  uiDocument: {fileID: 821578989}
+  allCircuits:
+  - {fileID: 11400000, guid: 455d19a9a875bbf4d8994928fc57fec0, type: 2}
+  - {fileID: 11400000, guid: 2c64e91f7cb7c5848a1b47ee77088ab3, type: 2}
+  - {fileID: 11400000, guid: 2bb82e2640ee35b43a1b1f98ced3e500, type: 2}
+  - {fileID: 11400000, guid: e755fb618c7b5de49b31ec07a8fcb34d, type: 2}
+  - {fileID: 11400000, guid: 85baa3fda05f83c44a4cfd22e77f4276, type: 2}
+  - {fileID: 11400000, guid: 1cad8ccaf8e07bf4c8c1bed3dd988dee, type: 2}
+  - {fileID: 11400000, guid: 8e18a482bacfc644a8bae05bcb65cfd1, type: 2}
+  - {fileID: 11400000, guid: cbc251310fef77d4caca921e4e4d3f5b, type: 2}
+  orbitronFont: {fileID: 12800000, guid: 9aab2c29959d68a4a8845e34ca01153b, type: 3}
+  exo2Font: {fileID: 12800000, guid: dd26866c61d152049869bcf8b2e4c98e, type: 3}
+  builderObject: {fileID: 1035291776}
+--- !u!114 &821578989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821578987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 9a4157f9f591202458c2aa6f0a160776, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 4b887217a36f40d4698c8ffc8c0ab64d, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &821578990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821578987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +508,110 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1035291776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035291779}
+  - component: {fileID: 1035291778}
+  - component: {fileID: 1035291777}
+  m_Layer: 0
+  m_Name: UIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1035291777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035291776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 9a4157f9f591202458c2aa6f0a160776, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 141513bc10cd92845ad387de6627dda6, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &1035291778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035291776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97e9ae9164cb4544bfe90f0e7819383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuilderUIController
+  uiDocument: {fileID: 1035291777}
+  allParts:
+  - {fileID: 11400000, guid: cb8d700b754994747bd961b75db65a73, type: 2}
+  - {fileID: 11400000, guid: a69d3477802dc5f44bf8cb2e07ab809e, type: 2}
+  - {fileID: 11400000, guid: 504166e2489c6a54da5157e8f54f6368, type: 2}
+  - {fileID: 11400000, guid: 91d7e5d5838ba5e428e5614fbb820ce2, type: 2}
+  - {fileID: 11400000, guid: 6239030a81eb4a34aae53a2845f75cdf, type: 2}
+  - {fileID: 11400000, guid: a1ff8f8f5855e6f47ad4dcc54c1fdbc2, type: 2}
+  - {fileID: 11400000, guid: 51169c359a0ef574eaec85891a744851, type: 2}
+  - {fileID: 11400000, guid: 0a4033ca253615d42badc8d03c632f52, type: 2}
+  - {fileID: 11400000, guid: 0cdd23c1b7ae89a48b35eca127bda952, type: 2}
+  - {fileID: 11400000, guid: ed7fd773a11661d4d9d78480ebd41be3, type: 2}
+  - {fileID: 11400000, guid: 5acc24dd9be09f14aac30079b308ccec, type: 2}
+  - {fileID: 11400000, guid: 2e8959824b4e420418f7b05a49207ec1, type: 2}
+  - {fileID: 11400000, guid: 135ecee0d3271f94291652434d526875, type: 2}
+  - {fileID: 11400000, guid: f26f177ae4521db44b07768d82e0b6d3, type: 2}
+  - {fileID: 11400000, guid: 529d91cdf824e774bb529a295b65ff21, type: 2}
+  - {fileID: 11400000, guid: 2a8fd13c42c913549aba12c4f63c87c4, type: 2}
+  - {fileID: 11400000, guid: 83abf25b28385fa44a4438f9d3362f05, type: 2}
+  - {fileID: 11400000, guid: cdb69784eb3870349b5894cdecc23420, type: 2}
+  - {fileID: 11400000, guid: a98666d3d4aadb54a8aac8bf1f9accd3, type: 2}
+  - {fileID: 11400000, guid: 4ff2b4fab6d3e3b44b047a711428312b, type: 2}
+  - {fileID: 11400000, guid: cf85ebf8c3c784844bf15eddc3586d52, type: 2}
+  - {fileID: 11400000, guid: c55efe5782fb54347a2a0834914dc2b4, type: 2}
+  - {fileID: 11400000, guid: 59498edd50fe61440848a09536017552, type: 2}
+  - {fileID: 11400000, guid: 061dd444ca4d92c46b6622688978bea3, type: 2}
+  iconFrontWing: {fileID: 21300000, guid: 7e5ffd52d7f12f6428be65613b3302bf, type: 3}
+  iconRearWing: {fileID: 21300000, guid: 6079e2d20305f51488c0fed12c844f4d, type: 3}
+  iconEngine: {fileID: 21300000, guid: 512c6dbd232dd5d4eba55309d28d6fb8, type: 3}
+  iconSuspension: {fileID: 21300000, guid: cd28716e0f6aa664cbfa5bacc5f4ff3b, type: 3}
+  iconTyres: {fileID: 21300000, guid: aa1507127ab53014a9b570c4ae0a5383, type: 3}
+  iconBrakes: {fileID: 21300000, guid: 236ab1ddc4b218642a25ee6952572981, type: 3}
+  iconSidepods: {fileID: 21300000, guid: 9f1f31930772e794d99c51cd0eeaf05e, type: 3}
+  iconFloor: {fileID: 21300000, guid: 0be55d7d58329a94abd7f6eb3117a99f, type: 3}
+  orbitronFont: {fileID: 12800000, guid: 9aab2c29959d68a4a8845e34ca01153b, type: 3}
+  exo2Font: {fileID: 12800000, guid: dd26866c61d152049869bcf8b2e4c98e, type: 3}
+--- !u!4 &1035291779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035291776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -518,3 +703,5 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 1662566663}
+  - {fileID: 1035291779}
+  - {fileID: 821578990}
