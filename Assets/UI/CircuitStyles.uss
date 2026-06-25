@@ -1,4 +1,3 @@
-/* ===================== ROOT ===================== */
 #Root {
     flex-direction: column;
     width: 100%;
@@ -6,12 +5,11 @@
     background-color: rgb(13, 10, 7);
 }
 
-/* ===================== HEADER ===================== */
 #Header {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px 12px 24px;
+    padding: 14px 24px 12px 24px;
     border-bottom-width: 1px;
     border-bottom-color: rgb(40, 28, 16);
     background-color: rgb(16, 12, 8);
@@ -24,7 +22,7 @@
 
 #AppTitle {
     color: rgb(255, 107, 26);
-    font-size: 10px;
+    font-size: 12px;
     -unity-font-style: bold;
     letter-spacing: 3px;
     margin-bottom: 2px;
@@ -32,38 +30,36 @@
 
 #ScreenTitle {
     color: rgb(255, 255, 255);
-    font-size: 18px;
+    font-size: 22px;
     -unity-font-style: bold;
     letter-spacing: 2px;
 }
 
 #HeaderRight {
-    color: rgb(60, 45, 28);
-    font-size: 9px;
+    color: rgb(100, 75, 45);
+    font-size: 11px;
     letter-spacing: 2px;
 }
 
-/* ===================== MAIN CONTENT ===================== */
 #MainContent {
     flex-direction: row;
     flex: 1;
     overflow: hidden;
 }
 
-/* ===================== GRID PANEL ===================== */
 #GridPanel {
-    width: 300px;
+    width: 220px;
     background-color: rgb(16, 12, 8);
     border-right-width: 1px;
     border-right-color: rgb(40, 28, 16);
-    padding: 16px 12px;
+    padding: 14px 10px;
     flex-direction: column;
     flex-shrink: 0;
 }
 
 #GridLabel {
-    font-size: 9px;
-    color: rgb(70, 52, 30);
+    font-size: 11px;
+    color: rgb(100, 75, 45);
     letter-spacing: 2px;
     margin-bottom: 12px;
     padding: 0 4px;
@@ -93,17 +89,17 @@
 .circuit-card--selected {
     background-color: rgb(30, 20, 10);
     border-color: rgb(255, 107, 26);
-    border-left-width: 3px;
+    border-left-width: 2px;
     border-left-color: rgb(255, 107, 26);
 }
 
 .circuit-flag-img {
-    width: 38px;
-    height: 26px;
-    margin-right: 12px;
+    width: 34px;
+    height: 24px;
+    margin-right: 10px;
     flex-shrink: 0;
     -unity-background-scale-mode: stretch-to-fill;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .circuit-name-col {
@@ -122,16 +118,15 @@
 }
 
 .circuit-card-type {
-    font-size: 8px;
-    color: rgb(60, 45, 26);
-    letter-spacing: 1px;
+    font-size: 10px;
+    color: rgb(80, 60, 32);
+    letter-spacing: 0.5px;
 }
 
 .circuit-card--selected .circuit-card-type {
     color: rgb(150, 85, 30);
 }
 
-/* ===================== PREVIEW PANEL ===================== */
 #PreviewPanel {
     flex: 1;
     flex-direction: column;
@@ -146,10 +141,10 @@
     background-color: rgb(240, 230, 215);
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    margin: 12px 12px 6px 12px;
+    padding: 18px;
+    margin: 10px 10px 6px 10px;
     border-radius: 10px;
-    height: 340px;
+    height: 300px;
     flex-shrink: 0;
 }
 
@@ -159,9 +154,8 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
-/* ===================== CIRCUIT INFO ===================== */
 #CircuitInfo {
-    padding: 16px 24px 24px 24px;
+    padding: 14px 22px 20px 22px;
     background-color: rgb(14, 10, 6);
     border-top-width: 1px;
     border-top-color: rgb(40, 28, 16);
@@ -175,12 +169,12 @@
 }
 
 #CircuitFlagImg {
-    width: 48px;
-    height: 32px;
-    margin-right: 14px;
+    width: 44px;
+    height: 30px;
+    margin-right: 12px;
     flex-shrink: 0;
     -unity-background-scale-mode: stretch-to-fill;
-    border-radius: 4px;
+    border-radius: 3px;
     border-width: 1px;
     border-color: rgb(50, 36, 20);
 }
@@ -190,7 +184,7 @@
 }
 
 #CircuitName {
-    font-size: 20px;
+    font-size: 22px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     letter-spacing: 1px;
@@ -198,8 +192,8 @@
 }
 
 #CircuitSub {
-    font-size: 9px;
-    color: rgb(70, 52, 30);
+    font-size: 11px;
+    color: rgb(90, 68, 38);
     letter-spacing: 2px;
 }
 
@@ -214,33 +208,33 @@
     background-color: rgba(255, 107, 26, 0.12);
     border-width: 1px;
     border-color: rgba(255, 107, 26, 0.3);
-    border-radius: 3px;
+    border-radius: 2px;
     padding: 3px 8px;
-    font-size: 8px;
+    font-size: 10px;
     color: rgb(255, 140, 60);
     letter-spacing: 1.5px;
-    margin-right: 6px;
+    margin-right: 5px;
     margin-bottom: 4px;
 }
 
 #StatsRow {
     flex-direction: row;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .stat-block {
-    margin-right: 28px;
+    margin-right: 26px;
 }
 
 .stat-lbl {
-    font-size: 8px;
-    color: rgb(60, 45, 26);
+    font-size: 10px;
+    color: rgb(80, 60, 32);
     letter-spacing: 2px;
     margin-bottom: 3px;
 }
 
 .stat-val {
-    font-size: 14px;
+    font-size: 16px;
     color: rgb(220, 185, 130);
     -unity-font-style: bold;
     letter-spacing: 0.5px;
@@ -255,14 +249,26 @@
     border-width: 0;
     border-radius: 4px;
     color: rgb(255, 255, 255);
-    font-size: 11px;
+    font-size: 13px;
     -unity-font-style: bold;
     letter-spacing: 2px;
-    height: 42px;
+    height: 46px;
     padding: 0 32px;
     flex-shrink: 0;
 }
 
 #BtnConfirm:hover {
     background-color: rgb(255, 130, 55);
+}
+
+#ScrollHint {
+    font-size: 10px;
+    color: rgb(100, 75, 45);
+    letter-spacing: 2px;
+    -unity-text-align: upper-center;
+    padding: 6px 0;
+    background-color: rgb(14, 10, 6);
+    border-top-width: 1px;
+    border-top-color: rgb(35, 25, 14);
+    flex-shrink: 0;
 }

@@ -1,0 +1,61 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="SplashStyles.uss"/>
+    <ui:VisualElement name="Root">
+
+        <ui:VisualElement name="TopAccent"/>
+
+        <!-- Car image fills the whole background -->
+        <ui:VisualElement name="CarBg"/>
+
+        <!-- Dark overlay on left side -->
+        <ui:VisualElement name="LeftOverlay">
+            <ui:Label name="LogoEyebrow" text="APPLE VISION PRO"/>
+            <ui:Label name="LogoTitle" text="F1 BUILD"/>
+            <ui:Label name="LogoTitleAccent" text="SIM"/>
+            <ui:Label name="LogoSubtitle" text="CAR CONFIGURATOR"/>
+            <ui:VisualElement name="LogoDivider"/>
+            <ui:Label name="LogoDesc" text="Design a Formula 1 car from scratch. Pick your components, tune your setup for a real circuit, and find out if your build can compete."/>
+
+            <ui:VisualElement name="StatsRow">
+                <ui:VisualElement class="stat-block">
+                    <ui:Label text="8" class="stat-num"/>
+                    <ui:Label text="COMPONENTS" class="stat-lbl"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="stat-sep"/>
+                <ui:VisualElement class="stat-block">
+                    <ui:Label text="8" class="stat-num"/>
+                    <ui:Label text="CIRCUITS" class="stat-lbl"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="stat-sep"/>
+                <ui:VisualElement class="stat-block">
+                    <ui:Label text="24" class="stat-num"/>
+                    <ui:Label text="PARTS" class="stat-lbl"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="StepsRow">
+                <ui:VisualElement class="step-item">
+                    <ui:Label text="1" class="step-num"/>
+                    <ui:Label text="Pick circuit" class="step-lbl"/>
+                </ui:VisualElement>
+                <ui:Label text="→" class="step-arrow"/>
+                <ui:VisualElement class="step-item">
+                    <ui:Label text="2" class="step-num"/>
+                    <ui:Label text="Build car" class="step-lbl"/>
+                </ui:VisualElement>
+                <ui:Label text="→" class="step-arrow"/>
+                <ui:VisualElement class="step-item">
+                    <ui:Label text="3" class="step-num"/>
+                    <ui:Label text="Evaluate" class="step-lbl"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Button name="BtnStart" text="START BUILDING →"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="BottomBar">
+            <ui:Label name="BottomText" text="SELECT YOUR CIRCUIT · BUILD YOUR CAR · EVALUATE YOUR SETUP"/>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

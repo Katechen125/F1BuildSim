@@ -400,7 +400,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &821578988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,6 +592,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c55efe5782fb54347a2a0834914dc2b4, type: 2}
   - {fileID: 11400000, guid: 59498edd50fe61440848a09536017552, type: 2}
   - {fileID: 11400000, guid: 061dd444ca4d92c46b6622688978bea3, type: 2}
+  orbitronFont: {fileID: 12800000, guid: 9aab2c29959d68a4a8845e34ca01153b, type: 3}
+  exo2Font: {fileID: 12800000, guid: dd26866c61d152049869bcf8b2e4c98e, type: 3}
+  circuitSelectorObject: {fileID: 821578987}
   iconFrontWing: {fileID: 21300000, guid: 7e5ffd52d7f12f6428be65613b3302bf, type: 3}
   iconRearWing: {fileID: 21300000, guid: 6079e2d20305f51488c0fed12c844f4d, type: 3}
   iconEngine: {fileID: 21300000, guid: 512c6dbd232dd5d4eba55309d28d6fb8, type: 3}
@@ -600,8 +603,6 @@ MonoBehaviour:
   iconBrakes: {fileID: 21300000, guid: 236ab1ddc4b218642a25ee6952572981, type: 3}
   iconSidepods: {fileID: 21300000, guid: 9f1f31930772e794d99c51cd0eeaf05e, type: 3}
   iconFloor: {fileID: 21300000, guid: 0be55d7d58329a94abd7f6eb3117a99f, type: 3}
-  orbitronFont: {fileID: 12800000, guid: 9aab2c29959d68a4a8845e34ca01153b, type: 3}
-  exo2Font: {fileID: 12800000, guid: dd26866c61d152049869bcf8b2e4c98e, type: 3}
 --- !u!4 &1035291779
 Transform:
   m_ObjectHideFlags: 0
@@ -695,6 +696,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1740315052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740315055}
+  - component: {fileID: 1740315054}
+  - component: {fileID: 1740315053}
+  m_Layer: 0
+  m_Name: SplashScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1740315053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740315052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f298c945e11538b4e84b95005765e512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplashController
+  uiDocument: {fileID: 1740315054}
+  circuitSelectorObject: {fileID: 821578987}
+  mclarenImage: {fileID: 21300000, guid: dc9b3360b38c00f4d82a7c8cb4020559, type: 3}
+  orbitronFont: {fileID: 12800000, guid: 9aab2c29959d68a4a8845e34ca01153b, type: 3}
+  exo2Font: {fileID: 12800000, guid: dd26866c61d152049869bcf8b2e4c98e, type: 3}
+--- !u!114 &1740315054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740315052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 790efc915a9a420429d1e5827e3bd30a, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 6f0f839d5a3d9604bba31c4de0c84a51, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &1740315055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740315052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -705,3 +779,4 @@ SceneRoots:
   - {fileID: 1662566663}
   - {fileID: 1035291779}
   - {fileID: 821578990}
+  - {fileID: 1740315055}

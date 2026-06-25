@@ -1,0 +1,198 @@
+#Root {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(10, 7, 4);
+    position: relative;
+}
+
+#TopAccent {
+    height: 3px;
+    background-color: rgb(255, 107, 26);
+    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+#CarBg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+#LeftOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 36px;
+    width: 54%;
+    background-color: rgba(6, 4, 1, 0.97);
+    padding: 36px 36px;
+    justify-content: center;
+    align-items: flex-start;
+    border-right-width: 1px;
+    border-right-color: rgb(60, 40, 18);
+}
+
+#LogoEyebrow {
+    font-size: 13px;
+    color: rgb(255, 107, 26);
+    letter-spacing: 3px;
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+
+#LogoTitle {
+    font-size: 46px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    margin-bottom: 0px;
+}
+
+#LogoTitleAccent {
+    font-size: 46px;
+    color: rgb(255, 107, 26);
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+#LogoSubtitle {
+    font-size: 12px;
+    color: rgb(100, 75, 45);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+
+#LogoDivider {
+    height: 2px;
+    width: 48px;
+    background-color: rgb(255, 107, 26);
+    margin-bottom: 16px;
+}
+
+#LogoDesc {
+    font-size: 14px;
+    color: rgb(180, 140, 95);
+    white-space: normal;
+    margin-bottom: 24px;
+}
+
+#StatsRow {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: rgb(22, 15, 8);
+    border-width: 1px;
+    border-color: rgb(55, 38, 18);
+    border-radius: 6px;
+    padding: 12px 18px;
+    flex-shrink: 0;
+}
+
+.stat-block {
+    align-items: center;
+    padding: 0 14px;
+}
+
+.stat-num {
+    font-size: 30px;
+    color: rgb(255, 107, 26);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    margin-bottom: 3px;
+}
+
+.stat-lbl {
+    font-size: 11px;
+    color: rgb(120, 90, 55);
+    letter-spacing: 1.5px;
+    -unity-text-align: upper-center;
+}
+
+.stat-sep {
+    width: 1px;
+    height: 30px;
+    background-color: rgb(55, 38, 18);
+}
+
+#StepsRow {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.step-item {
+    flex-direction: row;
+    align-items: center;
+}
+
+.step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    background-color: rgba(255, 107, 26, 0.15);
+    border-width: 1px;
+    border-color: rgba(255, 107, 26, 0.4);
+    color: rgb(255, 107, 26);
+    font-size: 10px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.step-lbl {
+    font-size: 12px;
+    color: rgb(150, 115, 70);
+}
+
+.step-arrow {
+    font-size: 13px;
+    color: rgb(80, 58, 28);
+    margin: 0 8px;
+}
+
+#BtnStart {
+    background-color: rgb(255, 107, 26);
+    border-width: 0;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+    height: 50px;
+    padding: 0 40px;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+#BtnStart:hover {
+    background-color: rgb(255, 130, 55);
+}
+
+#BottomBar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 36px;
+    background-color: rgb(12, 8, 4);
+    border-top-width: 1px;
+    border-top-color: rgb(45, 30, 14);
+    align-items: center;
+    justify-content: center;
+}
+
+#BottomText {
+    font-size: 11px;
+    color: rgb(120, 90, 55);
+    letter-spacing: 2px;
+    -unity-text-align: upper-center;
+}

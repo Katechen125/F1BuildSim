@@ -97,8 +97,6 @@
 
         <!-- MIDDLE PANEL -->
         <ui:VisualElement name="MiddlePanel">
-
-            <!-- Circuit banner -->
             <ui:VisualElement name="CircuitBanner">
                 <ui:VisualElement name="CircuitBannerFlag"/>
                 <ui:VisualElement name="CircuitBannerText">
@@ -107,14 +105,11 @@
                     <ui:VisualElement name="CircuitBannerTags"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-
-            <!-- Intro -->
             <ui:VisualElement name="IntroBox">
                 <ui:Label name="IntroTitle" text="BUILD YOUR F1 CAR"/>
                 <ui:Label name="IntroSubtitle" text="CAR CONFIGURATOR · 8 COMPONENTS"/>
                 <ui:Label name="IntroDesc" text="Select a category from the left to begin. Each component affects downforce, drag, top speed, cornering grip, and reliability. Build smart. Race faster."/>
             </ui:VisualElement>
-
             <ui:Label name="CategoryLabel" text="FRONT WING"/>
             <ui:Label name="CategoryCount" text="3 OPTIONS AVAILABLE"/>
             <ui:ScrollView name="PartList"
@@ -144,8 +139,93 @@
                 <ui:Label name="CircuitRating" text="--" class="circuit-rating-value"/>
                 <ui:Label name="BuildStatus" text="Select all 8 parts to evaluate"/>
                 <ui:Button name="BtnEvaluate" text="EVALUATE BUILD"/>
-                <ui:Button name="BtnReset" text="RESET"/>
             </ui:ScrollView>
+        </ui:VisualElement>
+
+        <!-- RESULTS MODAL -->
+        <ui:VisualElement name="ResultsModal" style="display: none;">
+            <ui:VisualElement name="ModalOverlay"/>
+            <ui:VisualElement name="ModalCard">
+                <ui:VisualElement name="ModalHeader">
+                    <ui:VisualElement name="ModalHeaderLeft">
+                        <ui:Label name="ModalSub" text="POST-BUILD ANALYSIS"/>
+                        <ui:Label name="ModalTitle" text="RACE REPORT"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ModalHeaderRight">
+                        <ui:Label name="ModalCircuitName" text="——"/>
+                        <ui:VisualElement name="ModalFlag"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ModalTopRow">
+                    <ui:VisualElement name="ModalScoreCard">
+                        <ui:Label text="EFFICIENCY" class="modal-score-label"/>
+                        <ui:Label name="ModalScore" text="--" class="modal-score-num"/>
+                        <ui:Label text="/100" class="modal-score-denom"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ModalRightTop">
+                        <ui:VisualElement name="ModalRatingBox">
+                            <ui:Label text="CIRCUIT RATING" class="modal-rating-label"/>
+                            <ui:Label name="ModalRating" text="——" class="modal-rating-val"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="ModalMiniRow">
+                            <ui:VisualElement class="modal-mini-stat">
+                                <ui:Label text="LAP TIME" class="modal-ms-label"/>
+                                <ui:Label name="ModalLapTime" text="--" class="modal-ms-val"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="modal-mini-stat">
+                                <ui:Label text="SPEED" class="modal-ms-label"/>
+                                <ui:Label name="ModalSpeed" text="--" class="modal-ms-val"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="modal-mini-stat">
+                                <ui:Label text="CORNERING" class="modal-ms-label"/>
+                                <ui:Label name="ModalCornering" text="--" class="modal-ms-val"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ModalBars">
+                    <ui:VisualElement class="modal-bar-row">
+                        <ui:Label text="DOWNFORCE" class="modal-bar-label"/>
+                        <ui:VisualElement class="modal-bar-track">
+                            <ui:VisualElement name="ModalBarDownforce" class="modal-bar-fill"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ModalBarDownforceVal" text="--" class="modal-bar-val"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="modal-bar-row">
+                        <ui:Label text="SPEED" class="modal-bar-label"/>
+                        <ui:VisualElement class="modal-bar-track">
+                            <ui:VisualElement name="ModalBarSpeed" class="modal-bar-fill"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ModalBarSpeedVal" text="--" class="modal-bar-val"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="modal-bar-row">
+                        <ui:Label text="CORNERING" class="modal-bar-label"/>
+                        <ui:VisualElement class="modal-bar-track">
+                            <ui:VisualElement name="ModalBarCornering" class="modal-bar-fill"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ModalBarCorneringVal" text="--" class="modal-bar-val"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="modal-bar-row">
+                        <ui:Label text="RELIABILITY" class="modal-bar-label"/>
+                        <ui:VisualElement class="modal-bar-track">
+                            <ui:VisualElement name="ModalBarReliability" class="modal-bar-fill"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ModalBarReliabilityVal" text="--" class="modal-bar-val"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ModalDebrief">
+                    <ui:Label text="ENGINEER DEBRIEF" class="modal-debrief-title"/>
+                    <ui:VisualElement name="ModalDebriefItems"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ModalButtonRow">
+                    <ui:Button name="BtnModalClose" text="ADJUST BUILD"/>
+                    <ui:Button name="BtnModalNewCircuit" text="NEW CIRCUIT →"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
 
     </ui:VisualElement>

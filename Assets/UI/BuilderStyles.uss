@@ -1,4 +1,3 @@
-/* ===================== ROOT ===================== */
 #Root {
     flex-direction: row;
     width: 100%;
@@ -6,11 +5,10 @@
     background-color: rgb(13, 10, 7);
 }
 
-/* ===================== LEFT PANEL ===================== */
 #CategoryPanel {
-    width: 160px;
+    width: 185px;
     background-color: rgb(18, 13, 8);
-    padding: 14px 0px 0px 0px;
+    padding: 18px 0px 0px 0px;
     border-right-width: 1px;
     border-right-color: rgb(40, 28, 16);
     justify-content: flex-start;
@@ -20,53 +18,53 @@
 
 #AppTitle {
     color: rgb(255, 107, 26);
-    font-size: 8px;
+    font-size: 12px;
     -unity-font-style: bold;
     letter-spacing: 2px;
     margin-bottom: 1px;
     -unity-text-align: upper-center;
-    padding: 0 10px;
+    padding: 0 14px;
 }
 
 #AppSubtitle {
-    color: rgb(80, 60, 38);
-    font-size: 6px;
+    color: rgb(100, 75, 48);
+    font-size: 10px;
     letter-spacing: 1.5px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     -unity-text-align: upper-center;
-    padding: 0 10px;
+    padding: 0 14px;
 }
 
 #SidebarDivider {
     height: 1px;
     background-color: rgb(40, 28, 16);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 #SidebarDivider2 {
     height: 1px;
     background-color: rgb(40, 28, 16);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 
 #ProgressSection {
-    padding: 0 10px 8px 10px;
+    padding: 0 14px 12px 14px;
 }
 
 #ProgressHeader {
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 #ProgressLabel {
-    font-size: 6px;
-    color: rgb(80, 60, 38);
+    font-size: 10px;
+    color: rgb(100, 75, 48);
     letter-spacing: 1px;
 }
 
 #ProgressCount {
-    font-size: 7px;
+    font-size: 11px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
@@ -89,7 +87,6 @@
     flex: 1;
 }
 
-/* Category buttons */
 .cat-btn {
     background-color: rgba(0,0,0,0);
     border-width: 0;
@@ -100,95 +97,55 @@
     border-radius: 0;
 }
 
-.cat-btn:hover {
-    background-color: rgb(25, 17, 9);
-}
+.cat-btn:hover { background-color: rgb(25, 17, 9); }
+.cat-btn:hover .btn-lbl { color: rgb(200, 150, 80); }
+.cat-btn:hover .btn-tag { border-color: rgb(100, 65, 25); color: rgb(160, 100, 40); }
 
-.cat-btn:hover .btn-lbl {
-    color: rgb(200, 150, 80);
-}
+.cat-btn--active { background-color: rgb(30, 20, 10); border-left-color: rgb(255, 107, 26); }
+.cat-btn--active .btn-tag { background-color: rgb(255, 107, 26); border-color: rgb(255, 107, 26); color: rgb(255, 255, 255); }
+.cat-btn--active .btn-lbl { color: rgb(255, 200, 130); }
 
-.cat-btn:hover .btn-tag {
-    border-color: rgb(100, 65, 25);
-    color: rgb(160, 100, 40);
-}
-
-.cat-btn--active {
-    background-color: rgb(30, 20, 10);
-    border-left-color: rgb(255, 107, 26);
-}
-
-.cat-btn--active .btn-tag {
-    background-color: rgb(255, 107, 26);
-    border-color: rgb(255, 107, 26);
-    color: rgb(255, 255, 255);
-}
-
-.cat-btn--active .btn-lbl {
-    color: rgb(255, 200, 130);
-}
-
-.cat-btn--done .btn-tag {
-    border-color: rgb(120, 78, 25);
-    color: rgb(190, 120, 45);
-}
-
-.cat-btn--done .btn-lbl {
-    color: rgb(150, 110, 65);
-}
-
-.cat-btn--done .btn-status {
-    color: rgb(255, 107, 26);
-    -unity-font-style: bold;
-}
+.cat-btn--done .btn-tag { border-color: rgb(120, 78, 25); color: rgb(190, 120, 45); }
+.cat-btn--done .btn-lbl { color: rgb(160, 120, 75); }
+.cat-btn--done .btn-status { color: rgb(255, 107, 26); -unity-font-style: bold; }
 
 .btn-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 7px 8px 7px 8px;
+    padding: 11px 12px 11px 12px;
     width: 100%;
 }
 
-.btn-left {
-    flex-direction: row;
-    align-items: center;
-}
+.btn-left { flex-direction: row; align-items: center; }
 
 .btn-tag {
     background-color: rgb(30, 18, 8);
     border-width: 1px;
     border-color: rgb(55, 38, 18);
     border-radius: 2px;
-    padding: 1px 4px;
-    font-size: 6px;
+    padding: 2px 5px;
+    font-size: 9px;
     color: rgb(100, 70, 32);
     letter-spacing: 1px;
     -unity-font-style: bold;
-    margin-right: 6px;
+    margin-right: 8px;
 }
 
-.btn-lbl {
-    font-size: 9px;
-    color: rgb(130, 100, 65);
-    letter-spacing: 0.3px;
-}
-
+.btn-lbl { font-size: 13px; color: rgb(150, 115, 72); letter-spacing: 0.3px; }
 .btn-status {
-    font-size: 6px;
-    color: rgb(55, 40, 22);
+    font-size: 10px;
+    color: rgb(80, 58, 32);
     letter-spacing: 1px;
+    margin-left: 4px;
 }
-
-/* ===================== MIDDLE PANEL ===================== */
 #MiddlePanel {
     flex: 1;
-    padding: 14px 14px 12px 14px;
+    padding: 18px 18px 14px 18px;
     background-color: rgb(13, 10, 7);
-    min-width: 300px;
+    min-width: 340px;
 }
 
-/* Circuit banner */
 #CircuitBanner {
     flex-direction: row;
     align-items: center;
@@ -198,33 +155,31 @@
     border-left-width: 2px;
     border-left-color: rgb(255, 107, 26);
     border-radius: 5px;
-    padding: 6px 10px;
-    margin-bottom: 10px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
     flex-shrink: 0;
 }
 
 #CircuitBannerFlag {
-    width: 24px;
-    height: 16px;
-    margin-right: 8px;
+    width: 28px;
+    height: 20px;
+    margin-right: 10px;
     flex-shrink: 0;
     -unity-background-scale-mode: stretch-to-fill;
     border-radius: 2px;
 }
 
-#CircuitBannerText {
-    flex: 1;
-}
+#CircuitBannerText { flex: 1; }
 
 #CircuitBannerLabel {
-    font-size: 6px;
-    color: rgb(70, 52, 30);
+    font-size: 9px;
+    color: rgb(90, 68, 38);
     letter-spacing: 1.5px;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
 }
 
 #CircuitBannerName {
-    font-size: 10px;
+    font-size: 14px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
@@ -233,7 +188,7 @@
 #CircuitBannerTags {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 3px;
+    margin-top: 4px;
 }
 
 .banner-tag {
@@ -241,48 +196,47 @@
     border-width: 1px;
     border-color: rgba(255, 107, 26, 0.25);
     border-radius: 2px;
-    padding: 1px 5px;
-    font-size: 6px;
+    padding: 2px 6px;
+    font-size: 9px;
     color: rgb(200, 120, 50);
     letter-spacing: 1px;
-    margin-right: 3px;
+    margin-right: 4px;
     margin-top: 2px;
 }
 
-/* Intro box */
 #IntroBox {
     flex: 1;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 8px 0px;
+    padding: 10px 0px;
 }
 
 #IntroTitle {
     color: rgb(255, 255, 255);
-    font-size: 13px;
+    font-size: 18px;
     -unity-font-style: bold;
     -unity-text-align: upper-left;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     letter-spacing: 1.5px;
 }
 
 #IntroSubtitle {
     color: rgb(255, 107, 26);
-    font-size: 7px;
+    font-size: 10px;
     letter-spacing: 1.5px;
     -unity-text-align: upper-left;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 #IntroDesc {
-    color: rgb(120, 92, 62);
-    font-size: 9px;
+    color: rgb(150, 115, 78);
+    font-size: 13px;
     white-space: normal;
     -unity-text-align: upper-left;
 }
 
 #CategoryLabel {
-    font-size: 14px;
+    font-size: 22px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     margin-bottom: 2px;
@@ -290,32 +244,26 @@
 }
 
 #CategoryCount {
-    font-size: 7px;
-    color: rgb(100, 75, 48);
+    font-size: 11px;
+    color: rgb(120, 90, 58);
     letter-spacing: 1.5px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
-#PartList {
-    flex: 1;
-}
+#PartList { flex: 1; }
 
-/* ===================== PART CARDS ===================== */
 .part-card {
     background-color: rgb(22, 16, 10);
     border-width: 1px;
     border-color: rgb(40, 30, 18);
-    border-radius: 6px;
-    padding: 10px 12px;
-    margin-bottom: 6px;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
     overflow: hidden;
     flex-shrink: 0;
 }
 
-.part-card:hover {
-    border-color: rgb(85, 60, 30);
-    background-color: rgb(26, 19, 11);
-}
+.part-card:hover { border-color: rgb(85, 60, 30); background-color: rgb(26, 19, 11); }
 
 .part-card--selected {
     border-color: rgb(255, 107, 26);
@@ -327,48 +275,40 @@
 .card-top-row {
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     overflow: hidden;
 }
 
 .part-icon {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    min-height: 28px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
     background-color: rgba(240, 220, 185, 0.08);
     border-radius: 6px;
     border-width: 1px;
     border-color: rgba(240, 220, 185, 0.15);
-    margin-right: 10px;
+    margin-right: 12px;
     flex-shrink: 0;
     -unity-background-image-tint-color: rgb(255, 255, 255);
-    padding: 4px;
+    padding: 5px;
 }
 
-.name-col {
-    flex: 1;
-    min-width: 0;
-    flex-shrink: 1;
-}
+.name-col { flex: 1; min-width: 0; flex-shrink: 1; }
 
 .part-name {
-    font-size: 11px;
+    font-size: 14px;
     color: rgb(240, 225, 205);
     -unity-font-style: bold;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     white-space: normal;
 }
 
-.part-desc {
-    font-size: 9px;
-    color: rgb(130, 100, 68);
-    white-space: normal;
-}
+.part-desc { font-size: 12px; color: rgb(150, 115, 78); white-space: normal; }
 
 .equipped-badge {
     color: rgb(255, 107, 26);
-    font-size: 7px;
+    font-size: 9px;
     -unity-font-style: bold;
     letter-spacing: 1px;
     align-self: flex-start;
@@ -379,188 +319,278 @@
 .card-divider {
     height: 1px;
     background-color: rgb(36, 26, 14);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.stats-row {
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-}
+.stats-row { flex-direction: row; flex-wrap: wrap; margin-bottom: 10px; }
 
 .stat-chip {
     background-color: rgb(26, 18, 10);
     border-width: 1px;
     border-color: rgb(45, 32, 16);
     border-radius: 3px;
-    padding: 3px 7px;
-    margin-right: 4px;
-    margin-bottom: 4px;
+    padding: 5px 9px;
+    margin-right: 5px;
+    margin-bottom: 5px;
     flex-shrink: 0;
 }
 
-.stat-chip-row {
-    flex-direction: row;
-    align-items: center;
-}
+.stat-chip-row { flex-direction: row; align-items: center; }
 
 .stat-chip-icon {
-    font-size: 9px;
+    font-size: 11px;
     color: rgb(255, 107, 26);
-    margin-right: 3px;
+    margin-right: 4px;
     -unity-text-align: middle-center;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
 }
 
-.stat-chip-label {
-    font-size: 8px;
-    color: rgb(170, 130, 75);
-    letter-spacing: 0.5px;
-}
-
-.stat-chip--negative .stat-chip-icon {
-    color: rgb(180, 90, 60);
-}
-
-.stat-chip--negative .stat-chip-label {
-    color: rgb(180, 90, 60);
-}
+.stat-chip-label { font-size: 11px; color: rgb(180, 140, 85); letter-spacing: 0.5px; }
+.stat-chip--negative .stat-chip-icon { color: rgb(180, 90, 60); }
+.stat-chip--negative .stat-chip-label { color: rgb(180, 90, 60); }
 
 .select-btn {
     background-color: rgba(0,0,0,0);
     border-width: 1px;
     border-color: rgb(60, 42, 20);
     border-radius: 3px;
-    color: rgb(140, 105, 65);
-    font-size: 8px;
+    color: rgb(160, 120, 75);
+    font-size: 11px;
     letter-spacing: 1px;
-    padding: 5px 10px;
+    padding: 7px 14px;
     -unity-font-style: bold;
     align-self: flex-start;
 }
 
-.select-btn:hover {
-    background-color: rgb(255, 107, 26);
-    border-color: rgb(255, 107, 26);
-    color: rgb(255, 255, 255);
-}
+.select-btn:hover { background-color: rgb(255, 107, 26); border-color: rgb(255, 107, 26); color: rgb(255, 255, 255); }
+.select-btn--selected { background-color: rgb(40, 24, 8); border-color: rgb(255, 107, 26); color: rgb(255, 107, 26); }
 
-.select-btn--selected {
-    background-color: rgb(40, 24, 8);
-    border-color: rgb(255, 107, 26);
-    color: rgb(255, 107, 26);
-}
-
-/* ===================== RIGHT PANEL ===================== */
 #StatsPanel {
-    width: 180px;
+    width: 220px;
     background-color: rgb(11, 8, 5);
-    padding: 14px 14px;
+    padding: 18px 16px;
     border-left-width: 1px;
     border-left-color: rgb(40, 28, 16);
     flex-shrink: 0;
 }
 
-#BuildTitle {
-    color: rgb(255, 107, 26);
-    font-size: 7px;
-    -unity-font-style: bold;
-    letter-spacing: 2px;
-    margin-bottom: 2px;
-}
+#BuildTitle { color: rgb(255, 107, 26); font-size: 11px; -unity-font-style: bold; letter-spacing: 2px; margin-bottom: 3px; }
+#BuildSubtitle { color: rgb(100, 75, 48); font-size: 10px; letter-spacing: 1px; margin-bottom: 16px; }
 
-#BuildSubtitle {
-    color: rgb(70, 52, 32);
-    font-size: 6px;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.stat-label {
-    color: rgb(85, 65, 40);
-    font-size: 7px;
-    letter-spacing: 1.5px;
-    margin-bottom: 1px;
-}
+.stat-label { color: rgb(110, 82, 52); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 2px; }
 
 .stat-value {
     color: rgb(255, 255, 255);
-    font-size: 20px;
+    font-size: 28px;
     -unity-font-style: bold;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     letter-spacing: -1px;
 }
 
-.stat-value--small {
-    font-size: 14px;
-    margin-bottom: 7px;
-    color: rgb(210, 185, 155);
-}
+.stat-value--small { font-size: 20px; margin-bottom: 10px; color: rgb(220, 195, 165); }
 
-#Divider {
-    height: 1px;
-    background-color: rgb(40, 28, 16);
-    margin-bottom: 8px;
-    margin-top: 1px;
-}
-
-#Divider2 {
-    height: 1px;
-    background-color: rgb(40, 28, 16);
-    margin-bottom: 8px;
-    margin-top: 1px;
-}
-
-#BuildStatus {
-    color: rgb(130, 98, 60);
-    font-size: 8px;
-    white-space: normal;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-}
+#Divider { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 12px; margin-top: 2px; }
+#Divider2 { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 12px; margin-top: 2px; }
 
 .circuit-rating-value {
-    font-size: 9px;
+    font-size: 13px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     white-space: normal;
 }
+
+#BuildStatus { color: rgb(160, 120, 75); font-size: 11px; white-space: normal; margin-bottom: 12px; letter-spacing: 0.5px; }
 
 #BtnEvaluate {
     background-color: rgb(255, 107, 26);
     border-width: 0;
-    border-radius: 3px;
+    border-radius: 4px;
     color: rgb(255, 255, 255);
-    font-size: 8px;
+    font-size: 12px;
     -unity-font-style: bold;
     letter-spacing: 1.5px;
-    height: 30px;
-    margin-bottom: 5px;
-    margin-top: 6px;
+    height: 40px;
+    margin-bottom: 0px;
+    margin-top: 8px;
     flex-shrink: 0;
 }
 
-#BtnEvaluate:hover {
-    background-color: rgb(255, 130, 55);
+#BtnEvaluate:hover { background-color: rgb(255, 130, 55); }
+
+#ResultsModal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
 }
 
-#BtnReset {
+#ModalOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.82);
+}
+
+#ModalCard {
+    background-color: rgb(16, 12, 8);
+    border-width: 1px;
+    border-color: rgb(60, 42, 20);
+    border-top-width: 2px;
+    border-top-color: rgb(255, 107, 26);
+    border-radius: 8px;
+    padding: 18px;
+    width: 540px;
+}
+
+#ModalHeader {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(40, 28, 16);
+}
+
+#ModalHeaderLeft { flex-direction: column; }
+
+#ModalSub { font-size: 10px; color: rgb(90, 68, 38); letter-spacing: 2px; margin-bottom: 2px; }
+#ModalTitle { font-size: 18px; color: rgb(255, 255, 255); -unity-font-style: bold; letter-spacing: 2px; }
+#ModalHeaderRight { flex-direction: row; align-items: center; }
+
+#ModalCircuitName {
+    font-size: 14px;
+    color: rgb(255, 107, 26);
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    margin-right: 10px;
+}
+
+#ModalFlag {
+    width: 34px;
+    height: 22px;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-radius: 2px;
+}
+
+#ModalTopRow { flex-direction: row; margin-bottom: 14px; }
+
+#ModalScoreCard {
+    width: 100px;
+    background-color: rgb(255, 107, 26);
+    border-radius: 6px;
+    padding: 12px 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.modal-score-label { font-size: 8px; color: rgba(255,255,255,0.75); letter-spacing: 1.5px; margin-bottom: 2px; }
+.modal-score-num { font-size: 42px; color: rgb(255,255,255); -unity-font-style: bold; letter-spacing: -1px; }
+.modal-score-denom { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+#ModalRightTop { flex: 1; flex-direction: column; }
+
+#ModalRatingBox {
+    background-color: rgb(22, 14, 8);
+    border-width: 1px;
+    border-color: rgba(255, 107, 26, 0.3);
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 6px;
+}
+
+.modal-rating-label { font-size: 8px; color: rgb(90, 68, 38); letter-spacing: 1.5px; margin-bottom: 2px; }
+.modal-rating-val { font-size: 14px; color: rgb(255, 107, 26); -unity-font-style: bold; letter-spacing: 1px; }
+
+#ModalMiniRow { flex-direction: row; }
+
+.modal-mini-stat {
+    flex: 1;
+    background-color: rgb(20, 13, 7);
+    border-width: 1px;
+    border-color: rgb(40, 28, 16);
+    border-radius: 3px;
+    padding: 6px 7px;
+    margin-right: 5px;
+}
+
+.modal-ms-label { font-size: 8px; color: rgb(90, 68, 38); letter-spacing: 1px; margin-bottom: 2px; }
+.modal-ms-val { font-size: 15px; color: rgb(255, 255, 255); -unity-font-style: bold; }
+
+#ModalBars { margin-bottom: 14px; }
+
+.modal-bar-row { flex-direction: row; align-items: center; margin-bottom: 6px; }
+.modal-bar-label { font-size: 10px; color: rgb(110, 82, 48); width: 70px; flex-shrink: 0; }
+.modal-bar-track { flex: 1; height: 4px; background-color: rgb(40, 26, 10); border-radius: 2px; }
+.modal-bar-fill { height: 4px; background-color: rgb(255, 107, 26); border-radius: 2px; width: 0%; }
+.modal-bar-fill--good { background-color: rgb(74, 222, 128); }
+.modal-bar-fill--warn { background-color: rgb(255, 140, 60); }
+.modal-bar-val { font-size: 11px; color: rgb(180, 135, 75); -unity-font-style: bold; width: 24px; -unity-text-align: upper-right; }
+
+#ModalDebrief {
+    background-color: rgb(20, 13, 7);
+    border-width: 1px;
+    border-color: rgb(40, 28, 16);
+    border-left-width: 2px;
+    border-left-color: rgb(255, 107, 26);
+    border-radius: 3px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+.modal-debrief-title { font-size: 8px; color: rgb(255, 107, 26); letter-spacing: 2px; margin-bottom: 8px; }
+.modal-debrief-item { flex-direction: row; align-items: flex-start; margin-bottom: 5px; }
+
+.modal-debrief-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 2px;
+    background-color: rgb(255, 107, 26);
+    flex-shrink: 0;
+    margin-top: 4px;
+    margin-right: 8px;
+}
+
+.modal-debrief-text { font-size: 11px; color: rgb(160, 115, 75); white-space: normal; flex: 1; }
+
+#ModalButtonRow { flex-direction: row; }
+
+#BtnModalClose {
+    flex: 1;
     background-color: rgba(0,0,0,0);
     border-width: 1px;
-    border-color: rgb(45, 32, 16);
+    border-color: rgb(58, 36, 16);
     border-radius: 3px;
-    color: rgb(90, 68, 42);
-    font-size: 7px;
+    color: rgb(150, 110, 65);
+    font-size: 11px;
     letter-spacing: 1.5px;
-    height: 24px;
-    flex-shrink: 0;
+    height: 38px;
+    margin-right: 8px;
 }
 
-#BtnReset:hover {
-    border-color: rgb(100, 75, 42);
-    color: rgb(150, 112, 68);
+#BtnModalClose:hover { border-color: rgb(120, 85, 45); color: rgb(190, 145, 85); }
+
+#BtnModalNewCircuit {
+    flex: 2;
+    background-color: rgb(255, 107, 26);
+    border-width: 0;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    font-size: 11px;
+    -unity-font-style: bold;
+    letter-spacing: 1.5px;
+    height: 38px;
 }
+
+#BtnModalNewCircuit:hover { background-color: rgb(255, 130, 55); }

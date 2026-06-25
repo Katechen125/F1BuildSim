@@ -20,13 +20,15 @@
             </ui:VisualElement>
 
             <ui:VisualElement name="PreviewPanel">
+                <ui:ScrollView name="PreviewScroll"
+                    vertical-scroller-visibility="Hidden"
+                    horizontal-scroller-visibility="Hidden">
 
                     <ui:VisualElement name="TrackImageContainer">
                         <ui:VisualElement name="TrackImage"/>
                     </ui:VisualElement>
 
                     <ui:VisualElement name="CircuitInfo">
-
                         <ui:VisualElement name="CircuitNameRow">
                             <ui:VisualElement name="CircuitFlagImg"/>
                             <ui:VisualElement name="CircuitNameCol">
@@ -34,9 +36,7 @@
                                 <ui:Label name="CircuitSub" text=""/>
                             </ui:VisualElement>
                         </ui:VisualElement>
-
                         <ui:VisualElement name="TagsContainer"/>
-
                         <ui:VisualElement name="StatsRow">
                             <ui:VisualElement class="stat-block">
                                 <ui:Label text="LAP LENGTH" class="stat-lbl"/>
@@ -51,13 +51,13 @@
                                 <ui:Label name="TopSpeed" text="--" class="stat-val"/>
                             </ui:VisualElement>
                         </ui:VisualElement>
-
                         <ui:VisualElement name="ButtonRow">
                             <ui:Button name="BtnConfirm" text="BUILD FOR THIS CIRCUIT →"/>
                         </ui:VisualElement>
-
                     </ui:VisualElement>
 
+                </ui:ScrollView>
+                <ui:Label name="ScrollHint" text="↓  SCROLL FOR MORE"/>
             </ui:VisualElement>
 
         </ui:VisualElement>

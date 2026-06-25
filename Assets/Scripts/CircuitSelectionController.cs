@@ -48,6 +48,7 @@ public class CircuitSelectionController : MonoBehaviour
         confirmBtn = root.Q<Button>("BtnConfirm");
         circuitFlagLarge = root.Q<VisualElement>("CircuitFlagImg");
 
+        
         ApplyFonts();
 
         if (confirmBtn != null)
@@ -147,10 +148,8 @@ public class CircuitSelectionController : MonoBehaviour
         ChosenCircuit = selectedCircuit;
         Debug.Log($"Circuit selected: {selectedCircuit.circuitName}");
 
-        // Hide circuit selector
         gameObject.SetActive(false);
 
-        // Show builder
         if (builderObject != null)
         {
             builderObject.SetActive(true);
