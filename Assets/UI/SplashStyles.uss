@@ -29,10 +29,10 @@
     position: absolute;
     left: 0;
     top: 0;
-    bottom: 36px;
-    width: 54%;
+    bottom: 32px;
+    width: 52%;
     background-color: rgba(6, 4, 1, 0.97);
-    padding: 36px 36px;
+    padding: 28px 30px;
     justify-content: center;
     align-items: flex-start;
     border-right-width: 1px;
@@ -40,92 +40,92 @@
 }
 
 #LogoEyebrow {
-    font-size: 13px;
+    font-size: 11px;
     color: rgb(255, 107, 26);
     letter-spacing: 3px;
     -unity-font-style: bold;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 #LogoTitle {
-    font-size: 46px;
+    font-size: 38px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     margin-bottom: 0px;
 }
 
 #LogoTitleAccent {
-    font-size: 46px;
+    font-size: 38px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
 }
 
 #LogoSubtitle {
-    font-size: 12px;
+    font-size: 10px;
     color: rgb(100, 75, 45);
     letter-spacing: 3px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 #LogoDivider {
     height: 2px;
-    width: 48px;
+    width: 40px;
     background-color: rgb(255, 107, 26);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 #LogoDesc {
-    font-size: 14px;
-    color: rgb(180, 140, 95);
+    font-size: 12px;
+    color: rgb(170, 130, 88);
     white-space: normal;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 #StatsRow {
     flex-direction: row;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     background-color: rgb(22, 15, 8);
     border-width: 1px;
     border-color: rgb(55, 38, 18);
-    border-radius: 6px;
-    padding: 12px 18px;
+    border-radius: 5px;
+    padding: 10px 14px;
     flex-shrink: 0;
 }
 
 .stat-block {
     align-items: center;
-    padding: 0 14px;
+    padding: 0 12px;
 }
 
 .stat-num {
-    font-size: 30px;
+    font-size: 26px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     -unity-text-align: upper-center;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .stat-lbl {
-    font-size: 11px;
-    color: rgb(120, 90, 55);
+    font-size: 9px;
+    color: rgb(110, 82, 50);
     letter-spacing: 1.5px;
     -unity-text-align: upper-center;
 }
 
 .stat-sep {
     width: 1px;
-    height: 30px;
+    height: 28px;
     background-color: rgb(55, 38, 18);
 }
 
 #StepsRow {
     flex-direction: row;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .step-item {
@@ -134,29 +134,29 @@
 }
 
 .step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
     background-color: rgba(255, 107, 26, 0.15);
     border-width: 1px;
     border-color: rgba(255, 107, 26, 0.4);
     color: rgb(255, 107, 26);
-    font-size: 10px;
+    font-size: 9px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    margin-right: 6px;
+    margin-right: 5px;
     flex-shrink: 0;
 }
 
 .step-lbl {
-    font-size: 12px;
-    color: rgb(150, 115, 70);
+    font-size: 11px;
+    color: rgb(140, 108, 65);
 }
 
 .step-arrow {
-    font-size: 13px;
-    color: rgb(80, 58, 28);
-    margin: 0 8px;
+    font-size: 11px;
+    color: rgb(70, 52, 24);
+    margin: 0 6px;
 }
 
 #BtnStart {
@@ -164,11 +164,11 @@
     border-width: 0;
     border-radius: 4px;
     color: rgb(255, 255, 255);
-    font-size: 14px;
+    font-size: 12px;
     -unity-font-style: bold;
     letter-spacing: 2px;
-    height: 50px;
-    padding: 0 40px;
+    height: 44px;
+    padding: 0 34px;
     align-self: flex-start;
     flex-shrink: 0;
 }
@@ -182,7 +182,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 36px;
+    height: 32px;
     background-color: rgb(12, 8, 4);
     border-top-width: 1px;
     border-top-color: rgb(45, 30, 14);
@@ -191,8 +191,8 @@
 }
 
 #BottomText {
-    font-size: 11px;
-    color: rgb(120, 90, 55);
+    font-size: 10px;
+    color: rgb(110, 82, 50);
     letter-spacing: 2px;
     -unity-text-align: upper-center;
 }

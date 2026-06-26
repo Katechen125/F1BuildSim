@@ -6,9 +6,9 @@
 }
 
 #CategoryPanel {
-    width: 185px;
+    width: 170px;
     background-color: rgb(18, 13, 8);
-    padding: 18px 0px 0px 0px;
+    padding: 14px 0px 0px 0px;
     border-right-width: 1px;
     border-right-color: rgb(40, 28, 16);
     justify-content: flex-start;
@@ -18,53 +18,53 @@
 
 #AppTitle {
     color: rgb(255, 107, 26);
-    font-size: 12px;
+    font-size: 10px;
     -unity-font-style: bold;
     letter-spacing: 2px;
     margin-bottom: 1px;
     -unity-text-align: upper-center;
-    padding: 0 14px;
+    padding: 0 12px;
 }
 
 #AppSubtitle {
-    color: rgb(100, 75, 48);
-    font-size: 10px;
+    color: rgb(90, 68, 42);
+    font-size: 8px;
     letter-spacing: 1.5px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     -unity-text-align: upper-center;
-    padding: 0 14px;
+    padding: 0 12px;
 }
 
 #SidebarDivider {
     height: 1px;
     background-color: rgb(40, 28, 16);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 #SidebarDivider2 {
     height: 1px;
     background-color: rgb(40, 28, 16);
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 #ProgressSection {
-    padding: 0 14px 12px 14px;
+    padding: 0 12px 10px 12px;
 }
 
 #ProgressHeader {
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 #ProgressLabel {
-    font-size: 10px;
-    color: rgb(100, 75, 48);
+    font-size: 8px;
+    color: rgb(90, 68, 42);
     letter-spacing: 1px;
 }
 
 #ProgressCount {
-    font-size: 11px;
+    font-size: 9px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
@@ -83,9 +83,7 @@
     width: 0%;
 }
 
-#CategoryScroll {
-    flex: 1;
-}
+#CategoryScroll { flex: 1; }
 
 .cat-btn {
     background-color: rgba(0,0,0,0);
@@ -100,20 +98,18 @@
 .cat-btn:hover { background-color: rgb(25, 17, 9); }
 .cat-btn:hover .btn-lbl { color: rgb(200, 150, 80); }
 .cat-btn:hover .btn-tag { border-color: rgb(100, 65, 25); color: rgb(160, 100, 40); }
-
 .cat-btn--active { background-color: rgb(30, 20, 10); border-left-color: rgb(255, 107, 26); }
 .cat-btn--active .btn-tag { background-color: rgb(255, 107, 26); border-color: rgb(255, 107, 26); color: rgb(255, 255, 255); }
 .cat-btn--active .btn-lbl { color: rgb(255, 200, 130); }
-
 .cat-btn--done .btn-tag { border-color: rgb(120, 78, 25); color: rgb(190, 120, 45); }
-.cat-btn--done .btn-lbl { color: rgb(160, 120, 75); }
+.cat-btn--done .btn-lbl { color: rgb(150, 115, 70); }
 .cat-btn--done .btn-status { color: rgb(255, 107, 26); -unity-font-style: bold; }
 
 .btn-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 11px 12px 11px 12px;
+    padding: 9px 10px;
     width: 100%;
 }
 
@@ -124,26 +120,22 @@
     border-width: 1px;
     border-color: rgb(55, 38, 18);
     border-radius: 2px;
-    padding: 2px 5px;
-    font-size: 9px;
+    padding: 1px 4px;
+    font-size: 8px;
     color: rgb(100, 70, 32);
     letter-spacing: 1px;
     -unity-font-style: bold;
-    margin-right: 8px;
+    margin-right: 7px;
 }
 
-.btn-lbl { font-size: 13px; color: rgb(150, 115, 72); letter-spacing: 0.3px; }
-.btn-status {
-    font-size: 10px;
-    color: rgb(80, 58, 32);
-    letter-spacing: 1px;
-    margin-left: 4px;
-}
+.btn-lbl { font-size: 11px; color: rgb(140, 108, 68); letter-spacing: 0.3px; }
+.btn-status { font-size: 9px; color: rgb(70, 52, 28); letter-spacing: 1px; }
+
 #MiddlePanel {
     flex: 1;
-    padding: 18px 18px 14px 18px;
+    padding: 14px 16px 12px 16px;
     background-color: rgb(13, 10, 7);
-    min-width: 340px;
+    min-width: 300px;
 }
 
 #CircuitBanner {
@@ -155,15 +147,15 @@
     border-left-width: 2px;
     border-left-color: rgb(255, 107, 26);
     border-radius: 5px;
-    padding: 8px 14px;
-    margin-bottom: 14px;
+    padding: 7px 12px;
+    margin-bottom: 12px;
     flex-shrink: 0;
 }
 
 #CircuitBannerFlag {
-    width: 28px;
-    height: 20px;
-    margin-right: 10px;
+    width: 24px;
+    height: 17px;
+    margin-right: 8px;
     flex-shrink: 0;
     -unity-background-scale-mode: stretch-to-fill;
     border-radius: 2px;
@@ -172,14 +164,14 @@
 #CircuitBannerText { flex: 1; }
 
 #CircuitBannerLabel {
-    font-size: 9px;
-    color: rgb(90, 68, 38);
+    font-size: 8px;
+    color: rgb(80, 60, 34);
     letter-spacing: 1.5px;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 
 #CircuitBannerName {
-    font-size: 14px;
+    font-size: 12px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
@@ -188,7 +180,7 @@
 #CircuitBannerTags {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 .banner-tag {
@@ -196,11 +188,11 @@
     border-width: 1px;
     border-color: rgba(255, 107, 26, 0.25);
     border-radius: 2px;
-    padding: 2px 6px;
-    font-size: 9px;
-    color: rgb(200, 120, 50);
+    padding: 1px 5px;
+    font-size: 8px;
+    color: rgb(190, 115, 48);
     letter-spacing: 1px;
-    margin-right: 4px;
+    margin-right: 3px;
     margin-top: 2px;
 }
 
@@ -208,35 +200,35 @@
     flex: 1;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 10px 0px;
+    padding: 8px 0px;
 }
 
 #IntroTitle {
     color: rgb(255, 255, 255);
-    font-size: 18px;
+    font-size: 15px;
     -unity-font-style: bold;
     -unity-text-align: upper-left;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     letter-spacing: 1.5px;
 }
 
 #IntroSubtitle {
     color: rgb(255, 107, 26);
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 1.5px;
     -unity-text-align: upper-left;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 #IntroDesc {
-    color: rgb(150, 115, 78);
-    font-size: 13px;
+    color: rgb(140, 108, 72);
+    font-size: 11px;
     white-space: normal;
     -unity-text-align: upper-left;
 }
 
 #CategoryLabel {
-    font-size: 22px;
+    font-size: 18px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     margin-bottom: 2px;
@@ -244,10 +236,10 @@
 }
 
 #CategoryCount {
-    font-size: 11px;
-    color: rgb(120, 90, 58);
+    font-size: 9px;
+    color: rgb(110, 82, 52);
     letter-spacing: 1.5px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 #PartList { flex: 1; }
@@ -256,9 +248,9 @@
     background-color: rgb(22, 16, 10);
     border-width: 1px;
     border-color: rgb(40, 30, 18);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
+    border-radius: 7px;
+    padding: 11px 13px;
+    margin-bottom: 7px;
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -275,79 +267,79 @@
 .card-top-row {
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     overflow: hidden;
 }
 
 .part-icon {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    min-height: 34px;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     background-color: rgba(240, 220, 185, 0.08);
-    border-radius: 6px;
+    border-radius: 5px;
     border-width: 1px;
     border-color: rgba(240, 220, 185, 0.15);
-    margin-right: 12px;
+    margin-right: 10px;
     flex-shrink: 0;
     -unity-background-image-tint-color: rgb(255, 255, 255);
-    padding: 5px;
+    padding: 4px;
 }
 
 .name-col { flex: 1; min-width: 0; flex-shrink: 1; }
 
 .part-name {
-    font-size: 14px;
+    font-size: 13px;
     color: rgb(240, 225, 205);
     -unity-font-style: bold;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     white-space: normal;
 }
 
-.part-desc { font-size: 12px; color: rgb(150, 115, 78); white-space: normal; }
+.part-desc { font-size: 11px; color: rgb(140, 108, 72); white-space: normal; }
 
 .equipped-badge {
     color: rgb(255, 107, 26);
-    font-size: 9px;
+    font-size: 8px;
     -unity-font-style: bold;
     letter-spacing: 1px;
     align-self: flex-start;
-    margin-left: 6px;
+    margin-left: 5px;
     padding-top: 1px;
 }
 
 .card-divider {
     height: 1px;
     background-color: rgb(36, 26, 14);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-.stats-row { flex-direction: row; flex-wrap: wrap; margin-bottom: 10px; }
+.stats-row { flex-direction: row; flex-wrap: wrap; margin-bottom: 8px; }
 
 .stat-chip {
     background-color: rgb(26, 18, 10);
     border-width: 1px;
     border-color: rgb(45, 32, 16);
     border-radius: 3px;
-    padding: 5px 9px;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    margin-bottom: 4px;
     flex-shrink: 0;
 }
 
 .stat-chip-row { flex-direction: row; align-items: center; }
 
 .stat-chip-icon {
-    font-size: 11px;
+    font-size: 10px;
     color: rgb(255, 107, 26);
-    margin-right: 4px;
+    margin-right: 3px;
     -unity-text-align: middle-center;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     flex-shrink: 0;
 }
 
-.stat-chip-label { font-size: 11px; color: rgb(180, 140, 85); letter-spacing: 0.5px; }
+.stat-chip-label { font-size: 10px; color: rgb(170, 130, 80); letter-spacing: 0.5px; }
 .stat-chip--negative .stat-chip-icon { color: rgb(180, 90, 60); }
 .stat-chip--negative .stat-chip-label { color: rgb(180, 90, 60); }
 
@@ -356,10 +348,10 @@
     border-width: 1px;
     border-color: rgb(60, 42, 20);
     border-radius: 3px;
-    color: rgb(160, 120, 75);
-    font-size: 11px;
+    color: rgb(150, 112, 70);
+    font-size: 10px;
     letter-spacing: 1px;
-    padding: 7px 14px;
+    padding: 5px 12px;
     -unity-font-style: bold;
     align-self: flex-start;
 }
@@ -368,54 +360,54 @@
 .select-btn--selected { background-color: rgb(40, 24, 8); border-color: rgb(255, 107, 26); color: rgb(255, 107, 26); }
 
 #StatsPanel {
-    width: 220px;
+    width: 200px;
     background-color: rgb(11, 8, 5);
-    padding: 18px 16px;
+    padding: 16px 14px;
     border-left-width: 1px;
     border-left-color: rgb(40, 28, 16);
     flex-shrink: 0;
 }
 
-#BuildTitle { color: rgb(255, 107, 26); font-size: 11px; -unity-font-style: bold; letter-spacing: 2px; margin-bottom: 3px; }
-#BuildSubtitle { color: rgb(100, 75, 48); font-size: 10px; letter-spacing: 1px; margin-bottom: 16px; }
+#BuildTitle { color: rgb(255, 107, 26); font-size: 10px; -unity-font-style: bold; letter-spacing: 2px; margin-bottom: 2px; }
+#BuildSubtitle { color: rgb(90, 68, 42); font-size: 9px; letter-spacing: 1px; margin-bottom: 14px; }
 
-.stat-label { color: rgb(110, 82, 52); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 2px; }
+.stat-label { color: rgb(100, 75, 48); font-size: 9px; letter-spacing: 1.5px; margin-bottom: 1px; }
 
 .stat-value {
     color: rgb(255, 255, 255);
-    font-size: 28px;
+    font-size: 24px;
     -unity-font-style: bold;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     letter-spacing: -1px;
 }
 
-.stat-value--small { font-size: 20px; margin-bottom: 10px; color: rgb(220, 195, 165); }
+.stat-value--small { font-size: 17px; margin-bottom: 8px; color: rgb(210, 185, 155); }
 
-#Divider { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 12px; margin-top: 2px; }
-#Divider2 { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 12px; margin-top: 2px; }
+#Divider { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 10px; margin-top: 2px; }
+#Divider2 { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 10px; margin-top: 2px; }
 
 .circuit-rating-value {
-    font-size: 13px;
+    font-size: 11px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     white-space: normal;
 }
 
-#BuildStatus { color: rgb(160, 120, 75); font-size: 11px; white-space: normal; margin-bottom: 12px; letter-spacing: 0.5px; }
+#BuildStatus { color: rgb(150, 112, 70); font-size: 10px; white-space: normal; margin-bottom: 10px; letter-spacing: 0.5px; }
 
 #BtnEvaluate {
     background-color: rgb(255, 107, 26);
     border-width: 0;
-    border-radius: 4px;
+    border-radius: 3px;
     color: rgb(255, 255, 255);
-    font-size: 12px;
+    font-size: 10px;
     -unity-font-style: bold;
     letter-spacing: 1.5px;
-    height: 40px;
+    height: 34px;
     margin-bottom: 0px;
-    margin-top: 8px;
+    margin-top: 6px;
     flex-shrink: 0;
 }
 
@@ -446,58 +438,57 @@
     border-color: rgb(60, 42, 20);
     border-top-width: 2px;
     border-top-color: rgb(255, 107, 26);
-    border-radius: 8px;
-    padding: 18px;
-    width: 540px;
+    border-radius: 7px;
+    padding: 16px;
+    width: 480px;
 }
 
 #ModalHeader {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
-    padding-bottom: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom-width: 1px;
     border-bottom-color: rgb(40, 28, 16);
 }
 
 #ModalHeaderLeft { flex-direction: column; }
-
-#ModalSub { font-size: 10px; color: rgb(90, 68, 38); letter-spacing: 2px; margin-bottom: 2px; }
-#ModalTitle { font-size: 18px; color: rgb(255, 255, 255); -unity-font-style: bold; letter-spacing: 2px; }
+#ModalSub { font-size: 8px; color: rgb(80, 60, 34); letter-spacing: 2px; margin-bottom: 2px; }
+#ModalTitle { font-size: 16px; color: rgb(255, 255, 255); -unity-font-style: bold; letter-spacing: 2px; }
 #ModalHeaderRight { flex-direction: row; align-items: center; }
 
 #ModalCircuitName {
-    font-size: 14px;
+    font-size: 12px;
     color: rgb(255, 107, 26);
     -unity-font-style: bold;
     letter-spacing: 1px;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 #ModalFlag {
-    width: 34px;
-    height: 22px;
+    width: 30px;
+    height: 20px;
     -unity-background-scale-mode: stretch-to-fill;
     border-radius: 2px;
 }
 
-#ModalTopRow { flex-direction: row; margin-bottom: 14px; }
+#ModalTopRow { flex-direction: row; margin-bottom: 12px; }
 
 #ModalScoreCard {
-    width: 100px;
+    width: 90px;
     background-color: rgb(255, 107, 26);
-    border-radius: 6px;
-    padding: 12px 10px;
+    border-radius: 5px;
+    padding: 10px 8px;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
-.modal-score-label { font-size: 8px; color: rgba(255,255,255,0.75); letter-spacing: 1.5px; margin-bottom: 2px; }
-.modal-score-num { font-size: 42px; color: rgb(255,255,255); -unity-font-style: bold; letter-spacing: -1px; }
-.modal-score-denom { font-size: 13px; color: rgba(255,255,255,0.65); }
+.modal-score-label { font-size: 7px; color: rgba(255,255,255,0.75); letter-spacing: 1.5px; margin-bottom: 1px; }
+.modal-score-num { font-size: 36px; color: rgb(255,255,255); -unity-font-style: bold; letter-spacing: -1px; }
+.modal-score-denom { font-size: 11px; color: rgba(255,255,255,0.65); }
 
 #ModalRightTop { flex: 1; flex-direction: column; }
 
@@ -505,13 +496,13 @@
     background-color: rgb(22, 14, 8);
     border-width: 1px;
     border-color: rgba(255, 107, 26, 0.3);
-    border-radius: 4px;
-    padding: 7px 10px;
-    margin-bottom: 6px;
+    border-radius: 3px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
 }
 
-.modal-rating-label { font-size: 8px; color: rgb(90, 68, 38); letter-spacing: 1.5px; margin-bottom: 2px; }
-.modal-rating-val { font-size: 14px; color: rgb(255, 107, 26); -unity-font-style: bold; letter-spacing: 1px; }
+.modal-rating-label { font-size: 7px; color: rgb(80, 60, 34); letter-spacing: 1.5px; margin-bottom: 1px; }
+.modal-rating-val { font-size: 12px; color: rgb(255, 107, 26); -unity-font-style: bold; letter-spacing: 1px; }
 
 #ModalMiniRow { flex-direction: row; }
 
@@ -521,22 +512,22 @@
     border-width: 1px;
     border-color: rgb(40, 28, 16);
     border-radius: 3px;
-    padding: 6px 7px;
-    margin-right: 5px;
+    padding: 5px 6px;
+    margin-right: 4px;
 }
 
-.modal-ms-label { font-size: 8px; color: rgb(90, 68, 38); letter-spacing: 1px; margin-bottom: 2px; }
-.modal-ms-val { font-size: 15px; color: rgb(255, 255, 255); -unity-font-style: bold; }
+.modal-ms-label { font-size: 7px; color: rgb(80, 60, 34); letter-spacing: 1px; margin-bottom: 1px; }
+.modal-ms-val { font-size: 13px; color: rgb(255, 255, 255); -unity-font-style: bold; }
 
-#ModalBars { margin-bottom: 14px; }
+#ModalBars { margin-bottom: 12px; }
 
-.modal-bar-row { flex-direction: row; align-items: center; margin-bottom: 6px; }
-.modal-bar-label { font-size: 10px; color: rgb(110, 82, 48); width: 70px; flex-shrink: 0; }
-.modal-bar-track { flex: 1; height: 4px; background-color: rgb(40, 26, 10); border-radius: 2px; }
-.modal-bar-fill { height: 4px; background-color: rgb(255, 107, 26); border-radius: 2px; width: 0%; }
+.modal-bar-row { flex-direction: row; align-items: center; margin-bottom: 5px; }
+.modal-bar-label { font-size: 9px; color: rgb(100, 75, 45); width: 62px; flex-shrink: 0; }
+.modal-bar-track { flex: 1; height: 3px; background-color: rgb(40, 26, 10); border-radius: 2px; }
+.modal-bar-fill { height: 3px; background-color: rgb(255, 107, 26); border-radius: 2px; width: 0%; }
 .modal-bar-fill--good { background-color: rgb(74, 222, 128); }
 .modal-bar-fill--warn { background-color: rgb(255, 140, 60); }
-.modal-bar-val { font-size: 11px; color: rgb(180, 135, 75); -unity-font-style: bold; width: 24px; -unity-text-align: upper-right; }
+.modal-bar-val { font-size: 10px; color: rgb(170, 128, 72); -unity-font-style: bold; width: 22px; -unity-text-align: upper-right; }
 
 #ModalDebrief {
     background-color: rgb(20, 13, 7);
@@ -545,24 +536,24 @@
     border-left-width: 2px;
     border-left-color: rgb(255, 107, 26);
     border-radius: 3px;
-    padding: 10px 12px;
-    margin-bottom: 14px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
 }
 
-.modal-debrief-title { font-size: 8px; color: rgb(255, 107, 26); letter-spacing: 2px; margin-bottom: 8px; }
-.modal-debrief-item { flex-direction: row; align-items: flex-start; margin-bottom: 5px; }
+.modal-debrief-title { font-size: 7px; color: rgb(255, 107, 26); letter-spacing: 2px; margin-bottom: 6px; }
+.modal-debrief-item { flex-direction: row; align-items: flex-start; margin-bottom: 4px; }
 
 .modal-debrief-dot {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
     border-radius: 2px;
     background-color: rgb(255, 107, 26);
     flex-shrink: 0;
     margin-top: 4px;
-    margin-right: 8px;
+    margin-right: 7px;
 }
 
-.modal-debrief-text { font-size: 11px; color: rgb(160, 115, 75); white-space: normal; flex: 1; }
+.modal-debrief-text { font-size: 10px; color: rgb(150, 110, 70); white-space: normal; flex: 1; }
 
 #ModalButtonRow { flex-direction: row; }
 
@@ -572,14 +563,14 @@
     border-width: 1px;
     border-color: rgb(58, 36, 16);
     border-radius: 3px;
-    color: rgb(150, 110, 65);
-    font-size: 11px;
+    color: rgb(140, 105, 62);
+    font-size: 10px;
     letter-spacing: 1.5px;
-    height: 38px;
-    margin-right: 8px;
+    height: 34px;
+    margin-right: 6px;
 }
 
-#BtnModalClose:hover { border-color: rgb(120, 85, 45); color: rgb(190, 145, 85); }
+#BtnModalClose:hover { border-color: rgb(110, 80, 42); color: rgb(180, 138, 82); }
 
 #BtnModalNewCircuit {
     flex: 2;
@@ -587,10 +578,10 @@
     border-width: 0;
     border-radius: 3px;
     color: rgb(255, 255, 255);
-    font-size: 11px;
+    font-size: 10px;
     -unity-font-style: bold;
     letter-spacing: 1.5px;
-    height: 38px;
+    height: 34px;
 }
 
 #BtnModalNewCircuit:hover { background-color: rgb(255, 130, 55); }
