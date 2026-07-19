@@ -30,19 +30,23 @@ public class BuilderUIController : MonoBehaviour
     private VisualElement partListContainer;
     private Label selectedCategoryLabel;
     private Label categoryCountLabel;
-    private Label efficiencyLabel;
-    private Label lapTimeLabel;
-    private Label speedLabel;
-    private Label corneringLabel;
-    private Label reliabilityLabel;
-    private Label buildStatusLabel;
-    private Label circuitRatingLabel;
     private VisualElement introBox;
     private VisualElement progressFill;
     private Label progressCount;
     private VisualElement circuitBannerFlag;
     private Label circuitBannerName;
     private VisualElement circuitBannerTags;
+
+    // Live sidebar match bars (right panel, while building)
+    private VisualElement liveMatchDownforceFill;
+    private Label liveMatchDownforceVal;
+    private VisualElement liveMatchDragFill;
+    private Label liveMatchDragVal;
+    private VisualElement liveMatchEngineFill;
+    private Label liveMatchEngineVal;
+    private VisualElement liveMatchTyreFill;
+    private Label liveMatchTyreVal;
+    private Label liveMatchHint;
 
     // Modal references
     private VisualElement resultsModal;
@@ -57,6 +61,16 @@ public class BuilderUIController : MonoBehaviour
 
     private PartCategory currentCategory = PartCategory.FrontWing;
 
+    // Tab switcher
+    private VisualElement tabPageRace;
+    private VisualElement tabPageCompare;
+    private Button tabRace;
+    private Button tabCompare;
+    private VisualElement circuitLeaderboard;
+
+    // All circuits reference
+    public Circuit[] allCircuits;
+
     void OnEnable()
     {
         root = uiDocument.rootVisualElement;
@@ -64,19 +78,23 @@ public class BuilderUIController : MonoBehaviour
         partListContainer = root.Q<VisualElement>("PartList");
         selectedCategoryLabel = root.Q<Label>("CategoryLabel");
         categoryCountLabel = root.Q<Label>("CategoryCount");
-        efficiencyLabel = root.Q<Label>("EfficiencyValue");
-        lapTimeLabel = root.Q<Label>("LapTimeValue");
-        speedLabel = root.Q<Label>("SpeedValue");
-        corneringLabel = root.Q<Label>("CorneringValue");
-        reliabilityLabel = root.Q<Label>("ReliabilityValue");
-        buildStatusLabel = root.Q<Label>("BuildStatus");
-        circuitRatingLabel = root.Q<Label>("CircuitRating");
         introBox = root.Q<VisualElement>("IntroBox");
         progressFill = root.Q<VisualElement>("ProgressFill");
         progressCount = root.Q<Label>("ProgressCount");
         circuitBannerFlag = root.Q<VisualElement>("CircuitBannerFlag");
         circuitBannerName = root.Q<Label>("CircuitBannerName");
         circuitBannerTags = root.Q<VisualElement>("CircuitBannerTags");
+
+        // Live sidebar match bars
+        liveMatchDownforceFill = root.Q<VisualElement>("LiveMatchDownforceFill");
+        liveMatchDownforceVal = root.Q<Label>("LiveMatchDownforceVal");
+        liveMatchDragFill = root.Q<VisualElement>("LiveMatchDragFill");
+        liveMatchDragVal = root.Q<Label>("LiveMatchDragVal");
+        liveMatchEngineFill = root.Q<VisualElement>("LiveMatchEngineFill");
+        liveMatchEngineVal = root.Q<Label>("LiveMatchEngineVal");
+        liveMatchTyreFill = root.Q<VisualElement>("LiveMatchTyreFill");
+        liveMatchTyreVal = root.Q<Label>("LiveMatchTyreVal");
+        liveMatchHint = root.Q<Label>("LiveMatchHint");
 
         // Modal references
         resultsModal = root.Q<VisualElement>("ResultsModal");
@@ -89,6 +107,31 @@ public class BuilderUIController : MonoBehaviour
         modalFlag = root.Q<VisualElement>("ModalFlag");
         modalDebriefItems = root.Q<VisualElement>("ModalDebriefItems");
 
+        // Tabs
+        tabPageRace = root.Q<VisualElement>("TabPageRace");
+        tabPageCompare = root.Q<VisualElement>("TabPageCompare");
+        tabRace = root.Q<Button>("TabRace");
+        tabCompare = root.Q<Button>("TabCompare");
+        circuitLeaderboard = root.Q<VisualElement>("CircuitLeaderboard");
+
+        if (tabRace != null)
+            tabRace.clicked += () => SwitchTab(0);
+        if (tabCompare != null)
+            tabCompare.clicked += () => SwitchTab(1);
+
+        // Race with build button
+        var raceBtn = root.Q<Button>("BtnRaceWithBuild");
+        if (raceBtn != null)
+            raceBtn.clicked += OnRaceWithBuild;
+
+        var xBtn = root.Q<Button>("BtnModalX");
+        if (xBtn != null)
+            xBtn.clicked += () =>
+            {
+                if (resultsModal != null)
+                    resultsModal.style.display = DisplayStyle.None;
+            };
+
         // Category buttons
         BindCategoryBtn("BtnFrontWing", PartCategory.FrontWing);
         BindCategoryBtn("BtnRearWing", PartCategory.RearWing);
@@ -99,7 +142,7 @@ public class BuilderUIController : MonoBehaviour
         BindCategoryBtn("BtnSidepods", PartCategory.Sidepods);
         BindCategoryBtn("BtnFloor", PartCategory.Floor);
 
-        // Evaluate and reset
+        // Evaluate
         var evaluateBtn = root.Q<Button>("BtnEvaluate");
         if (evaluateBtn != null)
             evaluateBtn.clicked += OnEvaluate;
@@ -151,7 +194,6 @@ public class BuilderUIController : MonoBehaviour
             }
         }
 
-        UpdateStats();
         UpdateProgressBar();
         ApplyFonts();
     }
@@ -258,13 +300,14 @@ public class BuilderUIController : MonoBehaviour
             {
                 GameManager.Instance.SelectPart(captured);
                 ShowCategory(currentCategory);
-                UpdateStats();
                 UpdateProgressBar();
             };
 
             card.Add(selectBtn);
             partListContainer.Add(card);
         }
+
+        UpdateSidebarMatchBars();
     }
 
     Sprite GetCategoryIcon(PartCategory cat) => cat switch
@@ -312,26 +355,6 @@ public class BuilderUIController : MonoBehaviour
                part == b.sidepods || part == b.floor;
     }
 
-    void UpdateStats()
-    {
-        if (GameManager.Instance == null) return;
-        bool complete = GameManager.Instance.currentBuild.IsComplete();
-
-        if (buildStatusLabel != null)
-        {
-            int selected = CountSelectedParts();
-            buildStatusLabel.text = complete
-                ? "✓ Build complete — ready to evaluate"
-                : $"{selected}/8 parts selected";
-        }
-
-        if (!complete)
-        {
-            SetStatLabels("--", "--", "--", "--", "--");
-            if (circuitRatingLabel != null) circuitRatingLabel.text = "--";
-        }
-    }
-
     void UpdateProgressBar()
     {
         int count = CountSelectedParts();
@@ -344,6 +367,7 @@ public class BuilderUIController : MonoBehaviour
                 new Length((count / 8f) * 100f, LengthUnit.Percent));
 
         UpdateSidebarStatus();
+        UpdateSidebarMatchBars();
     }
 
     void UpdateSidebarStatus()
@@ -395,14 +419,84 @@ public class BuilderUIController : MonoBehaviour
         return count;
     }
 
-    void SetStatLabels(string eff, string lap, string spd, string cor, string rel)
+    // ---------------------------------------------------------------
+    // Live sidebar match bars (right panel, updates as parts change)
+    // ---------------------------------------------------------------
+
+    void UpdateSidebarMatchBars()
     {
-        if (efficiencyLabel != null) efficiencyLabel.text = eff;
-        if (lapTimeLabel != null) lapTimeLabel.text = lap;
-        if (speedLabel != null) speedLabel.text = spd;
-        if (corneringLabel != null) corneringLabel.text = cor;
-        if (reliabilityLabel != null) reliabilityLabel.text = rel;
+        if (GameManager.Instance == null) return;
+        var build = GameManager.Instance.currentBuild;
+        var circuit = CircuitSelectionController.ChosenCircuit;
+        if (build == null || circuit == null) return;
+
+        // Track whether each stat has ANY contributing part selected yet,
+        // so bars stay empty instead of showing a false match against zero.
+        bool hasDownforce = build.frontWing != null || build.rearWing != null || build.floor != null;
+        bool hasDrag = build.frontWing != null || build.rearWing != null || build.sidepods != null;
+        bool hasEngine = build.engine != null;
+        bool hasReliability = build.tyres != null || build.brakes != null || build.suspension != null;
+
+        var r = PerformanceEngine.Calculate(build, circuit, requireComplete: false);
+
+        SetLiveBar(liveMatchDownforceFill, liveMatchDownforceVal, r.downforceMatch, hasDownforce);
+        SetLiveBar(liveMatchDragFill, liveMatchDragVal, r.dragMatch, hasDrag);
+        SetLiveBar(liveMatchEngineFill, liveMatchEngineVal, r.engineMatch, hasEngine);
+        SetLiveBar(liveMatchTyreFill, liveMatchTyreVal, r.tyreMatch, hasReliability);
+
+        UpdateLiveMatchHint(r);
     }
+
+    void SetLiveBar(VisualElement fill, Label val, float matchScore, bool hasData)
+    {
+        if (fill == null) return;
+
+        if (!hasData)
+        {
+            fill.style.width = new StyleLength(new Length(0f, LengthUnit.Percent));
+            fill.RemoveFromClassList("live-match-fill--good");
+            fill.RemoveFromClassList("live-match-fill--warn");
+            if (val != null) val.text = "--";
+            return;
+        }
+
+        fill.style.width = new StyleLength(new Length(Mathf.Clamp(matchScore, 0f, 100f), LengthUnit.Percent));
+        fill.RemoveFromClassList("live-match-fill--good");
+        fill.RemoveFromClassList("live-match-fill--warn");
+        if (matchScore >= 85f) fill.AddToClassList("live-match-fill--good");
+        else if (matchScore < 60f) fill.AddToClassList("live-match-fill--warn");
+        if (val != null) val.text = $"{matchScore:0}%";
+    }
+
+    void UpdateLiveMatchHint(PerformanceResult r)
+    {
+        if (liveMatchHint == null) return;
+        if (CountSelectedParts() == 0)
+        {
+            liveMatchHint.text = "Select parts to see your fit";
+            return;
+        }
+
+        var losses = new (string name, float loss)[]
+        {
+            ("Downforce", (100f - r.downforceMatch) * 0.35f),
+            ("Drag", (100f - r.dragMatch) * 0.25f),
+            ("Engine", (100f - r.engineMatch) * 0.25f),
+            ("Tyre/Reliability", (100f - r.tyreMatch) * 0.15f),
+        };
+
+        var worst = losses[0];
+        foreach (var l in losses)
+            if (l.loss > worst.loss) worst = l;
+
+        liveMatchHint.text = worst.loss > 1f
+            ? $"Biggest gap: {worst.name} (\u2212{worst.loss:0.0} pts)"
+            : "Your build is well matched to this circuit";
+    }
+
+    // ---------------------------------------------------------------
+    // Evaluate / Results modal
+    // ---------------------------------------------------------------
 
     void OnEvaluate()
     {
@@ -412,27 +506,8 @@ public class BuilderUIController : MonoBehaviour
         var result = GameManager.Instance.EvaluateBuild();
 
         if (!result.isValid)
-        {
-            if (buildStatusLabel != null)
-                buildStatusLabel.text = $"⚠ Incomplete — {CountSelectedParts()}/8 parts selected";
             return;
-        }
 
-        SetStatLabels(
-            $"{result.efficiencyScore}/100",
-            $"{result.lapTimeSeconds}s",
-            $"{result.speedScore}",
-            $"{result.corneringScore}",
-            $"{result.reliability}"
-        );
-
-        if (circuitRatingLabel != null)
-            circuitRatingLabel.text = result.circuitRating;
-
-        if (buildStatusLabel != null)
-            buildStatusLabel.text = "✓ Build evaluated!";
-
-        UpdateProgressBar();
         ShowResultsModal(result);
     }
 
@@ -440,6 +515,9 @@ public class BuilderUIController : MonoBehaviour
     {
         if (resultsModal == null) return;
         resultsModal.style.display = DisplayStyle.Flex;
+
+        // Reset to tab 1
+        SwitchTab(0);
 
         var circuit = CircuitSelectionController.ChosenCircuit;
 
@@ -454,12 +532,20 @@ public class BuilderUIController : MonoBehaviour
         if (modalSpeed != null) modalSpeed.text = $"{result.speedScore}";
         if (modalCornering != null) modalCornering.text = $"{result.corneringScore}";
 
-        SetModalBar("ModalBarDownforce", "ModalBarDownforceVal", result.aeroEfficiency);
-        SetModalBar("ModalBarSpeed", "ModalBarSpeedVal", result.speedScore);
-        SetModalBar("ModalBarCornering", "ModalBarCorneringVal", result.corneringScore);
-        SetModalBar("ModalBarReliability", "ModalBarReliabilityVal", result.reliability);
+        // These four bars now show the SAME match scores as the sidebar
+        // (downforceMatch/dragMatch/engineMatch/tyreMatch), not raw physical
+        // stats, so the modal and sidebar always agree with each other and
+        // with the weighted Efficiency number above them.
+        SetModalBar("ModalBarDownforce", "ModalBarDownforceVal", result.downforceMatch);
+        SetModalBar("ModalBarSpeed", "ModalBarSpeedVal", result.dragMatch);
+        SetModalBar("ModalBarCornering", "ModalBarCorneringVal", result.engineMatch);
+        SetModalBar("ModalBarReliability", "ModalBarReliabilityVal", result.tyreMatch);
 
         PopulateModalDebrief(result, circuit);
+
+        // Populate leaderboard for tab 2
+        if (GameManager.Instance?.currentBuild != null)
+            PopulateLeaderboard(GameManager.Instance.currentBuild);
     }
 
     void SetModalBar(string barName, string valName, float value)
@@ -486,26 +572,33 @@ public class BuilderUIController : MonoBehaviour
 
         var tips = new System.Collections.Generic.List<string>();
 
-        if (result.efficiencyScore >= 85f)
-            tips.Add("Outstanding build. Your setup matches this circuit perfectly.");
-        else if (result.efficiencyScore >= 70f)
-            tips.Add("Solid build with room to improve. Focus on your weakest stat.");
+        if (result.efficiencyScore >= 90f)
+            tips.Add("Outstanding setup. Your build matches this circuit's demands very well.");
+        else if (result.efficiencyScore >= 75f)
+            tips.Add("Solid build. A few component tweaks could push you into optimal territory.");
+        else if (result.efficiencyScore >= 55f)
+            tips.Add("Average setup for this circuit. Try matching your aero to the circuit's demands.");
         else
-            tips.Add("This setup is struggling here. Try a different aero configuration.");
+            tips.Add("This setup is poorly matched. Consider rebuilding specifically for this circuit.");
 
-        if (result.aeroEfficiency < 60f)
-            tips.Add("Too much drag for the downforce generated. Consider a lower drag package.");
-        else if (result.aeroEfficiency > 85f)
-            tips.Add("Excellent aero efficiency. Your lift-to-drag ratio is well optimised.");
+        if (circuit != null && GameManager.Instance?.currentBuild != null)
+        {
+            var suggestions = BuildAdvisor.GetTopSuggestions(GameManager.Instance.currentBuild, circuit, allParts, 2);
 
-        if (result.reliability < 70f)
-            tips.Add("Reliability is a concern. High stress components risk failure over race distance.");
-
-        if (result.speedScore < 60f)
-            tips.Add("Top speed is limited. A higher performance power unit would help.");
-
-        if (circuit != null && circuit.tyreStress > 80f && result.reliability < 75f)
-            tips.Add("This circuit is hard on tyres. A more durable compound is recommended.");
+            if (suggestions.Count > 0)
+            {
+                foreach (var s in suggestions)
+                {
+                    string currentName = s.currentPart != null ? s.currentPart.partName : "no part selected";
+                    tips.Add($"Swap {currentName} for {s.suggestedPart.partName}: {s.currentScore:0} \u2192 {s.projectedScore:0} (+{s.gain:0})");
+                }
+                tips.Add("Applying both changes together should push you further still, category effects don't stack perfectly, but this is your fastest path toward peak score.");
+            }
+            else
+            {
+                tips.Add("Your current parts are already the strongest available combination for this circuit.");
+            }
+        }
 
         foreach (string tip in tips)
         {
@@ -527,12 +620,9 @@ public class BuilderUIController : MonoBehaviour
     void OnReset()
     {
         GameManager.Instance?.ResetBuild();
-        UpdateStats();
         UpdateProgressBar();
         if (currentCategory != PartCategory.FrontWing)
             ShowCategory(currentCategory);
-        if (buildStatusLabel != null)
-            buildStatusLabel.text = "Build reset — start fresh";
     }
 
     void ApplyFonts()
@@ -566,4 +656,180 @@ public class BuilderUIController : MonoBehaviour
         if (label == null || font == null) return;
         label.style.unityFont = new StyleFont(font);
     }
+
+    void SwitchTab(int tab)
+    {
+        if (tab == 0)
+        {
+            if (tabPageRace != null)
+                tabPageRace.style.display = DisplayStyle.Flex;
+            if (tabPageCompare != null)
+                tabPageCompare.style.display = DisplayStyle.None;
+            if (tabRace != null)
+            {
+                tabRace.AddToClassList("modal-tab--active");
+                tabRace.RemoveFromClassList("modal-tab");
+                tabRace.AddToClassList("modal-tab");
+            }
+            if (tabCompare != null)
+                tabCompare.RemoveFromClassList("modal-tab--active");
+        }
+        else
+        {
+            if (tabPageRace != null)
+                tabPageRace.style.display = DisplayStyle.None;
+            if (tabPageCompare != null)
+                tabPageCompare.style.display = DisplayStyle.Flex;
+            if (tabCompare != null)
+                tabCompare.AddToClassList("modal-tab--active");
+            if (tabRace != null)
+                tabRace.RemoveFromClassList("modal-tab--active");
+        }
+    }
+
+    void PopulateLeaderboard(CarBuild build)
+    {
+        if (circuitLeaderboard == null || allCircuits == null) return;
+        circuitLeaderboard.Clear();
+
+        var results = new System.Collections.Generic.List<(Circuit circuit, float score, string rating)>();
+
+        foreach (Circuit c in allCircuits)
+        {
+            PerformanceResult r = PerformanceEngine.Calculate(build, c);
+            if (!r.isValid) continue;
+            results.Add((c, r.circuitFitScore, r.circuitRating));
+        }
+
+        if (results.Count == 0) return;
+
+        results.Sort((a, b) => b.score.CompareTo(a.score));
+
+        Circuit chosenCircuit = CircuitSelectionController.ChosenCircuit;
+
+        for (int i = 0; i < results.Count; i++)
+        {
+            var (circuit, score, rating) = results[i];
+            bool isChosen = circuit == chosenCircuit;
+
+            var row = new VisualElement();
+            row.AddToClassList("leaderboard-row");
+            if (isChosen) row.AddToClassList("leaderboard-row--selected");
+
+            var rank = new Label(i == 0 ? "★" : $"{i + 1}");
+            rank.AddToClassList("lb-rank");
+            if (i == 0) rank.AddToClassList("lb-rank--top");
+
+            var flag = new VisualElement();
+            flag.AddToClassList("lb-flag");
+            if (circuit.flagSprite != null)
+                flag.style.backgroundImage = new StyleBackground(circuit.flagSprite);
+
+            var name = new Label(circuit.circuitName.ToUpper());
+            name.AddToClassList("lb-name");
+            if (isChosen) name.AddToClassList("lb-name--selected");
+
+            var barTrack = new VisualElement();
+            barTrack.AddToClassList("lb-bar-track");
+            var barFill = new VisualElement();
+            barFill.AddToClassList("lb-bar-fill");
+            barFill.style.width = new StyleLength(
+                new Length(Mathf.Clamp(score, 0f, 100f), LengthUnit.Percent));
+
+            if (rating.Contains("OPTIMAL"))
+                barFill.style.backgroundColor = new StyleColor(new Color(0.29f, 0.87f, 0.5f));
+            else if (rating.Contains("POOR"))
+                barFill.style.backgroundColor = new StyleColor(new Color(0.71f, 0.31f, 0.24f));
+
+            barTrack.Add(barFill);
+
+            var scoreLabel = new Label($"{score:0}");
+            scoreLabel.AddToClassList("lb-score");
+
+            var ratingLabel = new Label(rating.Replace(" SETUP", ""));
+            ratingLabel.AddToClassList("lb-rating");
+            if (rating.Contains("OPTIMAL"))
+                ratingLabel.AddToClassList("lb-rating--optimal");
+            else if (rating.Contains("GOOD"))
+                ratingLabel.AddToClassList("lb-rating--good");
+            else if (rating.Contains("AVERAGE"))
+                ratingLabel.AddToClassList("lb-rating--average");
+            else
+                ratingLabel.AddToClassList("lb-rating--poor");
+
+            row.Add(rank);
+            row.Add(flag);
+            row.Add(name);
+            row.Add(barTrack);
+            row.Add(scoreLabel);
+            row.Add(ratingLabel);
+
+            circuitLeaderboard.Add(row);
+        }
+    }
+
+    void OnRaceWithBuild()
+    {
+        if (GameManager.Instance == null) return;
+        var build = GameManager.Instance.currentBuild;
+        if (build == null || !build.IsComplete()) return;
+
+        var result = GameManager.Instance.GetLastResult();
+        if (result == null) return;
+
+        float totalDownforce = 0f, totalDrag = 0f;
+        float totalPower = 0f, totalWeight = 0f, totalReliability = 0f;
+        foreach (var part in build.GetAllParts())
+        {
+            if (part == null) continue;
+            totalDownforce += part.downforce;
+            totalDrag += part.drag;
+            totalPower += part.power;
+            totalWeight += part.weight;
+            totalReliability += part.reliability;
+        }
+
+        var export = new BuildExport
+        {
+            circuitName = CircuitSelectionController.ChosenCircuit?.circuitName ?? "Unknown",
+            efficiencyScore = result.efficiencyScore,
+            lapTimeSeconds = result.lapTimeSeconds,
+            downforce = totalDownforce,
+            drag = totalDrag,
+            power = totalPower,
+            weight = totalWeight,
+            reliability = totalReliability,
+            tyreCompound = build.tyres?.partName ?? "Standard",
+            circuitRating = result.circuitRating,
+            speedScore = result.speedScore,
+            corneringScore = result.corneringScore
+        };
+
+        string json = JsonUtility.ToJson(export, true);
+        string path = System.IO.Path.Combine(
+            System.Environment.GetFolderPath(
+                System.Environment.SpecialFolder.MyDocuments),
+            "F1BuildExport.json");
+
+        System.IO.File.WriteAllText(path, json);
+        Debug.Log($"Build exported to: {path}");
+        Debug.Log(json);
+    }
+}
+
+[System.Serializable]
+public class BuildExport
+{
+    public string circuitName;
+    public float efficiencyScore;
+    public float lapTimeSeconds;
+    public float downforce;
+    public float drag;
+    public float power;
+    public float weight;
+    public float reliability;
+    public string tyreCompound;
+    public string circuitRating;
+    public float speedScore;
+    public float corneringScore;
 }

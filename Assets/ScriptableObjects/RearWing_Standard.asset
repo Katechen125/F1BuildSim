@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RearWing_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Rear Wing
-  description: Balanced rear stability. Reliable grip without a major top speed penalty.
+  description: Neutral rear stability. Keeps the car balanced across mixed track
+    layouts without a significant top speed penalty.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 1

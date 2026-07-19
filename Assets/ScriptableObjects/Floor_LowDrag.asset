@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Floor_LowDrag
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Low Drag Floor
-  description: Reduces underbody resistance for better straight-line speed. Less
-    grip but more velocity.
+  description: Reduced ground effect profile cuts underbody resistance. Trades downforce
+    for raw speed. The floor of choice when straight-line pace is everything.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 7

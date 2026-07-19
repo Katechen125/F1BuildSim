@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Brakes_Durable
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Durable Brakes
-  description: Built to last the full race. Slightly less stopping power but zero
-    fade risk over long distances.
+  description: Long-service compound designed for sustained braking stress. Fades
+    less than performance brakes, lasts longer than anything else.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 5

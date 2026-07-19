@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Suspension_Soft
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Soft Suspension
-  description: Forgiving over bumps and kerbs. Loses some cornering precision but
-    easier on the tyres.
+  description: High mechanical compliance. Forgives rough surfaces and aggressive
+    kerb use. Loses precision in fast direction changes.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 3

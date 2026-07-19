@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Suspension_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Suspension
-  description: Absorbs bumps and kerbs well. Predictable handling that suits most
-    situations.p on most track surfaces
+  description: Compliant geometry that absorbs kerbs and surface changes. Predictable
+    and forgiving, suited to most conditions.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 3

@@ -58,6 +58,7 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\BuilderUIController.cs" />
     <Compile Include="Assets\Scripts\PerformanceEngine.cs" />
+    <Compile Include="Assets\Scripts\BuildAdvisor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>

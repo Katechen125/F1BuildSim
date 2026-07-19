@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tyres_Medium
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Medium Compound
-  description: A balanced tyre that lasts longer than softs but grips better than
-    hards. The safe choice.
+  description: The balanced compound. Slower to come alive than softs, slower to
+    die than hards. The long game choice.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 4

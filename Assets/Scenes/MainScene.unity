@@ -603,6 +603,15 @@ MonoBehaviour:
   iconBrakes: {fileID: 21300000, guid: 236ab1ddc4b218642a25ee6952572981, type: 3}
   iconSidepods: {fileID: 21300000, guid: 9f1f31930772e794d99c51cd0eeaf05e, type: 3}
   iconFloor: {fileID: 21300000, guid: 0be55d7d58329a94abd7f6eb3117a99f, type: 3}
+  allCircuits:
+  - {fileID: 11400000, guid: 455d19a9a875bbf4d8994928fc57fec0, type: 2}
+  - {fileID: 11400000, guid: 2c64e91f7cb7c5848a1b47ee77088ab3, type: 2}
+  - {fileID: 11400000, guid: 2bb82e2640ee35b43a1b1f98ced3e500, type: 2}
+  - {fileID: 11400000, guid: e755fb618c7b5de49b31ec07a8fcb34d, type: 2}
+  - {fileID: 11400000, guid: 85baa3fda05f83c44a4cfd22e77f4276, type: 2}
+  - {fileID: 11400000, guid: 1cad8ccaf8e07bf4c8c1bed3dd988dee, type: 2}
+  - {fileID: 11400000, guid: 8e18a482bacfc644a8bae05bcb65cfd1, type: 2}
+  - {fileID: 11400000, guid: cbc251310fef77d4caca921e4e4d3f5b, type: 2}
 --- !u!4 &1035291779
 Transform:
   m_ObjectHideFlags: 0

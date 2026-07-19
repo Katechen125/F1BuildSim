@@ -3,58 +3,82 @@
     <ui:VisualElement name="Root">
 
         <ui:VisualElement name="TopAccent"/>
-
-        <!-- Car image fills the whole background -->
+        <ui:VisualElement name="TopAccentThin"/>
+        <ui:VisualElement name="BottomLine"/>
+        <ui:VisualElement name="AccentGlow"/>
         <ui:VisualElement name="CarBg"/>
+        <ui:VisualElement name="DarkOverlay"/>
+        <ui:VisualElement name="ScanLines"/>
 
-        <!-- Dark overlay on left side -->
-        <ui:VisualElement name="LeftOverlay">
-            <ui:Label name="LogoEyebrow" text="APPLE VISION PRO"/>
-            <ui:Label name="LogoTitle" text="F1 BUILD"/>
-            <ui:Label name="LogoTitleAccent" text="SIM"/>
-            <ui:Label name="LogoSubtitle" text="CAR CONFIGURATOR"/>
-            <ui:VisualElement name="LogoDivider"/>
-            <ui:Label name="LogoDesc" text="Design a Formula 1 car from scratch. Pick your components, tune your setup for a real circuit, and find out if your build can compete."/>
+        <ui:VisualElement name="CornerTL" class="corner"/>
+        <ui:VisualElement name="CornerTR" class="corner"/>
+        <ui:VisualElement name="CornerBL" class="corner"/>
+        <ui:VisualElement name="CornerBR" class="corner"/>
+
+        <ui:VisualElement name="HudTL">
+            <ui:Label text="APPLE VISION PRO"/>
+            <ui:Label text="SYS.READY · v2.5"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="HudTR">
+            <ui:Label text="2025 SEASON"/>
+            <ui:Label text="CAR.CFG · READY"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="Content">
+            <ui:VisualElement name="Badge">
+                <ui:VisualElement name="BadgeDot"/>
+                <ui:Label name="BadgeText" text="FORMULA 1 · CAR CONFIGURATOR"/>
+                <ui:VisualElement name="BadgeDot2"/>
+            </ui:VisualElement>
+
+            <ui:Label name="Presents" text="HSIUNG-SI TECHNOLOGIES PRESENTS"/>
+
+            <ui:Label name="TitleSpeed" text="SPEED"/>
+
+            <ui:VisualElement name="RuleWrap">
+                <ui:VisualElement name="RuleLine"/>
+                <ui:Label name="RuleText" text="FORMULA 1 CAR CONFIGURATOR"/>
+                <ui:VisualElement name="RuleLine2"/>
+            </ui:VisualElement>
+
+            <ui:Label name="TitleKraft" text="KRAFT"/>
+
+            <ui:Label name="Tagline" text="Every aero decision. Every component choice."/>
+            <ui:Label name="Tagline2" text="Configure your car. Race with your setup."/>
+
+            <ui:VisualElement name="BtnOuter">
+                <ui:Button name="BtnStart" text="ENTER GARAGE →"/>
+            </ui:VisualElement>
 
             <ui:VisualElement name="StatsRow">
-                <ui:VisualElement class="stat-block">
-                    <ui:Label text="8" class="stat-num"/>
-                    <ui:Label text="COMPONENTS" class="stat-lbl"/>
-                </ui:VisualElement>
-                <ui:VisualElement class="stat-sep"/>
-                <ui:VisualElement class="stat-block">
+                <ui:VisualElement class="stat-item">
                     <ui:Label text="8" class="stat-num"/>
                     <ui:Label text="CIRCUITS" class="stat-lbl"/>
                 </ui:VisualElement>
-                <ui:VisualElement class="stat-sep"/>
-                <ui:VisualElement class="stat-block">
+                <ui:VisualElement class="stat-item">
                     <ui:Label text="24" class="stat-num"/>
                     <ui:Label text="PARTS" class="stat-lbl"/>
                 </ui:VisualElement>
-            </ui:VisualElement>
-
-            <ui:VisualElement name="StepsRow">
-                <ui:VisualElement class="step-item">
-                    <ui:Label text="1" class="step-num"/>
-                    <ui:Label text="Pick circuit" class="step-lbl"/>
+                <ui:VisualElement class="stat-item">
+                    <ui:Label text="8" class="stat-num"/>
+                    <ui:Label text="CATEGORIES" class="stat-lbl"/>
                 </ui:VisualElement>
-                <ui:Label text="→" class="step-arrow"/>
-                <ui:VisualElement class="step-item">
-                    <ui:Label text="2" class="step-num"/>
-                    <ui:Label text="Build car" class="step-lbl"/>
-                </ui:VisualElement>
-                <ui:Label text="→" class="step-arrow"/>
-                <ui:VisualElement class="step-item">
-                    <ui:Label text="3" class="step-num"/>
-                    <ui:Label text="Evaluate" class="step-lbl"/>
+                <ui:VisualElement class="stat-item">
+                    <ui:Label text="4" class="stat-num"/>
+                    <ui:Label text="STEPS" class="stat-lbl"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-
-            <ui:Button name="BtnStart" text="START BUILDING →"/>
         </ui:VisualElement>
 
-        <ui:VisualElement name="BottomBar">
-            <ui:Label name="BottomText" text="SELECT YOUR CIRCUIT · BUILD YOUR CAR · EVALUATE YOUR SETUP"/>
+        <ui:VisualElement name="BottomStrip">
+            <ui:VisualElement name="BottomSteps">
+                <ui:Label name="Step1" text="01 CIRCUIT" class="bottom-step bottom-step--active"/>
+                <ui:Label name="Step2" text="02 BUILD" class="bottom-step"/>
+                <ui:Label name="Step3" text="03 EVALUATE" class="bottom-step"/>
+                <ui:Label name="Step4" text="04 RACE" class="bottom-step"/>
+            </ui:VisualElement>
+            <ui:Label name="BottomRight" text="SPEEDKRAFT · 2025"/>
         </ui:VisualElement>
 
     </ui:VisualElement>

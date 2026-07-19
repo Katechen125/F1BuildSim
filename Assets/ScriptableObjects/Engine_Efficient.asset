@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Engine_Efficient
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Hybrid Optimised Unit
-  description: Smart power delivery using the battery system. Consistent and efficient
-    rather than explosive.
+  description: Prioritises ERS deployment over raw combustion power. Consistent torque
+    delivery through corners, superior energy recovery on braking zones.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 2

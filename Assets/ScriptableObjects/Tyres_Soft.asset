@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tyres_Soft
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Soft Compound
-  description: The grippiest compound available. Fast from the start but wears out
-    quickly under pressure.
+  description: Maximum grip from lap one. Thermal degradation kicks in fast under
+    sustained load. Every lap after the first is borrowed time.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 4

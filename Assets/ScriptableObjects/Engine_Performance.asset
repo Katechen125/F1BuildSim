@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Engine_Performance
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Works Power Unit
-  description: The full factory engine. Maximum power output but runs hot and risks
-    failure over a long race.
+  description: Full factory specification. Explosive power curve, maximum output.
+    Runs hot and punishes poor reliability setups.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 2

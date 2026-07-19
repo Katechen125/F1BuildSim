@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RearWing_HighDownforce
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Downforce Rear Wing
-  description: Glues the rear tyres to the road under acceleration. Stable but slow
-    in a straight line.
+  description: Anchors the rear under hard acceleration. Prevents oversteer through
+    fast corners but kills terminal velocity. You'll feel planted, not fast.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 1

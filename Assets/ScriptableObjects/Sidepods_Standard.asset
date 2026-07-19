@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sidepods_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Sidepods
-  description: Keeps the engine at safe temperatures without hurting aerodynamics
-    too much.
+  description: Conventional cooling geometry. Adequate thermal regulation with a
+    modest drag penalty. Works everywhere, excels nowhere.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 6

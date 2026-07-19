@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Engine_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Customer Power Unit
-  description: ' A reliable engine supplied by a manufacturer. Not the fastest but
-    won''t let you down.'
+  description: A detuned factory spec unit. Conservative power delivery, excellent
+    thermal management, low failure risk. Finishes races others don't.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 2

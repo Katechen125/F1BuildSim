@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Brakes_Performance
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Performance Brakes
-  description: 'Maximum stopping force. Exceptional bite but they overheat under
-    sustained pressure. '
+  description: Maximum deceleration force on first touch. Exceptional initial bite
+    but heat builds fast under repeated heavy braking zones.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 5

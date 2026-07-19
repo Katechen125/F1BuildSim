@@ -2,97 +2,124 @@ using UnityEngine;
 
 public static class PerformanceEngine
 {
-    public static PerformanceResult Calculate(CarBuild build, Circuit circuit = null)
+    private static readonly PartCategory[] DownforceCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Floor };
+    private static readonly PartCategory[] DragCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Sidepods };
+    private static readonly PartCategory[] PowerCategories = { PartCategory.Engine };
+    private static readonly PartCategory[] ReliabilityCategories = { PartCategory.Tyres, PartCategory.Brakes, PartCategory.Suspension };
+
+    private const float MatchTolerance = 8f;
+    private const float DecaySteepness = 1.3f;
+
+    private static float AverageStat(CarBuild build, PartCategory[] categories, System.Func<CarPart, float> selector)
     {
-        if (!build.IsComplete())
+        float total = 0f;
+        int count = 0;
+        foreach (var part in build.GetAllParts())
+        {
+            if (part == null) continue;
+            bool inCategory = false;
+            foreach (var cat in categories)
+                if (part.category == cat) { inCategory = true; break; }
+            if (!inCategory) continue;
+            total += selector(part);
+            count++;
+        }
+        return count == 0 ? 0f : total / count;
+    }
+
+    private static float MatchScore(float actual, float target)
+    {
+        float diff = Mathf.Abs(actual - target);
+        if (diff <= MatchTolerance) return 100f;
+        float excess = diff - MatchTolerance;
+        return Mathf.Clamp(100f - excess * DecaySteepness, 0f, 100f);
+    }
+
+    public static PerformanceResult Calculate(CarBuild build, Circuit circuit = null, bool requireComplete = true)
+    {
+        if (requireComplete && !build.IsComplete())
             return new PerformanceResult { isValid = false };
 
-        float totalDownforce   = 0f;
-        float totalDrag        = 0f;
-        float totalWeight      = 0f;
-        float totalPower       = 0f;
-        float totalReliability = 0f;
-        int   partCount        = 0;
-
+        float totalWeight = 0f;
+        int partCount = 0;
         foreach (CarPart part in build.GetAllParts())
         {
             if (part == null) continue;
-            totalDownforce   += part.downforce;
-            totalDrag        += part.drag;
-            totalWeight      += part.weight;
-            totalPower       += part.power;
-            totalReliability += part.reliability;
+            totalWeight += part.weight;
             partCount++;
         }
+        float avgWeight = partCount == 0 ? 0f : totalWeight / partCount;
 
-        float avgReliability = totalReliability / partCount;
+        float avgDownforce = AverageStat(build, DownforceCategories, p => p.downforce);
+        float avgDrag = AverageStat(build, DragCategories, p => p.drag);
+        float avgPower = AverageStat(build, PowerCategories, p => p.power);
+        float avgReliability = AverageStat(build, ReliabilityCategories, p => p.reliability);
 
-        float aeroEfficiency = totalDrag > 0
-            ? (totalDownforce / (totalDownforce + totalDrag)) * 100f
+        float aeroEfficiency = avgDrag > 0
+            ? (avgDownforce / (avgDownforce + avgDrag)) * 100f
             : 100f;
 
-        float speedScore = Mathf.Clamp(
-            (totalPower * 1.2f) - (totalDrag * 0.4f), 0f, 100f);
-
-        float corneringScore = Mathf.Clamp(
-            totalDownforce - (totalWeight * 0.2f), 0f, 100f);
+        float speedScore = Mathf.Clamp((avgPower * 1.4f) - (avgDrag * 0.4f), 0f, 100f);
+        float corneringScore = Mathf.Clamp(avgDownforce - (avgWeight * 0.2f), 0f, 100f);
 
         float lapTime = 90f
-            - (speedScore    * 0.12f)
+            - (speedScore * 0.12f)
             - (corneringScore * 0.08f)
-            + (totalWeight   * 0.04f);
+            + (avgWeight * 0.04f);
 
         lapTime = Mathf.Clamp(lapTime, 60f, 90f);
 
-        float efficiencyScore = (aeroEfficiency  * 0.25f)
-                              + (speedScore       * 0.25f)
-                              + (corneringScore   * 0.25f)
-                              + (avgReliability   * 0.25f);
-
-        efficiencyScore = Mathf.Clamp(efficiencyScore, 0f, 100f);
-
         string circuitRating = "";
+        float circuitFitScore = 0f;
+        float downforceMatch = 0f, dragMatch = 0f, engineMatch = 0f, tyreMatch = 0f;
 
         if (circuit != null)
         {
-            float downforceNorm = Mathf.Clamp(totalDownforce / 3f, 0f, 100f);
-            float dragNorm      = Mathf.Clamp(totalDrag / 3f, 0f, 100f);
-            float powerNorm     = Mathf.Clamp(totalPower, 0f, 100f);
+            downforceMatch = MatchScore(avgDownforce, circuit.downforceRequirement);
+            dragMatch = MatchScore(avgDrag, 100f - circuit.dragSensitivity);
+            engineMatch = MatchScore(avgPower, circuit.engineDemand);
+            // Higher tyre stress rewards higher reliability parts (flipped from original)
+            tyreMatch = MatchScore(avgReliability, circuit.tyreStress);
 
-            float downforceMatch = 100f - Mathf.Abs(downforceNorm - circuit.downforceRequirement);
-            float dragMatch      = 100f - Mathf.Abs(dragNorm - (100f - circuit.dragSensitivity));
-            float engineMatch    = 100f - Mathf.Abs(powerNorm - circuit.engineDemand);
-            float tyreMatch      = 100f - Mathf.Abs(avgReliability - (100f - circuit.tyreStress));
+            circuitFitScore = (downforceMatch * 0.35f)
+                            + (dragMatch * 0.25f)
+                            + (engineMatch * 0.25f)
+                            + (tyreMatch * 0.15f);
 
-            downforceMatch = Mathf.Clamp(downforceMatch, 0f, 100f);
-            dragMatch      = Mathf.Clamp(dragMatch,      0f, 100f);
-            engineMatch    = Mathf.Clamp(engineMatch,    0f, 100f);
-            tyreMatch      = Mathf.Clamp(tyreMatch,      0f, 100f);
+            lapTime -= (circuitFitScore / 100f) * 8f;
+            lapTime = Mathf.Clamp(lapTime, 60f, 90f);
 
-            float circuitMatch = (downforceMatch * 0.4f)
-                               + (dragMatch      * 0.2f)
-                               + (engineMatch    * 0.25f)
-                               + (tyreMatch      * 0.15f);
-
-            lapTime -= (circuitMatch / 100f) * 6f;
-            lapTime  = Mathf.Clamp(lapTime, 60f, 90f);
-
-            if      (circuitMatch >= 80f) circuitRating = "OPTIMAL SETUP";
-            else if (circuitMatch >= 60f) circuitRating = "GOOD SETUP";
-            else if (circuitMatch >= 40f) circuitRating = "AVERAGE SETUP";
-            else                          circuitRating = "POOR SETUP";
+            if (circuitFitScore >= 90f) circuitRating = "OPTIMAL SETUP";
+            else if (circuitFitScore >= 75f) circuitRating = "GOOD SETUP";
+            else if (circuitFitScore >= 55f) circuitRating = "AVERAGE SETUP";
+            else circuitRating = "POOR SETUP";
         }
+
+        float finalScore = circuit != null
+            ? circuitFitScore
+            : ((aeroEfficiency * 0.25f) + (speedScore * 0.25f)
+             + (corneringScore * 0.25f) + (avgReliability * 0.25f));
+
+        finalScore = Mathf.Clamp(finalScore, 0f, 100f);
 
         return new PerformanceResult
         {
-            isValid         = true,
-            efficiencyScore = Mathf.Round(efficiencyScore),
-            lapTimeSeconds  = Mathf.Round(lapTime * 10f) / 10f,
-            aeroEfficiency  = Mathf.Round(aeroEfficiency),
-            speedScore      = Mathf.Round(speedScore),
-            corneringScore  = Mathf.Round(corneringScore),
-            reliability     = Mathf.Round(avgReliability),
-            circuitRating   = circuitRating
+            isValid = true,
+            efficiencyScore = Mathf.Round(finalScore),
+            lapTimeSeconds = Mathf.Round(lapTime * 10f) / 10f,
+            aeroEfficiency = Mathf.Round(aeroEfficiency),
+            speedScore = Mathf.Round(speedScore),
+            corneringScore = Mathf.Round(corneringScore),
+            reliability = Mathf.Round(avgReliability),
+            circuitRating = circuitRating,
+            circuitFitScore = Mathf.Round(circuitFitScore),
+            avgPower = Mathf.Round(avgPower),
+            avgDownforce = Mathf.Round(avgDownforce),
+            avgDrag = Mathf.Round(avgDrag),
+            downforceMatch = Mathf.Round(downforceMatch),
+            dragMatch = Mathf.Round(dragMatch),
+            engineMatch = Mathf.Round(engineMatch),
+            tyreMatch = Mathf.Round(tyreMatch)
         };
     }
 }
@@ -100,12 +127,22 @@ public static class PerformanceEngine
 [System.Serializable]
 public class PerformanceResult
 {
-    public bool   isValid;
-    public float  efficiencyScore;
-    public float  lapTimeSeconds;
-    public float  aeroEfficiency;
-    public float  speedScore;
-    public float  corneringScore;
-    public float  reliability;
+    public bool isValid;
+    public float efficiencyScore;
+    public float circuitFitScore;
+    public float lapTimeSeconds;
+    public float aeroEfficiency;
+    public float speedScore;
+    public float corneringScore;
+    public float reliability;
     public string circuitRating;
+    public float avgPower;
+    public float avgDownforce;
+    public float avgDrag;
+
+    // Per-stat match scores, used by the sidebar live bars and the debrief/advisor
+    public float downforceMatch;
+    public float dragMatch;
+    public float engineMatch;
+    public float tyreMatch;
 }

@@ -20,10 +20,9 @@ public class SplashController : MonoBehaviour
     {
         root = uiDocument.rootVisualElement;
 
-        // Assign car image
-        var carEl = root.Q<VisualElement>("CarBg");
-        if (carEl != null && mclarenImage != null)
-            carEl.style.backgroundImage = new StyleBackground(mclarenImage);
+        var carBg = root.Q<VisualElement>("CarBg");
+        if (carBg != null && mclarenImage != null)
+            carBg.style.backgroundImage = new StyleBackground(mclarenImage);
 
         var startBtn = root.Q<Button>("BtnStart");
         if (startBtn != null)
@@ -43,24 +42,26 @@ public class SplashController : MonoBehaviour
     {
         if (orbitronFont != null)
         {
-            SetFont(root.Q<Label>("LogoTitle"), orbitronFont);
-            SetFont(root.Q<Label>("LogoTitleAccent"), orbitronFont);
-            SetFont(root.Q<Label>("LogoEyebrow"), orbitronFont);
-            SetFont(root.Q<Label>("LogoSubtitle"), orbitronFont);
+            SetFont(root.Q<Label>("TitleSpeed"), orbitronFont);
+            SetFont(root.Q<Label>("TitleKraft"), orbitronFont);
+            SetFont(root.Q<Label>("BadgeText"), orbitronFont);
+            SetFont(root.Q<Label>("Presents"), orbitronFont);
+            SetFont(root.Q<Label>("RuleText"), orbitronFont);
 
-            foreach (var lbl in root.Query<Label>(className: "stat-num").ToList())
-                SetFont(lbl, orbitronFont);
+            foreach (var l in root.Query<Label>(className: "stat-num").ToList())
+                SetFont(l, orbitronFont);
+            foreach (var l in root.Query<Label>(className: "bottom-step").ToList())
+                SetFont(l, orbitronFont);
         }
 
         if (exo2Font != null)
         {
-            SetFont(root.Q<Label>("LogoDesc"), exo2Font);
-            SetFont(root.Q<Label>("BottomText"), exo2Font);
+            SetFont(root.Q<Label>("Tagline"), exo2Font);
+            SetFont(root.Q<Label>("Tagline2"), exo2Font);
+            SetFont(root.Q<Label>("BottomRight"), exo2Font);
 
-            foreach (var lbl in root.Query<Label>(className: "stat-lbl").ToList())
-                SetFont(lbl, exo2Font);
-            foreach (var lbl in root.Query<Label>(className: "step-lbl").ToList())
-                SetFont(lbl, exo2Font);
+            foreach (var l in root.Query<Label>(className: "stat-lbl").ToList())
+                SetFont(l, exo2Font);
         }
     }
 

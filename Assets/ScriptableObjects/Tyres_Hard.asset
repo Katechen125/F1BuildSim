@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tyres_Hard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Hard Compound
-  description: Built to survive a long stint. Slow to warm up and less grip, but
-    it goes the distance.
+  description: Built for distance. Grip builds slowly, peaks late, and holds. Unreachable
+    on a flying lap but unbeatable in a stint.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 4

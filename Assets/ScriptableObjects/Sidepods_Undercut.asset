@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sidepods_Undercut
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Undercut Sidepods
-  description: Aggressively shaped to channel more air under the car. Improves downforce
-    but reduces cooling margin.
+  description: Aggressively undercut bodywork redirects air under the floor for added
+    downforce. Cooling margin is thin. Don't run this somewhere hot.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 6

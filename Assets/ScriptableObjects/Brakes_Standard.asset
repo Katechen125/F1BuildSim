@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Brakes_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Carbon Brakes
-  description: Reliable stopping power across the whole race. Consistent and predictable
-    under repeated heavy braking.
+  description: Consistent stopping power across the full thermal range. Predictable
+    bite point, no surprises. Reliable over a full race distance.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 5

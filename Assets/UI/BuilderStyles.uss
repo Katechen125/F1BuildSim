@@ -23,16 +23,16 @@
     letter-spacing: 2px;
     margin-bottom: 1px;
     -unity-text-align: upper-center;
-    padding: 0 12px;
+    padding: 0 14px;
 }
 
 #AppSubtitle {
-    color: rgb(90, 68, 42);
+    color: rgb(140, 105, 65);
     font-size: 8px;
     letter-spacing: 1.5px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     -unity-text-align: upper-center;
-    padding: 0 12px;
+    padding: 0 14px;
 }
 
 #SidebarDivider {
@@ -585,3 +585,247 @@
 }
 
 #BtnModalNewCircuit:hover { background-color: rgb(255, 130, 55); }
+
+/* ===================== MODAL TABS ===================== */
+#ModalTabs {
+    flex-direction: row;
+    margin-bottom: 14px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(40, 28, 16);
+    padding-bottom: 0px;
+}
+
+.modal-tab {
+    flex: 1;
+    background-color: rgba(0,0,0,0);
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(0,0,0,0);
+    border-radius: 0;
+    color: rgb(100, 75, 45);
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 1.5px;
+    height: 36px;
+    padding-bottom: 2px;
+}
+
+.modal-tab:hover {
+    color: rgb(180, 135, 80);
+}
+
+.modal-tab--active {
+    color: rgb(255, 107, 26);
+    border-bottom-color: rgb(255, 107, 26);
+}
+
+/* ===================== COMPARE PAGE ===================== */
+.compare-title {
+    font-size: 9px;
+    color: rgb(100, 75, 45);
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+}
+
+.compare-sub {
+    font-size: 8px;
+    color: rgb(60, 45, 25);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+#CircuitLeaderboard {
+    flex: 1;
+    max-height: 280px;
+}
+
+.leaderboard-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    background-color: rgb(20, 14, 8);
+    border-width: 1px;
+    border-color: rgb(35, 25, 14);
+    border-radius: 5px;
+}
+
+.leaderboard-row--selected {
+    border-color: rgb(255, 107, 26);
+    background-color: rgb(28, 18, 9);
+    border-left-width: 2px;
+    border-left-color: rgb(255, 107, 26);
+}
+
+.lb-rank {
+    font-size: 11px;
+    color: rgb(80, 60, 32);
+    -unity-font-style: bold;
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.lb-rank--top {
+    color: rgb(255, 107, 26);
+}
+
+.lb-flag {
+    width: 26px;
+    height: 18px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-radius: 2px;
+}
+
+.lb-name {
+    flex: 1;
+    font-size: 11px;
+    color: rgb(200, 160, 100);
+    -unity-font-style: bold;
+}
+
+.lb-name--selected {
+    color: rgb(255, 107, 26);
+}
+
+.lb-score {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    width: 36px;
+    -unity-text-align: upper-right;
+    margin-right: 8px;
+}
+
+.lb-rating {
+    font-size: 8px;
+    letter-spacing: 1px;
+    width: 70px;
+    -unity-text-align: upper-right;
+}
+
+.lb-rating--optimal { color: rgb(74, 222, 128); }
+.lb-rating--good    { color: rgb(255, 107, 26); }
+.lb-rating--average { color: rgb(180, 135, 80); }
+.lb-rating--poor    { color: rgb(180, 80, 60); }
+
+.lb-bar-track {
+    width: 60px;
+    height: 3px;
+    background-color: rgb(35, 25, 12);
+    border-radius: 2px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.lb-bar-fill {
+    height: 3px;
+    background-color: rgb(255, 107, 26);
+    border-radius: 2px;
+}
+
+/* Race with build button */
+#BtnRaceWithBuild {
+    flex: 2;
+    background-color: rgb(30, 20, 8);
+    border-width: 1px;
+    border-color: rgb(255, 107, 26);
+    border-radius: 3px;
+    color: rgb(255, 107, 26);
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 1.5px;
+    height: 34px;
+    margin-left: 6px;
+}
+
+#BtnRaceWithBuild:hover {
+    background-color: rgb(255, 107, 26);
+    color: rgb(255, 255, 255);
+}
+
+#BtnModalX {
+    background-color: rgba(0,0,0,0);
+    border-width: 1px;
+    border-color: rgb(60, 42, 20);
+    border-radius: 3px;
+    color: rgb(100, 75, 45);
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    margin-left: 10px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+#BtnModalX:hover {
+    border-color: rgb(180, 80, 60);
+    color: rgb(220, 100, 80);
+}
+
+.live-match-panel {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.live-match-heading {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 16px;
+}
+
+.live-match-row {
+    margin-bottom: 14px;
+}
+
+.live-match-row-top {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.live-match-label {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.live-match-val {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.live-match-track {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.live-match-fill {
+    height: 6px;
+    width: 0%;
+    background-color: rgb(255, 122, 26);
+    border-radius: 3px;
+    transition-property: width, background-color;
+    transition-duration: 0.35s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.live-match-fill--good {
+    background-color: rgb(90, 224, 133);
+}
+
+.live-match-fill--warn {
+    background-color: rgb(206, 84, 66);
+}
+
+.live-match-hint {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 4px;
+    -unity-font-style: italic;
+}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Floor_Standard
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Standard Floor
-  description: Generates steady downforce under the car using ground effect. Consistent
-    across ride heights.
+  description: Consistent ground effect generation. Stable downforce platform across
+    varied ride heights and track surfaces.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 7

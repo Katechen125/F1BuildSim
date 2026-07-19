@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Floor_HighDownforce
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: High Downforce Floor
-  description: Maximises the suction effect under the car. Huge grip gains but sensitive
-    to ride height changes.
+  description: Aggressive venturi geometry maximises underbody suction. Enormous
+    grip gains but extremely sensitive to ride height variation. Setup precision
+    required.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 7

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Suspension_Stiff
   m_EditorClassIdentifier: Assembly-CSharp::CarPart
   partName: Stiff Suspension
-  description: Rigid setup that keeps the car flat in corners. Works best on smooth
-    tracks, harsh on rough ones.
+  description: Rigid setup that maximises aerodynamic platform stability. Rewards
+    smooth tracks but punishes every bump and kerb.
   icon: {fileID: 0}
   modelPrefab: {fileID: 0}
   category: 3
