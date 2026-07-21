@@ -255,7 +255,49 @@
     flex-shrink: 0;
 }
 
+.part-card {
+    background-color: rgb(22, 16, 10);
+    border-width: 1px;
+    border-color: rgb(40, 30, 18);
+    border-radius: 7px;
+    padding: 11px 13px;
+    margin-bottom: 7px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transform-origin: center;
+    transition-property: scale, background-color, border-color, border-width;
+    transition-duration: 0.16s;
+    transition-timing-function: ease-out-cubic;
+}
+
 .part-card:hover { border-color: rgb(85, 60, 30); background-color: rgb(26, 19, 11); }
+
+/* ===================== SELECTION FEEDBACK (randomly picked, one per click) ===================== */
+.part-card--punch {
+    scale: 1.035 1.035;
+}
+
+.part-card--flash {
+    background-color: rgba(255, 107, 26, 0.22);
+}
+
+.part-card--pulse {
+    border-color: rgb(255, 107, 26);
+    border-width: 2px;
+}
+
+/* ===================== EVALUATE BUTTON PUNCH ===================== */
+#BtnEvaluate {
+    transform-origin: center;
+    transition-property: scale, background-color;
+    transition-duration: 0.14s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.btn-evaluate--punch {
+    scale: 0.94 0.94;
+    background-color: rgb(255, 150, 70);
+}
 
 .part-card--selected {
     border-color: rgb(255, 107, 26);
@@ -359,43 +401,8 @@
 .select-btn:hover { background-color: rgb(255, 107, 26); border-color: rgb(255, 107, 26); color: rgb(255, 255, 255); }
 .select-btn--selected { background-color: rgb(40, 24, 8); border-color: rgb(255, 107, 26); color: rgb(255, 107, 26); }
 
-#StatsPanel {
-    width: 200px;
-    background-color: rgb(11, 8, 5);
-    padding: 16px 14px;
-    border-left-width: 1px;
-    border-left-color: rgb(40, 28, 16);
-    flex-shrink: 0;
-}
-
 #BuildTitle { color: rgb(255, 107, 26); font-size: 10px; -unity-font-style: bold; letter-spacing: 2px; margin-bottom: 2px; }
 #BuildSubtitle { color: rgb(90, 68, 42); font-size: 9px; letter-spacing: 1px; margin-bottom: 14px; }
-
-.stat-label { color: rgb(100, 75, 48); font-size: 9px; letter-spacing: 1.5px; margin-bottom: 1px; }
-
-.stat-value {
-    color: rgb(255, 255, 255);
-    font-size: 24px;
-    -unity-font-style: bold;
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-}
-
-.stat-value--small { font-size: 17px; margin-bottom: 8px; color: rgb(210, 185, 155); }
-
-#Divider { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 10px; margin-top: 2px; }
-#Divider2 { height: 1px; background-color: rgb(40, 28, 16); margin-bottom: 10px; margin-top: 2px; }
-
-.circuit-rating-value {
-    font-size: 11px;
-    color: rgb(255, 107, 26);
-    -unity-font-style: bold;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    white-space: normal;
-}
-
-#BuildStatus { color: rgb(150, 112, 70); font-size: 10px; white-space: normal; margin-bottom: 10px; letter-spacing: 0.5px; }
 
 #BtnEvaluate {
     background-color: rgb(255, 107, 26);
@@ -505,6 +512,7 @@
 .modal-rating-val { font-size: 12px; color: rgb(255, 107, 26); -unity-font-style: bold; letter-spacing: 1px; }
 
 #ModalMiniRow { flex-direction: row; }
+.modal-mini-row { flex-direction: row; }
 
 .modal-mini-stat {
     flex: 1;
@@ -828,4 +836,39 @@
     color: rgba(255, 255, 255, 0.35);
     margin-top: 4px;
     -unity-font-style: italic;
+}
+
+/* ===================== EVALUATE SUSPENSE SCREEN ===================== */
+#EvaluatingOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(6, 4, 2, 0.96);
+    align-items: center;
+    justify-content: center;
+}
+
+#EvaluatingCard {
+    align-items: center;
+}
+
+#EvaluatingPulse {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    background-color: rgba(255, 107, 26, 0.18);
+    border-width: 2px;
+    border-color: rgb(255, 107, 26);
+    margin-bottom: 20px;
+    transform-origin: center;
+}
+
+#EvaluatingText {
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    -unity-text-align: upper-center;
 }

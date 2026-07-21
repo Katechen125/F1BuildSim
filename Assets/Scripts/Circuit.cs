@@ -28,4 +28,8 @@ public class Circuit : ScriptableObject
 
     [Header("Tags")]
     public string[] tags;
+
+    [Header("Historical Reference (approximate — verify before shipping)")]
+    public string lapRecordTime; // format: "1:31.447" (m:ss.sss)
+    public string lapRecordHolder;
 }

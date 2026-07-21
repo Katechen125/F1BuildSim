@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -59,14 +60,33 @@ public class BuilderUIController : MonoBehaviour
     private VisualElement modalFlag;
     private VisualElement modalDebriefItems;
 
+    // Suspense reveal screen shown between the Evaluate click and the modal
+    private VisualElement evaluatingOverlay;
+    private Label evaluatingText;
+    private VisualElement evaluatingPulse;
+
     private PartCategory currentCategory = PartCategory.FrontWing;
 
-    // Tab switcher
+    // Tab switcher (3 tabs: Race Result, All Circuits, Qualifying)
     private VisualElement tabPageRace;
     private VisualElement tabPageCompare;
+    private VisualElement tabPageQualifying;
     private Button tabRace;
     private Button tabCompare;
+    private Button tabQualifying;
     private VisualElement circuitLeaderboard;
+
+    // Qualifying + Race Projection references
+    private Label qualiPosition;
+    private Label qualiPositionLabel;
+    private Label qualiEstimatedLap;
+    private Label qualiRecordLap;
+    private Label qualiGap;
+    private Label qualiRecordHolder;
+    private Label raceGridPos;
+    private Label raceFinishPos;
+    private Label raceTotalTime;
+    private Label raceTrendLabel;
 
     // All circuits reference
     public Circuit[] allCircuits;
@@ -107,17 +127,37 @@ public class BuilderUIController : MonoBehaviour
         modalFlag = root.Q<VisualElement>("ModalFlag");
         modalDebriefItems = root.Q<VisualElement>("ModalDebriefItems");
 
+        evaluatingOverlay = root.Q<VisualElement>("EvaluatingOverlay");
+        evaluatingText = root.Q<Label>("EvaluatingText");
+        evaluatingPulse = root.Q<VisualElement>("EvaluatingPulse");
+
         // Tabs
         tabPageRace = root.Q<VisualElement>("TabPageRace");
         tabPageCompare = root.Q<VisualElement>("TabPageCompare");
+        tabPageQualifying = root.Q<VisualElement>("TabPageQualifying");
         tabRace = root.Q<Button>("TabRace");
         tabCompare = root.Q<Button>("TabCompare");
+        tabQualifying = root.Q<Button>("TabQualifying");
         circuitLeaderboard = root.Q<VisualElement>("CircuitLeaderboard");
 
         if (tabRace != null)
             tabRace.clicked += () => SwitchTab(0);
         if (tabCompare != null)
             tabCompare.clicked += () => SwitchTab(1);
+        if (tabQualifying != null)
+            tabQualifying.clicked += () => SwitchTab(2);
+
+        // Qualifying + Race Projection references
+        qualiPosition = root.Q<Label>("QualiPosition");
+        qualiPositionLabel = root.Q<Label>("QualiPositionLabel");
+        qualiEstimatedLap = root.Q<Label>("QualiEstimatedLap");
+        qualiRecordLap = root.Q<Label>("QualiRecordLap");
+        qualiGap = root.Q<Label>("QualiGap");
+        qualiRecordHolder = root.Q<Label>("QualiRecordHolder");
+        raceGridPos = root.Q<Label>("RaceGridPos");
+        raceFinishPos = root.Q<Label>("RaceFinishPos");
+        raceTotalTime = root.Q<Label>("RaceTotalTime");
+        raceTrendLabel = root.Q<Label>("RaceTrendLabel");
 
         // Race with build button
         var raceBtn = root.Q<Button>("BtnRaceWithBuild");
@@ -145,7 +185,7 @@ public class BuilderUIController : MonoBehaviour
         // Evaluate
         var evaluateBtn = root.Q<Button>("BtnEvaluate");
         if (evaluateBtn != null)
-            evaluateBtn.clicked += OnEvaluate;
+            evaluateBtn.clicked += () => StartCoroutine(PlayEvaluateFeedbackThenRun(evaluateBtn));
 
         // Modal buttons
         var closeBtn = root.Q<Button>("BtnModalClose");
@@ -236,11 +276,13 @@ public class BuilderUIController : MonoBehaviour
 
         partListContainer.Clear();
 
+        var currentBuild = GameManager.Instance?.currentBuild;
+
         foreach (CarPart part in allParts)
         {
             if (part == null || part.category != category) continue;
 
-            bool selected = IsSelected(part);
+            bool selected = IsSelected(part, currentBuild);
 
             var card = new VisualElement();
             card.AddToClassList("part-card");
@@ -296,11 +338,12 @@ public class BuilderUIController : MonoBehaviour
             if (selected) selectBtn.AddToClassList("select-btn--selected");
 
             CarPart captured = part;
+            VisualElement capturedCard = card;
+            PartCategory capturedCategory = category;
             selectBtn.clicked += () =>
             {
                 GameManager.Instance.SelectPart(captured);
-                ShowCategory(currentCategory);
-                UpdateProgressBar();
+                StartCoroutine(PlaySelectFeedbackThenRefresh(capturedCard, capturedCategory));
             };
 
             card.Add(selectBtn);
@@ -308,6 +351,20 @@ public class BuilderUIController : MonoBehaviour
         }
 
         UpdateSidebarMatchBars();
+    }
+
+    // Quick confirmation punch on the card the user just selected, same
+    // animation every time for consistency, then rebuilds the category
+    // list to show the new EQUIPPED state.
+    IEnumerator PlaySelectFeedbackThenRefresh(VisualElement card, PartCategory category)
+    {
+        card.AddToClassList("part-card--punch");
+        yield return new WaitForSeconds(0.16f);
+        card.RemoveFromClassList("part-card--punch");
+        yield return new WaitForSeconds(0.06f);
+
+        ShowCategory(category);
+        UpdateProgressBar();
     }
 
     Sprite GetCategoryIcon(PartCategory cat) => cat switch
@@ -344,10 +401,8 @@ public class BuilderUIController : MonoBehaviour
         return chip;
     }
 
-    bool IsSelected(CarPart part)
+    bool IsSelected(CarPart part, CarBuild b)
     {
-        if (GameManager.Instance == null) return false;
-        var b = GameManager.Instance.currentBuild;
         if (b == null) return false;
         return part == b.frontWing || part == b.rearWing ||
                part == b.engine || part == b.suspension ||
@@ -367,13 +422,15 @@ public class BuilderUIController : MonoBehaviour
                 new Length((count / 8f) * 100f, LengthUnit.Percent));
 
         UpdateSidebarStatus();
-        UpdateSidebarMatchBars();
+        UpdateSidebarMatchBars(count);
     }
 
     void UpdateSidebarStatus()
     {
-        if (GameManager.Instance == null) return;
-        var b = GameManager.Instance.currentBuild;
+        var gm = GameManager.Instance;
+        if (gm == null) return;
+        var b = gm.currentBuild;
+        if (b == null) return;
 
         SetBtnStatus("BtnFrontWing", "StatusFrontWing", b.frontWing);
         SetBtnStatus("BtnRearWing", "StatusRearWing", b.rearWing);
@@ -423,15 +480,14 @@ public class BuilderUIController : MonoBehaviour
     // Live sidebar match bars (right panel, updates as parts change)
     // ---------------------------------------------------------------
 
-    void UpdateSidebarMatchBars()
+    void UpdateSidebarMatchBars(int? selectedCount = null)
     {
-        if (GameManager.Instance == null) return;
-        var build = GameManager.Instance.currentBuild;
+        var gm = GameManager.Instance;
+        if (gm == null) return;
+        var build = gm.currentBuild;
         var circuit = CircuitSelectionController.ChosenCircuit;
         if (build == null || circuit == null) return;
 
-        // Track whether each stat has ANY contributing part selected yet,
-        // so bars stay empty instead of showing a false match against zero.
         bool hasDownforce = build.frontWing != null || build.rearWing != null || build.floor != null;
         bool hasDrag = build.frontWing != null || build.rearWing != null || build.sidepods != null;
         bool hasEngine = build.engine != null;
@@ -444,7 +500,7 @@ public class BuilderUIController : MonoBehaviour
         SetLiveBar(liveMatchEngineFill, liveMatchEngineVal, r.engineMatch, hasEngine);
         SetLiveBar(liveMatchTyreFill, liveMatchTyreVal, r.tyreMatch, hasReliability);
 
-        UpdateLiveMatchHint(r);
+        UpdateLiveMatchHint(r, selectedCount ?? CountSelectedParts());
     }
 
     void SetLiveBar(VisualElement fill, Label val, float matchScore, bool hasData)
@@ -468,10 +524,10 @@ public class BuilderUIController : MonoBehaviour
         if (val != null) val.text = $"{matchScore:0}%";
     }
 
-    void UpdateLiveMatchHint(PerformanceResult r)
+    void UpdateLiveMatchHint(PerformanceResult r, int selectedCount)
     {
         if (liveMatchHint == null) return;
-        if (CountSelectedParts() == 0)
+        if (selectedCount == 0)
         {
             liveMatchHint.text = "Select parts to see your fit";
             return;
@@ -498,17 +554,90 @@ public class BuilderUIController : MonoBehaviour
     // Evaluate / Results modal
     // ---------------------------------------------------------------
 
-    void OnEvaluate()
+    IEnumerator PlayEvaluateFeedbackThenRun(Button btn)
     {
-        Debug.Log("OnEvaluate called!");
-        if (GameManager.Instance == null) return;
+        btn.AddToClassList("btn-evaluate--punch");
+        yield return new WaitForSeconds(0.14f);
+        btn.RemoveFromClassList("btn-evaluate--punch");
+
+        if (GameManager.Instance == null) yield break;
 
         var result = GameManager.Instance.EvaluateBuild();
 
         if (!result.isValid)
-            return;
+        {
+            Debug.Log("Build incomplete, skipping suspense sequence.");
+            yield break;
+        }
+
+        yield return StartCoroutine(PlaySuspenseSequence(result));
+    }
+
+    // "And your build is..." reveal screen: a short beat of suspense before
+    // the actual Race Report modal appears, instead of the modal just
+    // popping up instantly.
+    IEnumerator PlaySuspenseSequence(PerformanceResult result)
+    {
+        if (evaluatingOverlay == null)
+        {
+            ShowResultsModal(result);
+            yield break;
+        }
+
+        evaluatingOverlay.style.display = DisplayStyle.Flex;
+        evaluatingOverlay.style.opacity = 0f;
+        yield return StartCoroutine(FadeElement(evaluatingOverlay, 0f, 1f, 0.15f));
+
+        string[] phases = { "ANALYZING BUILD...", "CHECKING CIRCUIT FIT...", "AND YOUR BUILD IS..." };
+        foreach (var phase in phases)
+        {
+            if (evaluatingText != null) evaluatingText.text = phase;
+            yield return StartCoroutine(PulseOnce(evaluatingPulse));
+            yield return new WaitForSeconds(0.12f);
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        yield return StartCoroutine(FadeElement(evaluatingOverlay, 1f, 0f, 0.2f));
+        evaluatingOverlay.style.display = DisplayStyle.None;
 
         ShowResultsModal(result);
+    }
+
+    IEnumerator PulseOnce(VisualElement el)
+    {
+        if (el == null) yield break;
+        yield return StartCoroutine(ScaleElement(el, 1f, 1.22f, 0.22f));
+        yield return StartCoroutine(ScaleElement(el, 1.22f, 1f, 0.22f));
+    }
+
+    IEnumerator FadeElement(VisualElement el, float from, float to, float duration)
+    {
+        if (el == null) yield break;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            el.style.opacity = Mathf.Lerp(from, to, t);
+            yield return null;
+        }
+        el.style.opacity = to;
+    }
+
+    IEnumerator ScaleElement(VisualElement el, float from, float to, float duration)
+    {
+        if (el == null) yield break;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float s = Mathf.Lerp(from, to, t);
+            el.style.scale = new Scale(new Vector2(s, s));
+            yield return null;
+        }
+        el.style.scale = new Scale(new Vector2(to, to));
     }
 
     void ShowResultsModal(PerformanceResult result)
@@ -516,7 +645,6 @@ public class BuilderUIController : MonoBehaviour
         if (resultsModal == null) return;
         resultsModal.style.display = DisplayStyle.Flex;
 
-        // Reset to tab 1
         SwitchTab(0);
 
         var circuit = CircuitSelectionController.ChosenCircuit;
@@ -532,7 +660,7 @@ public class BuilderUIController : MonoBehaviour
         if (modalSpeed != null) modalSpeed.text = $"{result.speedScore}";
         if (modalCornering != null) modalCornering.text = $"{result.corneringScore}";
 
-        // These four bars now show the SAME match scores as the sidebar
+        // These four bars show the SAME match scores as the sidebar
         // (downforceMatch/dragMatch/engineMatch/tyreMatch), not raw physical
         // stats, so the modal and sidebar always agree with each other and
         // with the weighted Efficiency number above them.
@@ -543,9 +671,10 @@ public class BuilderUIController : MonoBehaviour
 
         PopulateModalDebrief(result, circuit);
 
-        // Populate leaderboard for tab 2
         if (GameManager.Instance?.currentBuild != null)
             PopulateLeaderboard(GameManager.Instance.currentBuild);
+
+        PopulateQualifying(result, circuit);
     }
 
     void SetModalBar(string barName, string valName, float value)
@@ -572,14 +701,31 @@ public class BuilderUIController : MonoBehaviour
 
         var tips = new System.Collections.Generic.List<string>();
 
-        if (result.efficiencyScore >= 90f)
+        if (result.efficiencyScore >= 93f)
             tips.Add("Outstanding setup. Your build matches this circuit's demands very well.");
-        else if (result.efficiencyScore >= 75f)
+        else if (result.efficiencyScore >= 78f)
             tips.Add("Solid build. A few component tweaks could push you into optimal territory.");
-        else if (result.efficiencyScore >= 55f)
+        else if (result.efficiencyScore >= 58f)
             tips.Add("Average setup for this circuit. Try matching your aero to the circuit's demands.");
         else
             tips.Add("This setup is poorly matched. Consider rebuilding specifically for this circuit.");
+
+        // Call out the single weakest category by name, with plain-language
+        // meaning, so a low number never sits unexplained.
+        var breakdown = new (string name, float score, string meaning)[]
+        {
+            ("Downforce", result.downforceMatch, "how well your wings and floor match this circuit's cornering load"),
+            ("Drag", result.dragMatch, "how well your straight-line efficiency matches this circuit's top speed demands"),
+            ("Engine", result.engineMatch, "how well your power unit's output matches what this circuit actually needs"),
+            ("Tyre Wear", result.tyreMatch, "how well your tyres, brakes, and suspension durability match this circuit's wear demands"),
+        };
+
+        var weakest = breakdown[0];
+        foreach (var b in breakdown)
+            if (b.score < weakest.score) weakest = b;
+
+        if (weakest.score < 60f)
+            tips.Add($"{weakest.name} is your weakest area here ({weakest.score:0}/100): {weakest.meaning}.");
 
         if (circuit != null && GameManager.Instance?.currentBuild != null)
         {
@@ -593,6 +739,14 @@ public class BuilderUIController : MonoBehaviour
                     tips.Add($"Swap {currentName} for {s.suggestedPart.partName}: {s.currentScore:0} \u2192 {s.projectedScore:0} (+{s.gain:0})");
                 }
                 tips.Add("Applying both changes together should push you further still, category effects don't stack perfectly, but this is your fastest path toward peak score.");
+            }
+            else if (weakest.score < 60f)
+            {
+                // No swap helps AND a category is genuinely weak: that means
+                // no available part in that category is close enough, not
+                // that the current choice was wrong. Say so honestly instead
+                // of implying the build is already optimal.
+                tips.Add($"No available {weakest.name.ToLower()} part gets closer to this circuit's demand right now, this is a gap in your part roster for this circuit, not a mistake in your build.");
             }
             else
             {
@@ -615,6 +769,72 @@ public class BuilderUIController : MonoBehaviour
             item.Add(text);
             modalDebriefItems.Add(item);
         }
+    }
+
+    // ---------------------------------------------------------------
+    // Qualifying + Race Projection tab
+    // ---------------------------------------------------------------
+
+    void PopulateQualifying(PerformanceResult result, Circuit circuit)
+    {
+        var q = QualifyingEstimator.Estimate(result, circuit);
+
+        if (!q.isValid)
+        {
+            if (qualiPosition != null) qualiPosition.text = "--";
+            if (qualiPositionLabel != null) qualiPositionLabel.text = "No lap record data for this circuit";
+            if (qualiEstimatedLap != null) qualiEstimatedLap.text = "--";
+            if (qualiRecordLap != null) qualiRecordLap.text = "--";
+            if (qualiGap != null) qualiGap.text = "--";
+            if (qualiRecordHolder != null) qualiRecordHolder.text = "";
+            if (raceGridPos != null) raceGridPos.text = "--";
+            if (raceFinishPos != null) raceFinishPos.text = "--";
+            if (raceTotalTime != null) raceTotalTime.text = "--";
+            if (raceTrendLabel != null) raceTrendLabel.text = "";
+            return;
+        }
+
+        if (qualiPosition != null) qualiPosition.text = $"P{q.estimatedPosition}";
+        if (qualiPositionLabel != null) qualiPositionLabel.text = q.positionLabel;
+        if (qualiEstimatedLap != null) qualiEstimatedLap.text = FormatLapTime(q.estimatedLapTimeSeconds);
+        if (qualiRecordLap != null) qualiRecordLap.text = q.recordLapTimeDisplay;
+        if (qualiGap != null) qualiGap.text = q.gapToRecordSeconds <= 0.001f
+            ? "AT RECORD PACE"
+            : $"+{q.gapToRecordSeconds:0.000}s";
+        if (qualiRecordHolder != null)
+            qualiRecordHolder.text = string.IsNullOrEmpty(q.recordHolder)
+                ? "Record holder not set"
+                : $"Track record held by {q.recordHolder}";
+
+        var race = QualifyingEstimator.EstimateRace(result, circuit, q);
+        if (!race.isValid) return;
+
+        if (raceGridPos != null) raceGridPos.text = $"P{q.estimatedPosition}";
+        if (raceFinishPos != null) raceFinishPos.text = $"P{race.estimatedFinishPosition}";
+        if (raceTotalTime != null) raceTotalTime.text = FormatRaceTime(race.totalRaceTimeSeconds);
+        if (raceTrendLabel != null)
+        {
+            raceTrendLabel.text = race.trendLabel;
+            raceTrendLabel.RemoveFromClassList("lb-rating--optimal");
+            raceTrendLabel.RemoveFromClassList("lb-rating--poor");
+            if (race.positionsGained > 0) raceTrendLabel.AddToClassList("lb-rating--optimal");
+            else if (race.positionsGained < 0) raceTrendLabel.AddToClassList("lb-rating--poor");
+        }
+    }
+
+    string FormatLapTime(float seconds)
+    {
+        int mins = Mathf.FloorToInt(seconds / 60f);
+        float secs = seconds - (mins * 60f);
+        return $"{mins}:{secs:00.000}";
+    }
+
+    string FormatRaceTime(float totalSeconds)
+    {
+        int hours = Mathf.FloorToInt(totalSeconds / 3600f);
+        int mins = Mathf.FloorToInt((totalSeconds % 3600f) / 60f);
+        float secs = totalSeconds % 60f;
+        return hours > 0 ? $"{hours}:{mins:00}:{secs:00.0}" : $"{mins}:{secs:00.0}";
     }
 
     void OnReset()
@@ -659,32 +879,17 @@ public class BuilderUIController : MonoBehaviour
 
     void SwitchTab(int tab)
     {
-        if (tab == 0)
-        {
-            if (tabPageRace != null)
-                tabPageRace.style.display = DisplayStyle.Flex;
-            if (tabPageCompare != null)
-                tabPageCompare.style.display = DisplayStyle.None;
-            if (tabRace != null)
-            {
-                tabRace.AddToClassList("modal-tab--active");
-                tabRace.RemoveFromClassList("modal-tab");
-                tabRace.AddToClassList("modal-tab");
-            }
-            if (tabCompare != null)
-                tabCompare.RemoveFromClassList("modal-tab--active");
-        }
-        else
-        {
-            if (tabPageRace != null)
-                tabPageRace.style.display = DisplayStyle.None;
-            if (tabPageCompare != null)
-                tabPageCompare.style.display = DisplayStyle.Flex;
-            if (tabCompare != null)
-                tabCompare.AddToClassList("modal-tab--active");
-            if (tabRace != null)
-                tabRace.RemoveFromClassList("modal-tab--active");
-        }
+        if (tabPageRace != null) tabPageRace.style.display = tab == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+        if (tabPageCompare != null) tabPageCompare.style.display = tab == 1 ? DisplayStyle.Flex : DisplayStyle.None;
+        if (tabPageQualifying != null) tabPageQualifying.style.display = tab == 2 ? DisplayStyle.Flex : DisplayStyle.None;
+
+        tabRace?.RemoveFromClassList("modal-tab--active");
+        tabCompare?.RemoveFromClassList("modal-tab--active");
+        tabQualifying?.RemoveFromClassList("modal-tab--active");
+
+        if (tab == 0) tabRace?.AddToClassList("modal-tab--active");
+        else if (tab == 1) tabCompare?.AddToClassList("modal-tab--active");
+        else if (tab == 2) tabQualifying?.AddToClassList("modal-tab--active");
     }
 
     void PopulateLeaderboard(CarBuild build)

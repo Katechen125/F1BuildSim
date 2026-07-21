@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\PerformanceEngine.cs" />
     <Compile Include="Assets\Scripts\BuildAdvisor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Qualifyingestimator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

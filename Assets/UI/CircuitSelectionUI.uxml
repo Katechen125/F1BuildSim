@@ -5,7 +5,7 @@
         <ui:VisualElement name="Header">
             <ui:VisualElement name="HeaderLeft">
                 <ui:Label name="AppTitle" text="SPEEDKRAFT"/>
-                <ui:Label name="AppSubtitle" text="BY HSIUNG-SI TECHNOLOGIES"/> 
+                <ui:Label name="AppSubtitle" text="BY HSIUNG-SI TECHNOLOGIES"/>
             </ui:VisualElement>
             <ui:Label name="HeaderRight" text="8 CIRCUITS AVAILABLE"/>
         </ui:VisualElement>
@@ -26,6 +26,17 @@
 
                     <ui:VisualElement name="TrackImageContainer">
                         <ui:VisualElement name="TrackImage"/>
+
+                        <!-- Mission lock-in overlay, invisible until BtnConfirm
+                             triggers the coroutine in CircuitSelectionController -->
+                        <ui:VisualElement name="LockCornerTL" class="lock-corner lock-corner--tl"/>
+                        <ui:VisualElement name="LockCornerTR" class="lock-corner lock-corner--tr"/>
+                        <ui:VisualElement name="LockCornerBL" class="lock-corner lock-corner--bl"/>
+                        <ui:VisualElement name="LockCornerBR" class="lock-corner lock-corner--br"/>
+                        <ui:VisualElement name="LockFlash"/>
+                        <ui:VisualElement name="LockStampWrap">
+                            <ui:Label name="LockStamp" text="CIRCUIT LOCKED"/>
+                        </ui:VisualElement>
                     </ui:VisualElement>
 
                     <ui:VisualElement name="CircuitInfo">

@@ -157,7 +157,7 @@
 
                 <ui:VisualElement class="live-match-row">
                     <ui:VisualElement class="live-match-row-top">
-                        <ui:Label text="TYRE / RELIABILITY" class="live-match-label" />
+                        <ui:Label text="TYRE WEAR" class="live-match-label" />
                         <ui:Label name="LiveMatchTyreVal" text="--" class="live-match-val" />
                     </ui:VisualElement>
                     <ui:VisualElement class="live-match-track">
@@ -171,6 +171,14 @@
             <ui:Button name="BtnEvaluate" text="EVALUATE BUILD"/>
         </ui:VisualElement>
 
+        <!-- SUSPENSE REVEAL SCREEN: shown after Evaluate, before the results modal -->
+        <ui:VisualElement name="EvaluatingOverlay" style="display: none;">
+            <ui:VisualElement name="EvaluatingCard">
+                <ui:VisualElement name="EvaluatingPulse"/>
+                <ui:Label name="EvaluatingText" text="ANALYZING BUILD..."/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        
         <!-- RESULTS MODAL -->
         <ui:VisualElement name="ResultsModal" style="display: none;">
             <ui:VisualElement name="ModalOverlay"/>
@@ -192,6 +200,7 @@
         <ui:VisualElement name="ModalTabs">
             <ui:Button name="TabRace" text="RACE RESULT" class="modal-tab modal-tab--active"/>
             <ui:Button name="TabCompare" text="ALL CIRCUITS" class="modal-tab"/>
+            <ui:Button name="TabQualifying" text="QUALIFYING" class="modal-tab"/>
         </ui:VisualElement>
 
         <!-- Page 1: Race result -->
@@ -224,6 +233,11 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
+            <!--
+                These four bars show CIRCUIT MATCH scores (downforceMatch,
+                dragMatch, engineMatch, tyreMatch), the same values as the
+                sidebar's Circuit Fit panel, not raw physical car stats.
+            -->
             <ui:VisualElement name="ModalBars">
                 <ui:VisualElement class="modal-bar-row">
                     <ui:Label text="DOWNFORCE" class="modal-bar-label"/>
@@ -247,7 +261,7 @@
                     <ui:Label name="ModalBarCorneringVal" text="--" class="modal-bar-val"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="modal-bar-row">
-                    <ui:Label text="TYRE / RELIABILITY" class="modal-bar-label"/>
+                    <ui:Label text="TYRE WEAR" class="modal-bar-label"/>
                     <ui:VisualElement class="modal-bar-track">
                         <ui:VisualElement name="ModalBarReliability" class="modal-bar-fill"/>
                     </ui:VisualElement>
@@ -268,6 +282,57 @@
             <ui:ScrollView name="CircuitLeaderboard"
                 vertical-scroller-visibility="Hidden"
                 horizontal-scroller-visibility="Hidden"/>
+        </ui:VisualElement>
+
+        <!-- Page 3: Qualifying + Race Projection -->
+        <ui:VisualElement name="TabPageQualifying" style="display: none;">
+            <ui:Label text="ESTIMATED QUALIFYING PACE" class="compare-title"/>
+            <ui:Label text="BASED ON YOUR CIRCUIT FIT SCORE" class="compare-sub"/>
+
+            <ui:VisualElement name="QualiPositionCard" class="modal-score-card">
+                <ui:Label text="ESTIMATED GRID POSITION" class="modal-score-label"/>
+                <ui:Label name="QualiPosition" text="--" class="modal-score-num"/>
+                <ui:Label name="QualiPositionLabel" text="——" class="modal-rating-val"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="QualiTimeRow" class="modal-mini-row">
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="ESTIMATED LAP" class="modal-ms-label"/>
+                    <ui:Label name="QualiEstimatedLap" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="TRACK RECORD" class="modal-ms-label"/>
+                    <ui:Label name="QualiRecordLap" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="GAP TO RECORD" class="modal-ms-label"/>
+                    <ui:Label name="QualiGap" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label name="QualiRecordHolder" text="" class="live-match-hint"/>
+
+            <ui:VisualElement name="RaceProjectionDivider" class="card-divider"/>
+
+            <ui:Label text="RACE PROJECTION" class="compare-title"/>
+            <ui:Label text="STARTING FROM YOUR ESTIMATED GRID SLOT" class="compare-sub"/>
+
+            <ui:VisualElement name="RaceResultRow" class="modal-mini-row">
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="GRID" class="modal-ms-label"/>
+                    <ui:Label name="RaceGridPos" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="FINISH" class="modal-ms-label"/>
+                    <ui:Label name="RaceFinishPos" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="modal-mini-stat">
+                    <ui:Label text="TOTAL TIME" class="modal-ms-label"/>
+                    <ui:Label name="RaceTotalTime" text="--" class="modal-ms-val"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label name="RaceTrendLabel" text="——" class="modal-rating-val"/>
         </ui:VisualElement>
 
         <!-- Buttons -->

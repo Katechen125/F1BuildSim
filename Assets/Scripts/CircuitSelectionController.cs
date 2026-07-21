@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
@@ -17,6 +18,15 @@ public class CircuitSelectionController : MonoBehaviour
     [Header("Builder Reference")]
     public GameObject builderObject;
 
+    [Header("Mission Lock-In Timing")]
+    public float zoomPunchDuration = 0.18f;
+    public float zoomSettleDuration = 0.12f;
+    public float cornerStaggerDelay = 0.05f;
+    public float cornerFadeDuration = 0.12f;
+    public float stampPunchDuration = 0.2f;
+    public float flashFadeOutDuration = 0.3f;
+    public float pauseBeforeSwitch = 0.55f;
+
     private VisualElement root;
     private VisualElement circuitGrid;
     private VisualElement trackImage;
@@ -29,7 +39,16 @@ public class CircuitSelectionController : MonoBehaviour
     private Button confirmBtn;
     private VisualElement circuitFlagLarge;
 
+    // Mission lock-in overlay elements
+    private VisualElement lockCornerTL;
+    private VisualElement lockCornerTR;
+    private VisualElement lockCornerBL;
+    private VisualElement lockCornerBR;
+    private VisualElement lockFlash;
+    private VisualElement lockStampWrap;
+
     private Circuit selectedCircuit;
+    private bool isLockingIn;
 
     public static Circuit ChosenCircuit;
 
@@ -48,7 +67,15 @@ public class CircuitSelectionController : MonoBehaviour
         confirmBtn = root.Q<Button>("BtnConfirm");
         circuitFlagLarge = root.Q<VisualElement>("CircuitFlagImg");
 
-        
+        lockCornerTL = root.Q<VisualElement>("LockCornerTL");
+        lockCornerTR = root.Q<VisualElement>("LockCornerTR");
+        lockCornerBL = root.Q<VisualElement>("LockCornerBL");
+        lockCornerBR = root.Q<VisualElement>("LockCornerBR");
+        lockFlash = root.Q<VisualElement>("LockFlash");
+        lockStampWrap = root.Q<VisualElement>("LockStampWrap");
+
+        ResetLockInVisuals();
+
         ApplyFonts();
 
         if (confirmBtn != null)
@@ -70,7 +97,6 @@ public class CircuitSelectionController : MonoBehaviour
             var card = new VisualElement();
             card.AddToClassList("circuit-card");
 
-            // Flag as image instead of emoji label
             var flagImg = new Image();
             flagImg.AddToClassList("circuit-flag-img");
             if (circuit.flagSprite != null)
@@ -97,11 +123,13 @@ public class CircuitSelectionController : MonoBehaviour
             circuitGrid.Add(card);
         }
     }
+
     void SelectCircuit(Circuit circuit)
     {
+        if (isLockingIn) return;
+
         selectedCircuit = circuit;
 
-        // Update card styles
         foreach (var card in circuitGrid.Children())
         {
             card.RemoveFromClassList("circuit-card--selected");
@@ -110,12 +138,9 @@ public class CircuitSelectionController : MonoBehaviour
                 card.AddToClassList("circuit-card--selected");
         }
 
-        // Update track image
         if (trackImage != null && circuit.trackLayout != null)
             trackImage.style.backgroundImage = new StyleBackground(circuit.trackLayout);
 
-        // Update info
-        // Update info
         if (circuitNameLabel != null)
             circuitNameLabel.text = circuit.circuitName.ToUpper();
         if (circuitSubLabel != null)
@@ -129,7 +154,6 @@ public class CircuitSelectionController : MonoBehaviour
         if (circuitFlagLarge != null && circuit.flagSprite != null)
             circuitFlagLarge.style.backgroundImage = new StyleBackground(circuit.flagSprite);
 
-        // Update tags
         if (tagsContainer != null)
         {
             tagsContainer.Clear();
@@ -144,20 +168,107 @@ public class CircuitSelectionController : MonoBehaviour
 
     void OnConfirm()
     {
-        if (selectedCircuit == null) return;
+        if (selectedCircuit == null || isLockingIn) return;
+        StartCoroutine(LockInSequence());
+    }
+
+    // "Accepting a mission" moment: the track image punches into a zoom,
+    // targeting-style corner brackets snap onto it in sequence, a flash
+    // sells the impact, and a "CIRCUIT LOCKED" stamp punches in before
+    // switching to the builder.
+    IEnumerator LockInSequence()
+    {
+        isLockingIn = true;
         ChosenCircuit = selectedCircuit;
-        Debug.Log($"Circuit selected: {selectedCircuit.circuitName}");
+        if (confirmBtn != null) confirmBtn.SetEnabled(false);
 
-        gameObject.SetActive(false);
+        // 1. Impact zoom with overshoot, then settle slightly higher than 1x
+        yield return StartCoroutine(ScaleElement(trackImage, 1f, 1.16f, zoomPunchDuration));
+        yield return StartCoroutine(ScaleElement(trackImage, 1.16f, 1.06f, zoomSettleDuration));
 
-        if (builderObject != null)
+        // 2. Corner brackets snap in one at a time, targeting-lock feel
+        StartCoroutine(FadeElement(lockCornerTL, 0f, 1f, cornerFadeDuration));
+        yield return new WaitForSeconds(cornerStaggerDelay);
+        StartCoroutine(FadeElement(lockCornerTR, 0f, 1f, cornerFadeDuration));
+        yield return new WaitForSeconds(cornerStaggerDelay);
+        StartCoroutine(FadeElement(lockCornerBL, 0f, 1f, cornerFadeDuration));
+        yield return new WaitForSeconds(cornerStaggerDelay);
+        StartCoroutine(FadeElement(lockCornerBR, 0f, 1f, cornerFadeDuration));
+        yield return new WaitForSeconds(cornerFadeDuration);
+
+        // 3. Flash + stamp punch, the actual "mission accepted" beat
+        StartCoroutine(FadeElement(lockFlash, 0f, 0.9f, 0.05f));
+        if (lockStampWrap != null)
         {
-            builderObject.SetActive(true);
-            Debug.Log("Builder activated");
+            lockStampWrap.style.opacity = 1f;
+            lockStampWrap.style.scale = new Scale(new Vector2(1.5f, 1.5f));
         }
+        yield return StartCoroutine(ScaleElement(lockStampWrap, 1.5f, 1f, stampPunchDuration));
+        StartCoroutine(FadeElement(lockFlash, 0.9f, 0f, flashFadeOutDuration));
+
+        yield return new WaitForSeconds(pauseBeforeSwitch);
+
+        // Activate the next screen before deactivating this one, same
+        // ordering fix as the splash screen transition.
+        if (builderObject != null)
+            builderObject.SetActive(true);
         else
             Debug.LogError("Builder reference not set!");
+
+        gameObject.SetActive(false);
     }
+
+    void ResetLockInVisuals()
+    {
+        SetOpacityImmediate(lockCornerTL, 0f);
+        SetOpacityImmediate(lockCornerTR, 0f);
+        SetOpacityImmediate(lockCornerBL, 0f);
+        SetOpacityImmediate(lockCornerBR, 0f);
+        SetOpacityImmediate(lockFlash, 0f);
+        SetOpacityImmediate(lockStampWrap, 0f);
+
+        if (trackImage != null)
+            trackImage.style.scale = new Scale(Vector2.one);
+        if (lockStampWrap != null)
+            lockStampWrap.style.scale = new Scale(Vector2.one);
+    }
+
+    void SetOpacityImmediate(VisualElement el, float value)
+    {
+        if (el == null) return;
+        el.style.opacity = value;
+    }
+
+    IEnumerator FadeElement(VisualElement el, float from, float to, float duration)
+    {
+        if (el == null) yield break;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            el.style.opacity = Mathf.Lerp(from, to, t);
+            yield return null;
+        }
+        el.style.opacity = to;
+    }
+
+    IEnumerator ScaleElement(VisualElement el, float from, float to, float duration)
+    {
+        if (el == null) yield break;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float eased = 1f - Mathf.Pow(1f - t, 3f);
+            float s = Mathf.Lerp(from, to, eased);
+            el.style.scale = new Scale(new Vector2(s, s));
+            yield return null;
+        }
+        el.style.scale = new Scale(new Vector2(to, to));
+    }
+
     void ApplyFonts()
     {
         if (orbitronFont != null)
@@ -167,6 +278,7 @@ public class CircuitSelectionController : MonoBehaviour
             SetFont(root.Q<Label>("CircuitName"), orbitronFont);
             SetFont(root.Q<Label>("GridLabel"), orbitronFont);
             SetFont(root.Q<Label>("HeaderRight"), orbitronFont);
+            SetFont(root.Q<Label>("LockStamp"), orbitronFont);
         }
 
         if (exo2Font != null)

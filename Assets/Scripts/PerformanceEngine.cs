@@ -5,10 +5,10 @@ public static class PerformanceEngine
     private static readonly PartCategory[] DownforceCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Floor };
     private static readonly PartCategory[] DragCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Sidepods };
     private static readonly PartCategory[] PowerCategories = { PartCategory.Engine };
-    private static readonly PartCategory[] ReliabilityCategories = { PartCategory.Tyres, PartCategory.Brakes, PartCategory.Suspension };
 
-    private const float MatchTolerance = 8f;
-    private const float DecaySteepness = 1.3f;
+    // Tightened from 8/1.3 so mid-pack circuits stop clustering at OPTIMAL together.
+    private const float MatchTolerance = 5f;
+    private const float DecaySteepness = 1.6f;
 
     private static float AverageStat(CarBuild build, PartCategory[] categories, System.Func<CarPart, float> selector)
     {
@@ -25,6 +25,26 @@ public static class PerformanceEngine
             count++;
         }
         return count == 0 ? 0f : total / count;
+    }
+
+    // Tyres matter most for real tyre wear/reliability, brakes and suspension
+    // matter but less. A flat 3-way average diluted single-part swaps too
+    // much (a Brakes or Suspension change barely moved the score), so tyres
+    // get 50% weight and brakes/suspension split the remaining 50%.
+    private static float ReliabilityWeightedAverage(CarBuild build)
+    {
+        float? tyres = build.tyres != null ? build.tyres.reliability : (float?)null;
+        float? brakes = build.brakes != null ? build.brakes.reliability : (float?)null;
+        float? suspension = build.suspension != null ? build.suspension.reliability : (float?)null;
+
+        float totalWeight = 0f;
+        float weightedSum = 0f;
+
+        if (tyres.HasValue) { weightedSum += tyres.Value * 0.5f; totalWeight += 0.5f; }
+        if (brakes.HasValue) { weightedSum += brakes.Value * 0.25f; totalWeight += 0.25f; }
+        if (suspension.HasValue) { weightedSum += suspension.Value * 0.25f; totalWeight += 0.25f; }
+
+        return totalWeight == 0f ? 0f : weightedSum / totalWeight;
     }
 
     private static float MatchScore(float actual, float target)
@@ -53,7 +73,7 @@ public static class PerformanceEngine
         float avgDownforce = AverageStat(build, DownforceCategories, p => p.downforce);
         float avgDrag = AverageStat(build, DragCategories, p => p.drag);
         float avgPower = AverageStat(build, PowerCategories, p => p.power);
-        float avgReliability = AverageStat(build, ReliabilityCategories, p => p.reliability);
+        float avgReliability = ReliabilityWeightedAverage(build);
 
         float aeroEfficiency = avgDrag > 0
             ? (avgDownforce / (avgDownforce + avgDrag)) * 100f
@@ -78,7 +98,6 @@ public static class PerformanceEngine
             downforceMatch = MatchScore(avgDownforce, circuit.downforceRequirement);
             dragMatch = MatchScore(avgDrag, 100f - circuit.dragSensitivity);
             engineMatch = MatchScore(avgPower, circuit.engineDemand);
-            // Higher tyre stress rewards higher reliability parts (flipped from original)
             tyreMatch = MatchScore(avgReliability, circuit.tyreStress);
 
             circuitFitScore = (downforceMatch * 0.35f)
@@ -89,9 +108,11 @@ public static class PerformanceEngine
             lapTime -= (circuitFitScore / 100f) * 8f;
             lapTime = Mathf.Clamp(lapTime, 60f, 90f);
 
-            if (circuitFitScore >= 90f) circuitRating = "OPTIMAL SETUP";
-            else if (circuitFitScore >= 75f) circuitRating = "GOOD SETUP";
-            else if (circuitFitScore >= 55f) circuitRating = "AVERAGE SETUP";
+            // Thresholds raised so OPTIMAL requires genuine circuit-specific tuning,
+            // not just a decent all-round build.
+            if (circuitFitScore >= 93f) circuitRating = "OPTIMAL SETUP";
+            else if (circuitFitScore >= 78f) circuitRating = "GOOD SETUP";
+            else if (circuitFitScore >= 58f) circuitRating = "AVERAGE SETUP";
             else circuitRating = "POOR SETUP";
         }
 
@@ -140,7 +161,6 @@ public class PerformanceResult
     public float avgDownforce;
     public float avgDrag;
 
-    // Per-stat match scores, used by the sidebar live bars and the debrief/advisor
     public float downforceMatch;
     public float dragMatch;
     public float engineMatch;

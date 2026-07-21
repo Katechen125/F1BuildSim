@@ -16,13 +16,13 @@
         <ui:VisualElement name="CornerBR" class="corner"/>
 
         <ui:VisualElement name="HudTL">
-            <ui:Label text="APPLE VISION PRO"/>
-            <ui:Label text="SYS.READY · v2.5"/>
+            <ui:Label name="HudTL1" text="APPLE VISION PRO"/>
+            <ui:Label name="HudTL2" text="SYS.READY · v2.5"/>
         </ui:VisualElement>
 
         <ui:VisualElement name="HudTR">
-            <ui:Label text="2025 SEASON"/>
-            <ui:Label text="CAR.CFG · READY"/>
+            <ui:Label name="HudTR1" text="2025 SEASON"/>
+            <ui:Label name="HudTR2" text="CAR.CFG · READY"/>
         </ui:VisualElement>
 
         <ui:VisualElement name="Content">
@@ -80,6 +80,15 @@
             </ui:VisualElement>
             <ui:Label name="BottomRight" text="SPEEDKRAFT · 2025"/>
         </ui:VisualElement>
+
+        <!-- Garage doors: 0 width until BtnStart is clicked, then grow to
+             50% each, meeting at center. DoorSeamGlow/DoorSeamCore start
+             invisible (opacity 0) and are only faded in by script the
+             instant the doors finish closing, that's the synced flash. -->
+        <ui:VisualElement name="GarageDoorLeft" class="garage-door garage-door--left"/>
+        <ui:VisualElement name="GarageDoorRight" class="garage-door garage-door--right"/>
+        <ui:VisualElement name="DoorSeamGlow"/>
+        <ui:VisualElement name="DoorSeamCore"/>
 
     </ui:VisualElement>
 </ui:UXML>

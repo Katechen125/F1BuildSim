@@ -352,3 +352,48 @@
     color: rgba(180, 120, 50, 0.6);
     letter-spacing: 2px;
 }
+
+/* ===================== GARAGE DOOR TRANSITION ===================== */
+/* Doors start at 0 width and grow to 50% each, meeting in the center.
+   No border on the door panels themselves, that was causing a static
+   orange line to appear instantly at frame 0, before the doors had
+   visibly moved, it read as "the light already happened." The seam
+   flash below is triggered by script only once the doors are fully
+   closed, so the glow is synced to the actual moment of closure. */
+.garage-door {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background-color: rgb(6, 4, 2);
+}
+
+.garage-door--left {
+    left: 0;
+}
+
+.garage-door--right {
+    right: 0;
+}
+
+#DoorSeamGlow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 80px;
+    margin-left: -40px;
+    background-color: rgba(255, 140, 40, 0.35);
+    opacity: 0;
+}
+
+#DoorSeamCore {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    margin-left: -2px;
+    background-color: rgb(255, 220, 180);
+    opacity: 0;
+}
