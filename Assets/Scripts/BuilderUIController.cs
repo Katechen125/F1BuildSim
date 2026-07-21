@@ -85,7 +85,9 @@ public class BuilderUIController : MonoBehaviour
     private Label qualiRecordHolder;
     private Label raceGridPos;
     private Label raceFinishPos;
+    private Label raceAvgLap;
     private Label raceTotalTime;
+    private Label raceLapCompareLabel;
     private Label raceTrendLabel;
 
     // All circuits reference
@@ -156,7 +158,9 @@ public class BuilderUIController : MonoBehaviour
         qualiRecordHolder = root.Q<Label>("QualiRecordHolder");
         raceGridPos = root.Q<Label>("RaceGridPos");
         raceFinishPos = root.Q<Label>("RaceFinishPos");
+        raceAvgLap = root.Q<Label>("RaceAvgLap");
         raceTotalTime = root.Q<Label>("RaceTotalTime");
+        raceLapCompareLabel = root.Q<Label>("RaceLapCompareLabel");
         raceTrendLabel = root.Q<Label>("RaceTrendLabel");
 
         // Race with build button
@@ -738,7 +742,11 @@ public class BuilderUIController : MonoBehaviour
                     string currentName = s.currentPart != null ? s.currentPart.partName : "no part selected";
                     tips.Add($"Swap {currentName} for {s.suggestedPart.partName}: {s.currentScore:0} \u2192 {s.projectedScore:0} (+{s.gain:0})");
                 }
-                tips.Add("Applying both changes together should push you further still, category effects don't stack perfectly, but this is your fastest path toward peak score.");
+
+                if (suggestions.Count > 1)
+                    tips.Add("Applying both changes together should push you further still, category effects don't stack perfectly, but this is your fastest path toward peak score.");
+                else
+                    tips.Add("That's the only single-part swap that improves your score here, everything else is already dialed in for this circuit.");
             }
             else if (weakest.score < 60f)
             {
@@ -789,7 +797,9 @@ public class BuilderUIController : MonoBehaviour
             if (qualiRecordHolder != null) qualiRecordHolder.text = "";
             if (raceGridPos != null) raceGridPos.text = "--";
             if (raceFinishPos != null) raceFinishPos.text = "--";
+            if (raceAvgLap != null) raceAvgLap.text = "--";
             if (raceTotalTime != null) raceTotalTime.text = "--";
+            if (raceLapCompareLabel != null) raceLapCompareLabel.text = "";
             if (raceTrendLabel != null) raceTrendLabel.text = "";
             return;
         }
@@ -811,7 +821,13 @@ public class BuilderUIController : MonoBehaviour
 
         if (raceGridPos != null) raceGridPos.text = $"P{q.estimatedPosition}";
         if (raceFinishPos != null) raceFinishPos.text = $"P{race.estimatedFinishPosition}";
+        if (raceAvgLap != null) raceAvgLap.text = FormatLapTime(race.avgRaceLapSeconds);
         if (raceTotalTime != null) raceTotalTime.text = FormatRaceTime(race.totalRaceTimeSeconds);
+        if (raceLapCompareLabel != null)
+        {
+            float diff = race.avgRaceLapSeconds - q.estimatedLapTimeSeconds;
+            raceLapCompareLabel.text = $"+{diff:0.000}s per lap vs qualifying pace (fuel + tyre management over a full stint)";
+        }
         if (raceTrendLabel != null)
         {
             raceTrendLabel.text = race.trendLabel;
@@ -834,7 +850,14 @@ public class BuilderUIController : MonoBehaviour
         int hours = Mathf.FloorToInt(totalSeconds / 3600f);
         int mins = Mathf.FloorToInt((totalSeconds % 3600f) / 60f);
         float secs = totalSeconds % 60f;
-        return hours > 0 ? $"{hours}:{mins:00}:{secs:00.0}" : $"{mins}:{secs:00.0}";
+
+        // Explicit h/m/s labels instead of colon notation, a total race
+        // time like "1:20:42.7" reads too similarly to a single lap time
+        // like "1:46.339", making it look (wrongly) like it could beat the
+        // lap record. Spelling out the units removes that ambiguity.
+        return hours > 0
+            ? $"{hours}h {mins:00}m {secs:00.0}s"
+            : $"{mins}m {secs:00.0}s";
     }
 
     void OnReset()

@@ -7,14 +7,22 @@ public static class QualifyingEstimator
     // Tightened so only a near-perfect, circuit-specific build gets close to
     // pole, and no build ever literally matches or beats the historical
     // record, that's the point of the MinimumGapPercent floor below.
-    private const float PercentPerMissingPoint = 0.06f;
+    private const float PercentPerMissingPoint = 0.07f;
     private const float MaxGapPercentForLastPlace = 6f;
     private const float MinimumGapPercent = 0.05f;
+
+    // Driver execution variance: even a perfectly-matched car doesn't
+    // guarantee a perfect lap every time, the driver has to actually
+    // deliver it. This is a one-sided random cost (0 to max), never a
+    // gain, so the car's fit score still sets the ceiling, but that
+    // ceiling is no longer a guarantee. Rolled separately for qualifying
+    // and the race, since they're different sessions.
+    private const float DriverVarianceMaxPercent = 0.35f;
     private const int GridSize = 20;
 
     // Race laps run a bit slower than a single qualifying push lap
     // (fuel load, tyre management, less risk-taking).
-    private const float RacePaceOffsetMultiplier = 1.015f;
+    private const float RacePaceOffsetMultiplier = 1.035f;
 
     // Parses "1:31.447" (m:ss.sss) into total seconds. Returns -1f if the
     // string is empty or not in the expected format, so callers can treat
@@ -42,7 +50,9 @@ public static class QualifyingEstimator
         // Position uses the RAW gap, unfloored, so only a literal 100
         // circuitFitScore ever earns pole. A 99 already costs at least one
         // grid slot, this is intentionally strict.
-        float rawGapPercent = Mathf.Clamp((100f - result.circuitFitScore) * PercentPerMissingPoint, 0f, 15f);
+        float carGapPercent = Mathf.Clamp((100f - result.circuitFitScore) * PercentPerMissingPoint, 0f, 15f);
+        float driverVariance = Random.Range(0f, DriverVarianceMaxPercent);
+        float rawGapPercent = carGapPercent + driverVariance;
 
         // Displayed lap time uses a floored gap, so even a perfect P1 build
         // never literally ties or beats the historical record, execution
@@ -65,7 +75,8 @@ public static class QualifyingEstimator
             gapPercent = Mathf.Round(displayGapPercent * 100f) / 100f,
             recordLapTimeSeconds = recordSeconds,
             recordLapTimeDisplay = circuit.lapRecordTime,
-            recordHolder = circuit.lapRecordHolder
+            recordHolder = circuit.lapRecordHolder,
+            driverVarianceRolled = driverVariance
         };
     }
 
@@ -83,7 +94,12 @@ public static class QualifyingEstimator
                             + (result.engineMatch * 0.20f)
                             + (result.tyreMatch * 0.30f);
 
-        float rawRaceGapPercent = Mathf.Clamp((100f - raceFitScore) * PercentPerMissingPoint, 0f, 15f);
+        float carRaceGapPercent = Mathf.Clamp((100f - raceFitScore) * PercentPerMissingPoint, 0f, 15f);
+        // Same driver, same day: reuse the variance rolled during qualifying
+        // instead of an independent roll, so the two screens read as one
+        // consistent driver performance rather than two unrelated dice
+        // rolls.
+        float rawRaceGapPercent = carRaceGapPercent + quali.driverVarianceRolled;
         float displayRaceGapPercent = Mathf.Max(rawRaceGapPercent, MinimumGapPercent);
         int racePosition = GapPercentToPosition(rawRaceGapPercent);
 
@@ -139,6 +155,7 @@ public class QualifyingResult
     public float recordLapTimeSeconds;
     public string recordLapTimeDisplay;
     public string recordHolder;
+    public float driverVarianceRolled;
 }
 
 [System.Serializable]

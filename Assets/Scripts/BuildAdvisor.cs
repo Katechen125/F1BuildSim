@@ -13,54 +13,80 @@ public static class BuildAdvisor
         public float gain;
     }
 
+    // Chained/sequential search: each suggestion is found on top of the
+    // build state AFTER applying the previous suggestion, not against the
+    // original build independently. This is the fix for two suggestions
+    // both claiming to reach the same ceiling on their own, if the first
+    // swap alone already maxes the score, the search correctly finds no
+    // further gain available and stops instead of recommending a second,
+    // redundant change.
     public static List<Suggestion> GetTopSuggestions(CarBuild build, Circuit circuit, CarPart[] allParts, int maxSuggestions = 2)
     {
         var suggestions = new List<Suggestion>();
         if (build == null || circuit == null || allParts == null) return suggestions;
 
-        float baseScore = PerformanceEngine.Calculate(build, circuit, requireComplete: false).circuitFitScore;
+        var alreadySuggestedCategories = new HashSet<PartCategory>();
+        float runningScore = PerformanceEngine.Calculate(build, circuit, requireComplete: false).circuitFitScore;
 
-        foreach (PartCategory category in System.Enum.GetValues(typeof(PartCategory)))
+        for (int i = 0; i < maxSuggestions; i++)
         {
-            CarPart original = GetPart(build, category);
+            // Ceiling reached, no further suggestion can possibly help.
+            if (runningScore >= 99.5f) break;
+
+            PartCategory? bestCategory = null;
+            CarPart bestOriginal = null;
             CarPart bestAlt = null;
-            float bestScore = baseScore;
+            float bestScore = runningScore;
 
-            foreach (var candidate in allParts)
+            foreach (PartCategory category in System.Enum.GetValues(typeof(PartCategory)))
             {
-                if (candidate == null || candidate.category != category || candidate == original)
-                    continue;
+                if (alreadySuggestedCategories.Contains(category)) continue;
 
-                SetPart(build, category, candidate);
-                float trialScore = PerformanceEngine.Calculate(build, circuit, requireComplete: false).circuitFitScore;
+                CarPart original = GetPart(build, category);
 
-                if (trialScore > bestScore)
+                foreach (var candidate in allParts)
                 {
-                    bestScore = trialScore;
-                    bestAlt = candidate;
+                    if (candidate == null || candidate.category != category || candidate == original)
+                        continue;
+
+                    SetPart(build, category, candidate);
+                    float trialScore = PerformanceEngine.Calculate(build, circuit, requireComplete: false).circuitFitScore;
+                    SetPart(build, category, original);
+
+                    if (trialScore > bestScore)
+                    {
+                        bestScore = trialScore;
+                        bestCategory = category;
+                        bestOriginal = original;
+                        bestAlt = candidate;
+                    }
                 }
             }
 
-            // Always revert, we're only probing
-            SetPart(build, category, original);
+            // No category improves on the current running state, stop.
+            if (bestCategory == null) break;
 
-            if (bestAlt != null)
+            suggestions.Add(new Suggestion
             {
-                suggestions.Add(new Suggestion
-                {
-                    category = category,
-                    currentPart = original,
-                    suggestedPart = bestAlt,
-                    currentScore = baseScore,
-                    projectedScore = bestScore,
-                    gain = bestScore - baseScore
-                });
-            }
+                category = bestCategory.Value,
+                currentPart = bestOriginal,
+                suggestedPart = bestAlt,
+                currentScore = runningScore,
+                projectedScore = bestScore,
+                gain = bestScore - runningScore
+            });
+
+            // Actually apply this suggestion before searching for the next
+            // one, so the next search reflects the improved state.
+            SetPart(build, bestCategory.Value, bestAlt);
+            alreadySuggestedCategories.Add(bestCategory.Value);
+            runningScore = bestScore;
         }
 
-        suggestions.Sort((a, b) => b.gain.CompareTo(a.gain));
-        if (suggestions.Count > maxSuggestions)
-            suggestions.RemoveRange(maxSuggestions, suggestions.Count - maxSuggestions);
+        // Revert all trial changes, this method must not leave the user's
+        // actual build modified.
+        foreach (var s in suggestions)
+            SetPart(build, s.category, s.currentPart);
 
         return suggestions;
     }

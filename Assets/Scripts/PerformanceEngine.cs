@@ -2,9 +2,16 @@ using UnityEngine;
 
 public static class PerformanceEngine
 {
-    private static readonly PartCategory[] DownforceCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Floor };
-    private static readonly PartCategory[] DragCategories = { PartCategory.FrontWing, PartCategory.RearWing, PartCategory.Sidepods };
+    private static readonly PartCategory[] WingCategories = { PartCategory.FrontWing, PartCategory.RearWing };
     private static readonly PartCategory[] PowerCategories = { PartCategory.Engine };
+
+    // Neutral baselines used for the additive-offset categories below.
+    // These are the Standard-tier part values, chosen so "Standard" parts
+    // contribute exactly 0 offset (no bonus, no penalty).
+    private const float SidepodsNeutralDrag = 25f;
+    private const float FloorNeutralDownforce = 50f;
+    private const float BrakesNeutralReliability = 85f;
+    private const float SuspensionNeutralReliability = 85f;
 
     // Tightened from 8/1.3 so mid-pack circuits stop clustering at OPTIMAL together.
     private const float MatchTolerance = 5f;
@@ -27,24 +34,62 @@ public static class PerformanceEngine
         return count == 0 ? 0f : total / count;
     }
 
-    // Tyres matter most for real tyre wear/reliability, brakes and suspension
-    // matter but less. A flat 3-way average diluted single-part swaps too
-    // much (a Brakes or Suspension change barely moved the score), so tyres
-    // get 50% weight and brakes/suspension split the remaining 50%.
-    private static float ReliabilityWeightedAverage(CarBuild build)
+    // Wings set the downforce baseline. Floor has a wider value range
+    // (35-75) than Sidepods did, so it usually escaped the tolerance zone
+    // on its own under the old flat 3-way average, but not always, it
+    // depended on coincidence with whatever wings were equipped. Same
+    // fix as Drag/Sidepods: full-weight offset from a neutral baseline
+    // instead of dilution, so Floor is *guaranteed* to matter every time,
+    // not just usually.
+    private static float DownforceWithFloorOffset(CarBuild build)
     {
-        float? tyres = build.tyres != null ? build.tyres.reliability : (float?)null;
-        float? brakes = build.brakes != null ? build.brakes.reliability : (float?)null;
-        float? suspension = build.suspension != null ? build.suspension.reliability : (float?)null;
+        float wingsDownforce = AverageStat(build, WingCategories, p => p.downforce);
+        if (build.frontWing == null && build.rearWing == null) return 0f;
 
-        float totalWeight = 0f;
-        float weightedSum = 0f;
+        float floorOffset = build.floor != null
+            ? build.floor.downforce - FloorNeutralDownforce
+            : 0f;
 
-        if (tyres.HasValue) { weightedSum += tyres.Value * 0.5f; totalWeight += 0.5f; }
-        if (brakes.HasValue) { weightedSum += brakes.Value * 0.25f; totalWeight += 0.25f; }
-        if (suspension.HasValue) { weightedSum += suspension.Value * 0.25f; totalWeight += 0.25f; }
+        return Mathf.Clamp(wingsDownforce + floorOffset, 0f, 100f);
+    }
 
-        return totalWeight == 0f ? 0f : weightedSum / totalWeight;
+    // Wings set the drag baseline. Sidepods' own value range is narrow
+    // (20-30), so folding it into a flat 3-way average with the wings
+    // diluted its swing down to ~3 points, well under the match tolerance,
+    // meaning no Sidepods choice could ever move the score. Applying it as
+    // a full-weight offset from a neutral baseline instead means its whole
+    // 10-point range actually counts.
+    private static float DragWithSidepodsOffset(CarBuild build)
+    {
+        float wingsDrag = AverageStat(build, WingCategories, p => p.drag);
+        if (build.frontWing == null && build.rearWing == null) return 0f;
+
+        float sidepodsOffset = build.sidepods != null
+          ? (build.sidepods.drag - SidepodsNeutralDrag) * 1.3f
+          : 0f;
+
+        return Mathf.Clamp(wingsDrag + sidepodsOffset, 0f, 100f);
+    }
+
+    // Tyres are the dominant factor for reliability, so they set the base
+    // value directly (undiluted). Brakes and Suspension apply as
+    // full-weight offsets from their neutral baseline, this keeps tyres in
+    // the driver's seat while guaranteeing Brakes' 30-point range and
+    // Suspension's 15-point range both comfortably clear the match
+    // tolerance instead of getting flattened by averaging.
+    private static float ReliabilityWithOffsets(CarBuild build)
+    {
+        float baseReliability = build.tyres != null ? build.tyres.reliability : 0f;
+
+        float brakesOffset = build.brakes != null
+            ? (build.brakes.reliability - BrakesNeutralReliability) * 0.5f
+            : 0f;
+
+        float suspensionOffset = build.suspension != null
+            ? (build.suspension.reliability - SuspensionNeutralReliability) * 0.7f
+            : 0f;
+
+        return Mathf.Clamp(baseReliability + brakesOffset + suspensionOffset, 0f, 100f);
     }
 
     private static float MatchScore(float actual, float target)
@@ -70,10 +115,10 @@ public static class PerformanceEngine
         }
         float avgWeight = partCount == 0 ? 0f : totalWeight / partCount;
 
-        float avgDownforce = AverageStat(build, DownforceCategories, p => p.downforce);
-        float avgDrag = AverageStat(build, DragCategories, p => p.drag);
+        float avgDownforce = DownforceWithFloorOffset(build);
+        float avgDrag = DragWithSidepodsOffset(build);
         float avgPower = AverageStat(build, PowerCategories, p => p.power);
-        float avgReliability = ReliabilityWeightedAverage(build);
+        float avgReliability = ReliabilityWithOffsets(build);
 
         float aeroEfficiency = avgDrag > 0
             ? (avgDownforce / (avgDownforce + avgDrag)) * 100f

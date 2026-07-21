@@ -178,7 +178,7 @@
                 <ui:Label name="EvaluatingText" text="ANALYZING BUILD..."/>
             </ui:VisualElement>
         </ui:VisualElement>
-        
+
         <!-- RESULTS MODAL -->
         <ui:VisualElement name="ResultsModal" style="display: none;">
             <ui:VisualElement name="ModalOverlay"/>
@@ -287,7 +287,7 @@
         <!-- Page 3: Qualifying + Race Projection -->
         <ui:VisualElement name="TabPageQualifying" style="display: none;">
             <ui:Label text="ESTIMATED QUALIFYING PACE" class="compare-title"/>
-            <ui:Label text="BASED ON YOUR CIRCUIT FIT SCORE" class="compare-sub"/>
+            <ui:Label text="BASED ON YOUR CIRCUIT FIT SCORE + DRIVER EXECUTION" class="compare-sub"/>
 
             <ui:VisualElement name="QualiPositionCard" class="modal-score-card">
                 <ui:Label text="ESTIMATED GRID POSITION" class="modal-score-label"/>
