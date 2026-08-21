@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class BuildGameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static BuildGameManager Instance { get; private set; }
 
     [Header("Current Build")]
     public CarBuild currentBuild = new CarBuild();
@@ -74,5 +74,4 @@ public class GameManager : MonoBehaviour
         currentBuild.Reset();
         Debug.Log("Build reset");
     }
-
 }

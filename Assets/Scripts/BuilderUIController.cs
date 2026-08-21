@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class BuilderUIController : MonoBehaviour
@@ -16,6 +17,7 @@ public class BuilderUIController : MonoBehaviour
 
     [Header("Scene References")]
     public GameObject circuitSelectorObject;
+    public string racingSceneName = "RacingLevel";
 
     [Header("Part Icons")]
     public Sprite iconFrontWing;
@@ -204,7 +206,7 @@ public class BuilderUIController : MonoBehaviour
         if (newCircuitBtn != null)
             newCircuitBtn.clicked += () =>
             {
-                GameManager.Instance?.ResetBuild();
+                BuildGameManager.Instance?.ResetBuild();
                 if (resultsModal != null)
                     resultsModal.style.display = DisplayStyle.None;
                 gameObject.SetActive(false);
@@ -280,7 +282,7 @@ public class BuilderUIController : MonoBehaviour
 
         partListContainer.Clear();
 
-        var currentBuild = GameManager.Instance?.currentBuild;
+        var currentBuild = BuildGameManager.Instance?.currentBuild;
 
         foreach (CarPart part in allParts)
         {
@@ -346,7 +348,7 @@ public class BuilderUIController : MonoBehaviour
             PartCategory capturedCategory = category;
             selectBtn.clicked += () =>
             {
-                GameManager.Instance.SelectPart(captured);
+                BuildGameManager.Instance.SelectPart(captured);
                 StartCoroutine(PlaySelectFeedbackThenRefresh(capturedCard, capturedCategory));
             };
 
@@ -431,7 +433,7 @@ public class BuilderUIController : MonoBehaviour
 
     void UpdateSidebarStatus()
     {
-        var gm = GameManager.Instance;
+        var gm = BuildGameManager.Instance;
         if (gm == null) return;
         var b = gm.currentBuild;
         if (b == null) return;
@@ -466,8 +468,8 @@ public class BuilderUIController : MonoBehaviour
 
     int CountSelectedParts()
     {
-        if (GameManager.Instance == null) return 0;
-        var b = GameManager.Instance.currentBuild;
+        if (BuildGameManager.Instance == null) return 0;
+        var b = BuildGameManager.Instance.currentBuild;
         int count = 0;
         if (b.frontWing != null) count++;
         if (b.rearWing != null) count++;
@@ -486,7 +488,7 @@ public class BuilderUIController : MonoBehaviour
 
     void UpdateSidebarMatchBars(int? selectedCount = null)
     {
-        var gm = GameManager.Instance;
+        var gm = BuildGameManager.Instance;
         if (gm == null) return;
         var build = gm.currentBuild;
         var circuit = CircuitSelectionController.ChosenCircuit;
@@ -564,9 +566,9 @@ public class BuilderUIController : MonoBehaviour
         yield return new WaitForSeconds(0.14f);
         btn.RemoveFromClassList("btn-evaluate--punch");
 
-        if (GameManager.Instance == null) yield break;
+        if (BuildGameManager.Instance == null) yield break;
 
-        var result = GameManager.Instance.EvaluateBuild();
+        var result = BuildGameManager.Instance.EvaluateBuild();
 
         if (!result.isValid)
         {
@@ -675,8 +677,8 @@ public class BuilderUIController : MonoBehaviour
 
         PopulateModalDebrief(result, circuit);
 
-        if (GameManager.Instance?.currentBuild != null)
-            PopulateLeaderboard(GameManager.Instance.currentBuild);
+        if (BuildGameManager.Instance?.currentBuild != null)
+            PopulateLeaderboard(BuildGameManager.Instance.currentBuild);
 
         PopulateQualifying(result, circuit);
     }
@@ -731,9 +733,9 @@ public class BuilderUIController : MonoBehaviour
         if (weakest.score < 60f)
             tips.Add($"{weakest.name} is your weakest area here ({weakest.score:0}/100): {weakest.meaning}.");
 
-        if (circuit != null && GameManager.Instance?.currentBuild != null)
+        if (circuit != null && BuildGameManager.Instance?.currentBuild != null)
         {
-            var suggestions = BuildAdvisor.GetTopSuggestions(GameManager.Instance.currentBuild, circuit, allParts, 2);
+            var suggestions = BuildAdvisor.GetTopSuggestions(BuildGameManager.Instance.currentBuild, circuit, allParts, 2);
 
             if (suggestions.Count > 0)
             {
@@ -862,7 +864,7 @@ public class BuilderUIController : MonoBehaviour
 
     void OnReset()
     {
-        GameManager.Instance?.ResetBuild();
+        BuildGameManager.Instance?.ResetBuild();
         UpdateProgressBar();
         if (currentCategory != PartCategory.FrontWing)
             ShowCategory(currentCategory);
@@ -998,66 +1000,17 @@ public class BuilderUIController : MonoBehaviour
 
     void OnRaceWithBuild()
     {
-        if (GameManager.Instance == null) return;
-        var build = GameManager.Instance.currentBuild;
+        if (BuildGameManager.Instance == null) return;
+        var build = BuildGameManager.Instance.currentBuild;
         if (build == null || !build.IsComplete()) return;
 
-        var result = GameManager.Instance.GetLastResult();
-        if (result == null) return;
+        var result = BuildGameManager.Instance.GetLastResult();
+        if (result == null || !result.isValid) return;
 
-        float totalDownforce = 0f, totalDrag = 0f;
-        float totalPower = 0f, totalWeight = 0f, totalReliability = 0f;
-        foreach (var part in build.GetAllParts())
-        {
-            if (part == null) continue;
-            totalDownforce += part.downforce;
-            totalDrag += part.drag;
-            totalPower += part.power;
-            totalWeight += part.weight;
-            totalReliability += part.reliability;
-        }
-
-        var export = new BuildExport
-        {
-            circuitName = CircuitSelectionController.ChosenCircuit?.circuitName ?? "Unknown",
-            efficiencyScore = result.efficiencyScore,
-            lapTimeSeconds = result.lapTimeSeconds,
-            downforce = totalDownforce,
-            drag = totalDrag,
-            power = totalPower,
-            weight = totalWeight,
-            reliability = totalReliability,
-            tyreCompound = build.tyres?.partName ?? "Standard",
-            circuitRating = result.circuitRating,
-            speedScore = result.speedScore,
-            corneringScore = result.corneringScore
-        };
-
-        string json = JsonUtility.ToJson(export, true);
-        string path = System.IO.Path.Combine(
-            System.Environment.GetFolderPath(
-                System.Environment.SpecialFolder.MyDocuments),
-            "F1BuildExport.json");
-
-        System.IO.File.WriteAllText(path, json);
-        Debug.Log($"Build exported to: {path}");
-        Debug.Log(json);
+        // No file to write anymore. BuildGameManager uses
+        // DontDestroyOnLoad, so currentBuild/lastResult simply survive
+        // the scene load, the racing scene's BuildImporter reads them
+        // straight from BuildGameManager.Instance.
+        SceneManager.LoadScene(racingSceneName);
     }
-}
-
-[System.Serializable]
-public class BuildExport
-{
-    public string circuitName;
-    public float efficiencyScore;
-    public float lapTimeSeconds;
-    public float downforce;
-    public float drag;
-    public float power;
-    public float weight;
-    public float reliability;
-    public string tyreCompound;
-    public string circuitRating;
-    public float speedScore;
-    public float corneringScore;
 }
